@@ -1,0 +1,67 @@
+<!DOCTYPE Theme PUBLIC "-//VideoLAN//DTD VLC Skins V2.0//EN" "skin.dtd">
+<Theme version="2.0">
+  <ThemeInfo name="Unnamed Theme" author="Ohata" email="Unknown" webpage="http://www.videolan.org/vlc/"/>
+
+  <!-- Created using the VLC Skin Editor 0.8.6.dev (http://www.videolan.org/vlc/skineditor.html)-->
+
+  <Font id="A101HLVN_16" file="A101HLVN.TTF" size="16"/>
+  <Bitmap id="vlc_isdt_skin" file="vlc_isdt_skin.png" alphacolor="#FF00FF">
+    <SubBitmap id="frame_lt" x="0" y="0" height="32" width="16"/>
+    <SubBitmap id="frame_lc" x="0" y="32" height="480" width="16"/>
+    <SubBitmap id="frame_lb" x="0" y="512" height="64" width="16"/>
+    <SubBitmap id="frame_ct" x="16" y="0" height="32" width="640"/>
+    <SubBitmap id="frame_cb" x="16" y="512" height="64" width="640"/>
+    <SubBitmap id="frame_rt" x="656" y="0" height="32" width="16"/>
+    <SubBitmap id="frame_rc" x="656" y="32" height="480" width="16"/>
+    <SubBitmap id="frame_rb" x="656" y="512" height="64" width="16"/>
+    <SubBitmap id="frame_lb_nc" x="0" y="560" height="16" width="16"/>
+    <SubBitmap id="frame_cb_nc" x="16" y="560" height="16" width="640"/>
+    <SubBitmap id="frame_rb_nc" x="656" y="560" height="16" width="16"/>
+  </Bitmap>
+  <Bitmap id="isdt_buttons" file="isdt_buttons.png" alphacolor="#FF00FF">
+    <SubBitmap id="play_n" x="0" y="0" height="32" width="32"/>
+    <SubBitmap id="play_h" x="0" y="32" height="32" width="32"/>
+    <SubBitmap id="play_p" x="0" y="64" height="32" width="32"/>
+    <SubBitmap id="pause_n" x="32" y="0" height="32" width="32"/>
+    <SubBitmap id="pause_h" x="32" y="32" height="32" width="32"/>
+    <SubBitmap id="pause_p" x="32" y="64" height="32" width="32"/>
+    <SubBitmap id="knob_n" x="66" y="2" height="15" width="10"/>
+    <SubBitmap id="knob_h" x="65" y="33" height="17" width="12"/>
+    <SubBitmap id="knob_p" x="65" y="65" height="17" width="12"/>
+  </Bitmap>
+  <Bitmap id="isdt_horizon" file="isdt_horizon.png" alphacolor="#FF00FF">
+    <SubBitmap id="video_seekbar" x="0" y="0" height="3" width="300"/>
+  </Bitmap>
+  <Bitmap id="min_max_close" file="min_max_close.png" alphacolor="#FF00FF">
+    <SubBitmap id="min_n" x="0" y="0" height="24" width="24"/>
+    <SubBitmap id="min_h" x="0" y="24" height="24" width="24"/>
+    <SubBitmap id="min_p" x="0" y="48" height="24" width="24"/>
+    <SubBitmap id="max_n" x="24" y="0" height="24" width="24"/>
+    <SubBitmap id="max_h" x="24" y="24" height="24" width="24"/>
+    <SubBitmap id="close_n" x="72" y="0" height="24" width="24"/>
+    <SubBitmap id="close_h" x="72" y="24" height="24" width="24"/>
+  </Bitmap>
+  <Bitmap id="rec_button" file="rec_button.png" alphacolor="#FF00FF">
+    <SubBitmap id="recAnime" x="64" y="0" height="256" width="48" nbframes="8" fps="8"/>
+    <SubBitmap id="rec_n" x="64" y="0" height="32" width="48"/>
+    <SubBitmap id="rec_h" x="16" y="96" height="32" width="48"/>
+    <SubBitmap id="rec_p" x="16" y="128" height="32" width="48"/>
+  </Bitmap>
+
+  <Window id="main">
+    <Layout id="main_layout" width="672" height="576" minwidth="450" maxwidth="1920" minheight="360" maxheight="1080">
+      <Image id="wlt" image="frame_lt" resize="scale" rightbottom="rightbottom" xkeepratio="true" ykeepratio="true"/>
+      <Image id="wct" x="16" image="frame_ct" action="move" resize="scale" rightbottom="rightbottom" ykeepratio="true"/>
+      <Image id="wrt" x="656" image="frame_rt" resize="scale" rightbottom="rightbottom" xkeepratio="true" ykeepratio="true"/>
+      <Image id="wl" y="32" image="frame_lc" action="resizeE" resize="scale" rightbottom="rightbottom" xkeepratio="true"/>
+      <Image id="wr" x="656" y="32" image="frame_rc" action="resizeE" resize="scale" rightbottom="rightbottom" xkeepratio="true"/>
+      <Image id="wlb" y="512" image="frame_lb" xkeepratio="true" ykeepratio="true"/>
+      <Image id="wb" x="16" y="512" image="frame_cb" resize="scale" rightbottom="rightbottom" ykeepratio="true"/>
+      <Image id="wrb" x="656" y="512" image="frame_rb" action="resizeSE" resize="scale" xkeepratio="true" ykeepratio="true"/>
+      <Video id="video_area" x="16" y="32" width="640" height="480" autoresize="false" rightbottom="rightbottom"/>
+      <Button up="close_n" over="close_h" action="vlc.quit()" id="close_btn" x="632" y="4" lefttop="righttop" rightbottom="righttop"/>
+      <Checkbox state="vlc.isRecording" up1="rec_n" up2="recAnime" down1="rec_p" down2="rec_p" over1="rec_h" over2="rec_h" action1="vlc.toggleRecord()" action2="vlc.toggleRecord()" id="rec_ctrl" x="312" y="528" xkeepratio="true" ykeepratio="true" visible="vlc.canRecording"/>
+    </Layout>
+  </Window>
+
+</Theme>

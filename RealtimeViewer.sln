@@ -1,0 +1,178 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeViewer", "RealtimeViewer\RealtimeViewer.csproj", "{E491A868-A597-4138-8F38-85FFC5CBDD7D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{AC2242B8-3460-44AD-A694-74ABBAEFA919}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserEnroll", "UserEnroll\UserEnroll.csproj", "{7D70F546-451C-4001-966E-0BCE4012CC16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserIdentify", "UserIdentify\UserIdentify.csproj", "{07A383A2-FCED-4276-8534-AB0CAD3AC73B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A44E1884-6F63-4D1A-8FED-2FF345471599}"
+	ProjectSection(SolutionItems) = preProject
+		fromBase64.ps1 = fromBase64.ps1
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vlc-skin-src", "vlc-skin-src", "{E749AD11-39FC-4B25-AB99-5B4FFB3718FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "krita", "krita", "{00C3B1F6-8338-4C57-9507-B6075E3C6E15}"
+	ProjectSection(SolutionItems) = preProject
+		vlc-skin-src\krita\channel.kra = vlc-skin-src\krita\channel.kra
+		vlc-skin-src\krita\isdt_buttons2.kra = vlc-skin-src\krita\isdt_buttons2.kra
+		vlc-skin-src\krita\min_max_close2.kra = vlc-skin-src\krita\min_max_close2.kra
+		vlc-skin-src\krita\rec_button.kra = vlc-skin-src\krita\rec_button.kra
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "isdt", "isdt", "{04667522-A9FC-45C3-92B4-8E6C1BEA253D}"
+	ProjectSection(SolutionItems) = preProject
+		vlc-skin-src\isdt\A101HLVN.TTF = vlc-skin-src\isdt\A101HLVN.TTF
+		vlc-skin-src\isdt\isdt-nc.xml = vlc-skin-src\isdt\isdt-nc.xml
+		vlc-skin-src\isdt\isdt.xml = vlc-skin-src\isdt\isdt.xml
+		vlc-skin-src\isdt\isdt_buttons.pdn = vlc-skin-src\isdt\isdt_buttons.pdn
+		vlc-skin-src\isdt\isdt_buttons.png = vlc-skin-src\isdt\isdt_buttons.png
+		vlc-skin-src\isdt\isdt_horizon.pdn = vlc-skin-src\isdt\isdt_horizon.pdn
+		vlc-skin-src\isdt\isdt_horizon.png = vlc-skin-src\isdt\isdt_horizon.png
+		vlc-skin-src\isdt\min_max_close.pdn = vlc-skin-src\isdt\min_max_close.pdn
+		vlc-skin-src\isdt\min_max_close.png = vlc-skin-src\isdt\min_max_close.png
+		vlc-skin-src\isdt\README.md = vlc-skin-src\isdt\README.md
+		vlc-skin-src\isdt\rec_button.png = vlc-skin-src\isdt\rec_button.png
+		vlc-skin-src\isdt\skin.dtd = vlc-skin-src\isdt\skin.dtd
+		vlc-skin-src\isdt\vlc_isdt_skin-orange.pdn = vlc-skin-src\isdt\vlc_isdt_skin-orange.pdn
+		vlc-skin-src\isdt\vlc_isdt_skin-orange.png = vlc-skin-src\isdt\vlc_isdt_skin-orange.png
+		vlc-skin-src\isdt\vlc_isdt_skin.pdn = vlc-skin-src\isdt\vlc_isdt_skin.pdn
+		vlc-skin-src\isdt\vlc_isdt_skin.png = vlc-skin-src\isdt\vlc_isdt_skin.png
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestRealtimeViewer", "UnitTestRealtimeViewer\UnitTestRealtimeViewer.csproj", "{609EB9BB-6020-43F7-B8F1-986DCEC9B031}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D} = {E491A868-A597-4138-8F38-85FFC5CBDD7D}
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupLiveGPSMW", "SetupLiveGPSMW\SetupLiveGPSMW.vdproj", "{00F921FF-CA84-4C47-98EE-65E01768ED75}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupLiveGPS", "SetupLiveGPS\SetupLiveGPS.vdproj", "{3E45C77D-57A8-46B8-B425-A4162EA7F360}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug(緊急モード)|Any CPU = Debug(緊急モード)|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		R_Issui|Any CPU = R_Issui|Any CPU
+		R_Meiji|Any CPU = R_Meiji|Any CPU
+		R_Nemuro|Any CPU = R_Nemuro|Any CPU
+		R_Tobu|Any CPU = R_Tobu|Any CPU
+		R_WeatherMedia|Any CPU = R_WeatherMedia|Any CPU
+		Release(緊急モード)|Any CPU = Release(緊急モード)|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Debug(緊急モード)|Any CPU.Build.0 = Debug(緊急モード)|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Issui|Any CPU.ActiveCfg = R_Issui|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Issui|Any CPU.Build.0 = R_Issui|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Meiji|Any CPU.ActiveCfg = R_Meiji|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Meiji|Any CPU.Build.0 = R_Meiji|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Nemuro|Any CPU.ActiveCfg = R_Nemuro|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Nemuro|Any CPU.Build.0 = R_Nemuro|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Tobu|Any CPU.ActiveCfg = R_Tobu|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_Tobu|Any CPU.Build.0 = R_Tobu|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_WeatherMedia|Any CPU.ActiveCfg = R_WeatherMedia|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.R_WeatherMedia|Any CPU.Build.0 = R_WeatherMedia|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Release(緊急モード)|Any CPU.Build.0 = Release(緊急モード)|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E491A868-A597-4138-8F38-85FFC5CBDD7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Debug(緊急モード)|Any CPU.Build.0 = Debug(緊急モード)|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Issui|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Issui|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Meiji|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Meiji|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Nemuro|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Nemuro|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Tobu|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_Tobu|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_WeatherMedia|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.R_WeatherMedia|Any CPU.Build.0 = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Release(緊急モード)|Any CPU.Build.0 = Release(緊急モード)|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D70F546-451C-4001-966E-0BCE4012CC16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Debug(緊急モード)|Any CPU.Build.0 = Debug(緊急モード)|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Issui|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Issui|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Meiji|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Meiji|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Nemuro|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Nemuro|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Tobu|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_Tobu|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_WeatherMedia|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.R_WeatherMedia|Any CPU.Build.0 = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Release(緊急モード)|Any CPU.Build.0 = Release(緊急モード)|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07A383A2-FCED-4276-8534-AB0CAD3AC73B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_Issui|Any CPU.ActiveCfg = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_Meiji|Any CPU.ActiveCfg = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_Nemuro|Any CPU.ActiveCfg = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_Tobu|Any CPU.ActiveCfg = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_Tobu|Any CPU.Build.0 = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.R_WeatherMedia|Any CPU.ActiveCfg = Release|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)|Any CPU
+		{609EB9BB-6020-43F7-B8F1-986DCEC9B031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.Debug|Any CPU.ActiveCfg = Debug
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_Issui|Any CPU.ActiveCfg = R_Issui
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_Meiji|Any CPU.ActiveCfg = R_Meiji
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_Nemuro|Any CPU.ActiveCfg = R_Nemuro
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_Tobu|Any CPU.ActiveCfg = R_Tobu
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_WeatherMedia|Any CPU.ActiveCfg = R_WeatherMedia
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.R_WeatherMedia|Any CPU.Build.0 = R_WeatherMedia
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)
+		{00F921FF-CA84-4C47-98EE-65E01768ED75}.Release|Any CPU.ActiveCfg = Release
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Debug(緊急モード)|Any CPU.ActiveCfg = Debug(緊急モード)
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Debug|Any CPU.ActiveCfg = Debug
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Issui|Any CPU.ActiveCfg = R_Issui
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Issui|Any CPU.Build.0 = R_Issui
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Meiji|Any CPU.ActiveCfg = R_Meiji
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Meiji|Any CPU.Build.0 = R_Meiji
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Nemuro|Any CPU.ActiveCfg = R_Nemuro
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Nemuro|Any CPU.Build.0 = R_Nemuro
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Tobu|Any CPU.ActiveCfg = R_Tobu
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_Tobu|Any CPU.Build.0 = R_Tobu
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.R_WeatherMedia|Any CPU.ActiveCfg = R_WeatherMedia
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Release(緊急モード)|Any CPU.ActiveCfg = Release(緊急モード)
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Release(緊急モード)|Any CPU.Build.0 = Release(緊急モード)
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Release|Any CPU.ActiveCfg = Release
+		{3E45C77D-57A8-46B8-B425-A4162EA7F360}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{00C3B1F6-8338-4C57-9507-B6075E3C6E15} = {E749AD11-39FC-4B25-AB99-5B4FFB3718FE}
+		{04667522-A9FC-45C3-92B4-8E6C1BEA253D} = {E749AD11-39FC-4B25-AB99-5B4FFB3718FE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {438F002E-F3F4-428A-A265-F8D68EDC3D42}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProject\SharedProject.projitems*{07a383a2-fced-4276-8534-ab0cad3ac73b}*SharedItemsImports = 4
+		SharedProject\SharedProject.projitems*{7d70f546-451c-4001-966e-0bce4012cc16}*SharedItemsImports = 4
+		SharedProject\SharedProject.projitems*{ac2242b8-3460-44ad-a694-74abbaefa919}*SharedItemsImports = 13
+		SharedProject\SharedProject.projitems*{e491a868-a597-4138-8f38-85ffc5cbdd7d}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,122 @@
+{
+  "Tobu": [
+    {
+      "Id": 0,
+      "Kind": 0,
+      "Name": "東武バス",
+      "ValidOfficeIds": [],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [
+        1,
+        17,
+        18
+      ],
+      "IsShowWaitDialog": true,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    }
+  ],
+  "Multiwave": [
+    {
+      "Id": 0,
+      "Kind": 0,
+      "Name": "東武バス",
+      "ValidOfficeIds": [],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [
+        1,
+        17,
+        18
+      ],
+      "IsShowWaitDialog": true,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    },
+    {
+      "Id": 1,
+      "Kind": 1,
+      "Name": "開発",
+      "ValidOfficeIds": [],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": true,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": [ 2 ]
+    }
+  ],
+  "Meiji": [
+    {
+      "Id": 2,
+      "Kind": 1,
+      "Name": "明治大学",
+      "ValidOfficeIds": [
+        2
+      ],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": false,
+      "UseRetainMessageForRemoteSettings": false,
+      "ExcludeOfficesForRetain": []
+    }
+  ],
+  "Nemuro": [
+    {
+      "Id": 3,
+      "Kind": 1,
+      "Name": "根室観光交通",
+      "ValidOfficeIds": [
+        3
+      ],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": false,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    }
+  ],
+  "Issui": [
+    {
+      "Id": 0,
+      "Kind": 0,
+      "Name": "東武バス",
+      "ValidOfficeIds": [],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [
+        1,
+        17,
+        18
+      ],
+      "IsShowWaitDialog": true,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    },
+    {
+      "Id": 3,
+      "Kind": 1,
+      "Name": "根室観光交通",
+      "ValidOfficeIds": [
+        3
+      ],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": false,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    }
+  ],
+  "WeatherMedia": [
+    {
+      "Id": 4,
+      "Kind": 1,
+      "Name": "ウェザーメディア",
+      "ValidOfficeIds": [
+        4
+      ],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": false,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": []
+    }
+  ]
+}

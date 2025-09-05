@@ -1,0 +1,106 @@
+﻿{
+  "Tobu": {
+    "01": {
+      "longitude": 503329796,
+      "latitude": 128544617
+    },
+    "02": {
+      "longitude": 503260015,
+      "latitude": 128862377
+    },
+    "03": {
+      "longitude": 503217954,
+      "latitude": 128804060
+    },
+    "04": {
+      "longitude": 503497589,
+      "latitude": 128806274
+    },
+    "05": {
+      "longitude": 503399598,
+      "latitude": 128839972
+    },
+    "06": {
+      "longitude": 503298994,
+      "latitude": 129039428
+    },
+    "07": {
+      "longitude": 503445981,
+      "latitude": 128917387
+    },
+    "08": {
+      "longitude": 503507389,
+      "latitude": 129069301
+    },
+    "09": {
+      "longitude": 503464055,
+      "latitude": 129177134
+    },
+    "10": {
+      "longitude": 502594981,
+      "latitude": 129449996
+    },
+    "11": {
+      "longitude": 502968001,
+      "latitude": 129368939
+    },
+    "12": {
+      "longitude": 502709522,
+      "latitude": 129237426
+    },
+    "13": {
+      "longitude": 502407926,
+      "latitude": 129470397
+    },
+    "14": {
+      "longitude": 502136817,
+      "latitude": 129347445
+    },
+    "15": {
+      "longitude": 501929729,
+      "latitude": 129448175
+    },
+    "16": {
+      "longitude": 502413153,
+      "latitude": 128927405
+    },
+    "17": {
+      "longitude": 503811379,
+      "latitude": 129154729
+    },
+    "18": {
+      "longitude": 504077915,
+      "latitude": 128962378
+    },
+    "19": {
+      "longitude": 502659558,
+      "latitude": 132291221
+    },
+    "20": {
+      "longitude": 503811379,
+      "latitude": 129154729
+    },
+    "21": {
+      "longitude": 504077915,
+      "latitude": 128962378
+    }
+  },
+  "Dev": {
+    "01": {
+      "longitude": 503214235,
+      "latitude": 128487665
+    },
+    "02": {
+      "longitude": 507329654,
+      "latitude": 135573847
+    },
+    "03": {
+      "longitude": 524139000,
+      "latitude": 155912000
+    },
+    "04": {
+      "longitude": 503389000,
+      "latitude": 128200000
+    }
+  },
+}

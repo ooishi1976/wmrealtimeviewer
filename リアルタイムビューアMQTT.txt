@@ -1,0 +1,75 @@
+Realtime Viewer配信
+
+■APサーバー
+  // 現行のstream file 払い出しAPI
+  〇api/v1/da/live_streams/${DeviceId}
+	  Route::get('/streaming_server', 'StreamingController@getStreamingServer');  
+	  
+	    JSON形式で以下を返す
+	    'streaming_host' -> ストリーミングHost ($live_stream->streaming_server_host)
+	    'publish_port' -> ストリーミングPort($live_stream->publish_port) => 配信ポート(UDPの場合）
+	    'stream_name' -> ストリーム名($live_stream->stream_name),
+	    // 'source_user' => $live_stream->streaming_server->source_user,
+	    // 'source_pass' => $live_stream->streaming_server->source_pass,
+
+  // RTMP用のstream file 払い出しAPIを作る(データベースは共用する)
+  〇api/v1/da/live_streams/${DeviceId}
+	  Route::get('/streaming_server/rtmp/${DeviceId}', 'StreamingController@getStreamingServer');  
+  
+	    JSON形式で以下を返す
+	    'streaming_host' -> ストリーミングHost ($live_stream->streaming_server_host)
+	    'streaming_port' -> ストリーミングPort($live_stream->streaming_server_port)
+	    'stream_name' -> ストリーム名($live_stream->stream_name),
+	    'source_user' -> 配信ユーザ名($live_stream->streaming_server->source_user)
+	    'source_pass' -> 配信パスワード($live_stream->streaming_server->source_pass),
+
+  
+  // live配信情報の取得は同じ
+  Route::get('/live_streams/{device_id}', 'StreamingController@getLiveStream');
+
+
+■MQTTサーバー
+
+1. ストリーミング開始(orチャンネル切替)リクエスト(RealtimeViewerから車載器へ) (現行通り)
+Topic:
+	car/streaming/(?<device_id>\w+)/request
+Msg: JSON形式
+	{"device_id":"6025","startstop":1,"channel":0}
+	
+	device_id -> 社番
+	startstop -> 1: 開始
+	channel -> ストリーミングチャンネル (0: CH1, 1: CH2 ...)
+
+
+2. ストリーミング終了リクエスト(RealtimeViewerから車載器へ) (現行通り)
+Topic:
+	car/streaming/(?<device_id>\w+)/request
+Msg: JSON形式
+	{"device_id":null,"startstop":2,"channel":0}
+	
+	device_id -> null
+	startstop -> 2: 終了
+	channel -> 0 (0: CH1, 1: CH2 ...)
+
+
+
+3. ストリーミングステータス配信 (車載器からRealtimeViewerへ) (現行通り)
+FFMPEGで変換 -> 配信している時に標準エラー or 標準出力に出力されている内容と思います。
+
+Topic:
+	car/streaming/(?<device_id>\w+)/status
+
+Msg: JSON形式
+	{"device_id":"2843","ts":"20250522113845","streamingStarted":1,"streamingChannel":0,"tframes":155,"tbytes":385212,"fps":15.170,"kbps":300.200,"elapsed":"0:00:10","dropped":0,"speed":1.000}
+
+device_id -> 社番
+ts -> タイムスタンプ(yyyyMMddHHmmss)
+streamingStarted -> 1(開始)
+streamingChannel -> チャンネル
+tframes -> 送信フレーム数
+tbytes -> 送信バイト数
+fps -> FPS
+kbps -> ビットレート
+elapsed -> 経過時間
+dropped -> ドロップフレーム数
+speed -> 処理速度の倍率
