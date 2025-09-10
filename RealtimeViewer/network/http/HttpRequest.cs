@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RealtimeViewer.Network.Http
@@ -184,16 +185,18 @@ namespace RealtimeViewer.Network.Http
         /// <param name="accessToken">認証トークン</param>
         /// <param name="movieId">映像ID</param>
         /// <returns>ダウンロードファイルのファイル名。Emptyの場合はダウンロード失敗である。</returns>
-        public static async Task<string> DownloadMovie(HttpClient client, string serverAddr, string accessToken, int movieId)
+        public static async Task<string> DownloadMovie(
+            HttpClient client, string serverAddr, string accessToken, int movieId, CancellationToken? cancellationToken = null)
         {
-            string filepath = string.Empty;
+            var token = cancellationToken ?? CancellationToken.None;
+            var filepath = string.Empty;
             try
             {
                 var uri = new Uri($"http://{serverAddr}/api/v1/ua/event_movies/{movieId}/zip");
                 using (var request = new HttpRequestMessage(HttpMethod.Get, uri))
                 {
                     request.Headers.Add("Authorization", "Bearer " + accessToken);
-                    using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                    using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token))
                     {
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
@@ -516,13 +519,15 @@ namespace RealtimeViewer.Network.Http
         /// <param name="end">データ種別(1: MTX(デフォルト) 2: MU</param>
         /// <returns>ダウンロードファイルのパス</returns>
         public static async Task<string> DownloadMuZip(
-            HttpClient client, string serverAddr, string accessToken, string deviceId, DateTime begin, DateTime end, int dataType = 1)
+            HttpClient client, string serverAddr, string accessToken, 
+            string deviceId, DateTime begin, DateTime end, int dataType = 1,
+            CancellationToken? cancellationToken = null)
         {
             // 1:mtx, 2:mu
             int data_type = dataType;
 
             string filepath = string.Empty;
-
+            var token = (cancellationToken is null) ? CancellationToken.None : cancellationToken.Value;
             try
             {
                 var dtFormat = @"yyyyMMddHHmmss";
@@ -534,7 +539,7 @@ namespace RealtimeViewer.Network.Http
                 using (var request = new HttpRequestMessage(HttpMethod.Get, uri))
                 {
                     request.Headers.Add("Authorization", "Bearer " + accessToken);
-                    using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                    using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token))
                     {
                         Debug.WriteLine($"http status {response.StatusCode}");
                         if (response.StatusCode == HttpStatusCode.OK)

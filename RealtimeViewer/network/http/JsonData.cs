@@ -69,7 +69,7 @@ namespace RealtimeViewer.Network.Http
     public class JsonMovie
     {
         public int camera_id { get; set; }
-        public int device_id { get; set; }
+        public string device_id { get; set; }
         public int id { get; set; }
         public string sequence { get; set; }
         public string name { get; set; }

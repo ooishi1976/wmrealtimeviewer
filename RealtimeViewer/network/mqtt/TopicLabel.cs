@@ -1,7 +1,7 @@
 ﻿
 namespace RealtimeViewer.Network.Mqtt
 {
-    enum TopicLabel
+    public enum TopicLabel
     {
         TopicNone,
         TopicStreamingStatus,

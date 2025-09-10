@@ -28,7 +28,7 @@ namespace RealtimeViewer.Network.Http
     /// 以降、トークンは使いまわさされる。
     /// TODO: 有効期限切れやログイン出来ない場合の処理が無く、ログイン可能の前提で作られている。
     /// </summary>
-    public class RequestSequence
+    public partial class RequestSequence
     {
 //        public const int SEARCH_MOVIE_DAYS = 60;
         public OperationServerInfo ServerInfo { get; set; }
@@ -825,10 +825,10 @@ namespace RealtimeViewer.Network.Http
             if (hasAccessToken)
             {
                 // MUイベントから取得して、取得できなければMTXを読む
-                result = await GetDigFromMu(deviceId, timestamp, isDeleteWorkFile);
+                result = await GetDigFromMu(deviceId, timestamp, isDeleteWorkFile, CancellationToken.None);
                 if (result.Result != 0)
                 {
-                    result = await GetDigFromMtx(deviceId, timestamp, isDeleteWorkFile);
+                    result = await GetDigFromMtx(deviceId, timestamp, isDeleteWorkFile, CancellationToken.None);
                 }
             }
             callback(result);
@@ -841,7 +841,8 @@ namespace RealtimeViewer.Network.Http
         /// <param name="occurTime">発生時刻</param>
         /// <param name="isDeleteWorkFile">true: 展開ファイルを削除する。 false: 展開ファイルを削除しない</param>
         /// <returns>Gセンサー値</returns>
-        private async Task<DigResult> GetDigFromMu(string deviceId, DateTime occurTime, bool isDeleteWorkFile)
+        private async Task<DigResult> GetDigFromMu(
+            string deviceId, DateTime occurTime, bool isDeleteWorkFile, CancellationToken token)
         {
             DigResult result = new DigResult();
             ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();
@@ -850,6 +851,7 @@ namespace RealtimeViewer.Network.Http
             DateTime tsEnd = tsBegin.AddHours(1);
             int dataType = 2;
 
+            token.ThrowIfCancellationRequested();
             var zipfile = await HttpRequest.DownloadMuZip(
                 httpClient, serverInfo.HttpAddr, loginResponse.access_token, deviceId, tsBegin, tsEnd, dataType);
             if (string.IsNullOrEmpty(zipfile))
@@ -866,7 +868,7 @@ namespace RealtimeViewer.Network.Http
                     Debug.WriteLine($"Scceeded unzip file {unzipPath}");
                     try
                     {
-                        var dig = MtxUtil.Gravity(unzipPath, occurTime);
+                        var dig = MtxUtil.Gravity(unzipPath, occurTime, token);
                         if (dig != null)
                         {
                             Debug.WriteLine($"Found a DIG - {dig}");
@@ -901,7 +903,8 @@ namespace RealtimeViewer.Network.Http
             return result;
         }
 
-        private async Task<DigResult> GetDigFromMtx(string deviceId, DateTime occurTime, bool isDeleteWorkFile)
+        private async Task<DigResult> GetDigFromMtx(
+            string deviceId, DateTime occurTime, bool isDeleteWorkFile, CancellationToken token)
         {
             DigResult result = new DigResult();
             ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();
@@ -910,7 +913,7 @@ namespace RealtimeViewer.Network.Http
             var tsEnd = occurTime.AddMinutes(1).AddSeconds(30);
 
             var zipfile = await HttpRequest.DownloadMuZip(
-                httpClient, serverInfo.HttpAddr, loginResponse.access_token, deviceId, tsBegin, tsEnd);
+                httpClient, serverInfo.HttpAddr, loginResponse.access_token, deviceId, tsBegin, tsEnd, 1, token);
             if (string.IsNullOrEmpty(zipfile))
             {
                 result.Result = -3;
@@ -923,7 +926,7 @@ namespace RealtimeViewer.Network.Http
                     // unzip.
                     System.IO.Compression.ZipFile.ExtractToDirectory(zipfile, unzipPath);
                     Debug.WriteLine($"Scceeded unzip file {unzipPath}");
-                    var dig = MtxUtil.GetGravity(unzipPath, occurTime, localSettings.PrePostDuration);
+                    var dig = MtxUtil.GetGravity(unzipPath, occurTime, localSettings.PrePostDuration, token);
                     if (dig != null)
                     {
                         Debug.WriteLine($"Found a DIG - {dig}");

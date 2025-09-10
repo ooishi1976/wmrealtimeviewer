@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Threading;
 
 namespace RealtimeViewer
 {
@@ -62,7 +63,8 @@ namespace RealtimeViewer
         /// <param name="targetDir">MTX展開ディレクトリ</param>
         /// <param name="occurDateTime">イベント発生秒</param>
         /// <returns></returns>
-        public static GravityRecord GetGravity(string targetDir, DateTime occurDateTime, double prepostDuration=10D)
+        public static GravityRecord GetGravity(
+            string targetDir, DateTime occurDateTime, double prepostDuration, CancellationToken token)
         {
             GravityRecord result = null;
             double maxG = 0D;
@@ -71,6 +73,7 @@ namespace RealtimeViewer
             {
                 foreach (GravityRecord gravity in GetGravityRecords(file))
                 {
+                    token.ThrowIfCancellationRequested();
                     if (occurDateTime <= gravity.Timestamp)
                     {
                         TimeSpan duration = (occurDateTime - gravity.Timestamp).Duration();
@@ -97,12 +100,13 @@ namespace RealtimeViewer
         /// <param name="targetDir">MUイベントファイル展開ディレクトリ</param>
         /// <param name="occurDateTime">イベント発生時刻</param>
         /// <returns>Gセンサー値。該当なしの場合はNULL</returns>
-        public static GravityRecord Gravity(string targetDir, DateTime occurDateTime)
+        public static GravityRecord Gravity(string targetDir, DateTime occurDateTime, CancellationToken token)
         {
             GravityRecord result = null;
 
             foreach (string file in Directory.GetFileSystemEntries(targetDir, $"*.mu", SearchOption.AllDirectories))
             {
+                token.ThrowIfCancellationRequested();
                 result = GetGravityRecords(file, occurDateTime);
                 if (result != null)
                 {

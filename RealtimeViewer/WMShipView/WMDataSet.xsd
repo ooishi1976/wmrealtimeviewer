@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="WMDataSet" targetNamespace="http://tempuri.org/DataSet.xsd" xmlns:mstns="http://tempuri.org/DataSet.xsd" xmlns="http://tempuri.org/DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="WMDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="WMDataSet" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="WMDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OfficeTable" msprop:Generator_RowEvHandlerName="OfficeTableRowChangeEventHandler" msprop:Generator_RowDeletedName="OfficeTableRowDeleted" msprop:Generator_RowDeletingName="OfficeTableRowDeleting" msprop:Generator_RowEvArgName="OfficeTableRowChangeEvent" msprop:Generator_TablePropName="OfficeTable" msprop:Generator_RowChangedName="OfficeTableRowChanged" msprop:Generator_UserTableName="OfficeTable" msprop:Generator_RowChangingName="OfficeTableRowChanging" msprop:Generator_RowClassName="OfficeTableRow" msprop:Generator_TableClassName="OfficeTableDataTable" msprop:Generator_TableVarName="tableOfficeTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CompanyId" msprop:Generator_ColumnPropNameInTable="CompanyIdColumn" msprop:Generator_ColumnPropNameInRow="CompanyId" msprop:Generator_UserColumnName="CompanyId" msprop:Generator_ColumnVarNameInTable="columnCompanyId" type="xs:int" minOccurs="0" />
+              <xs:element name="OfficeId" msprop:Generator_ColumnPropNameInTable="OfficeIdColumn" msprop:Generator_ColumnPropNameInRow="OfficeId" msprop:Generator_UserColumnName="OfficeId" msprop:Generator_ColumnVarNameInTable="columnOfficeId" type="xs:int" />
+              <xs:element name="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_UserColumnName="Name" msprop:Generator_ColumnVarNameInTable="columnName" type="xs:string" minOccurs="0" />
+              <xs:element name="Longitude" msprop:Generator_ColumnPropNameInTable="LongitudeColumn" msprop:Generator_ColumnPropNameInRow="Longitude" msprop:Generator_UserColumnName="Longitude" msprop:Generator_ColumnVarNameInTable="columnLongitude" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Latitude" msprop:Generator_ColumnPropNameInTable="LatitudeColumn" msprop:Generator_ColumnPropNameInRow="Latitude" msprop:Generator_UserColumnName="Latitude" msprop:Generator_ColumnVarNameInTable="columnLatitude" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Visible" msprop:Generator_ColumnPropNameInTable="VisibleColumn" msprop:Generator_ColumnPropNameInRow="Visible" msprop:Generator_UserColumnName="Visible" msprop:Generator_ColumnVarNameInTable="columnVisible" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DeviceTable" msprop:Generator_RowEvHandlerName="DeviceTableRowChangeEventHandler" msprop:Generator_RowDeletedName="DeviceTableRowDeleted" msprop:Generator_RowDeletingName="DeviceTableRowDeleting" msprop:Generator_RowEvArgName="DeviceTableRowChangeEvent" msprop:Generator_TablePropName="DeviceTable" msprop:Generator_RowChangedName="DeviceTableRowChanged" msprop:Generator_UserTableName="DeviceTable" msprop:Generator_RowChangingName="DeviceTableRowChanging" msprop:Generator_RowClassName="DeviceTableRow" msprop:Generator_TableClassName="DeviceTableDataTable" msprop:Generator_TableVarName="tableDeviceTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DeviceId" msprop:Generator_ColumnPropNameInTable="DeviceIdColumn" msprop:Generator_ColumnPropNameInRow="DeviceId" msprop:Generator_UserColumnName="DeviceId" msprop:Generator_ColumnVarNameInTable="columnDeviceId" type="xs:string" />
+              <xs:element name="OfficeId" msprop:Generator_ColumnPropNameInTable="OfficeIdColumn" msprop:Generator_ColumnPropNameInRow="OfficeId" msprop:Generator_UserColumnName="OfficeId" msprop:Generator_ColumnVarNameInTable="columnOfficeId" type="xs:int" minOccurs="0" />
+              <xs:element name="CarId" msprop:Generator_ColumnPropNameInTable="CarIdColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CarId" msprop:Generator_UserColumnName="CarId" msprop:Generator_ColumnVarNameInTable="columnCarId" type="xs:string" minOccurs="0" />
+              <xs:element name="CarNumber" msprop:Generator_ColumnPropNameInTable="CarNumberColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CarNumber" msprop:Generator_UserColumnName="CarNumber" msprop:Generator_ColumnVarNameInTable="columnCarNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Longitude" msprop:Generator_ColumnPropNameInTable="LongitudeColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Longitude" msprop:Generator_UserColumnName="Longitude" msprop:Generator_ColumnVarNameInTable="columnLongitude" type="xs:string" minOccurs="0" />
+              <xs:element name="Latitude" msprop:Generator_ColumnPropNameInTable="LatitudeColumn" msprop:Generator_ColumnPropNameInRow="Latitude" msprop:Generator_UserColumnName="Latitude" msprop:Generator_ColumnVarNameInTable="columnLatitude" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_UserColumnName="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EventList" msprop:Generator_RowEvHandlerName="EventListRowChangeEventHandler" msprop:Generator_RowDeletedName="EventListRowDeleted" msprop:Generator_RowDeletingName="EventListRowDeleting" msprop:Generator_RowEvArgName="EventListRowChangeEvent" msprop:Generator_TablePropName="EventList" msprop:Generator_RowChangedName="EventListRowChanged" msprop:Generator_UserTableName="EventList" msprop:Generator_RowChangingName="EventListRowChanging" msprop:Generator_RowClassName="EventListRow" msprop:Generator_TableClassName="EventListDataTable" msprop:Generator_TableVarName="tableEventList">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Timestamp" msprop:Generator_ColumnPropNameInTable="TimestampColumn" msprop:Generator_ColumnPropNameInRow="Timestamp" msprop:Generator_UserColumnName="Timestamp" msprop:Generator_ColumnVarNameInTable="columnTimestamp" type="xs:dateTime" />
+              <xs:element name="DeviceId" msprop:Generator_ColumnPropNameInTable="DeviceIdColumn" msprop:Generator_ColumnPropNameInRow="DeviceId" msprop:Generator_UserColumnName="DeviceId" msprop:Generator_ColumnVarNameInTable="columnDeviceId" type="xs:string" />
+              <xs:element name="CarNumber" msprop:Generator_ColumnPropNameInTable="CarNumberColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CarNumber" msprop:Generator_UserColumnName="CarNumber" msprop:Generator_ColumnVarNameInTable="columnCarNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Sequence" msprop:Generator_ColumnPropNameInTable="SequenceColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Sequence" msprop:Generator_UserColumnName="Sequence" msprop:Generator_ColumnVarNameInTable="columnSequence" type="xs:string" minOccurs="0" />
+              <xs:element name="MovieId" msprop:Generator_ColumnPropNameInRow="MovieId" msprop:Generator_ColumnPropNameInTable="MovieIdColumn" msprop:Generator_ColumnVarNameInTable="columnMovieId" msprop:Generator_UserColumnName="MovieId" type="xs:int" minOccurs="0" />
+              <xs:element name="MovieType" msprop:Generator_ColumnPropNameInTable="MovieTypeColumn" msprop:Generator_ColumnPropNameInRow="MovieType" msprop:Generator_UserColumnName="MovieType" msprop:Generator_ColumnVarNameInTable="columnMovieType" type="xs:int" minOccurs="0" />
+              <xs:element name="MovieTypeName" msprop:Generator_ColumnPropNameInTable="MovieTypeNameColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="MovieTypeName" msprop:Generator_UserColumnName="MovieTypeName" msprop:Generator_ColumnVarNameInTable="columnMovieTypeName" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_UserColumnName="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="GX" msprop:Generator_ColumnPropNameInTable="GXColumn" msprop:Generator_ColumnPropNameInRow="GX" msprop:Generator_UserColumnName="GX" msprop:Generator_ColumnVarNameInTable="columnGX" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="GY" msprop:Generator_ColumnPropNameInTable="GYColumn" msprop:Generator_ColumnPropNameInRow="GY" msprop:Generator_UserColumnName="GY" msprop:Generator_ColumnVarNameInTable="columnGY" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="GZ" msprop:Generator_ColumnPropNameInTable="GZColumn" msprop:Generator_ColumnPropNameInRow="GZ" msprop:Generator_UserColumnName="GZ" msprop:Generator_ColumnVarNameInTable="columnGZ" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="Selected" msprop:Generator_ColumnPropNameInRow="Selected" msprop:Generator_ColumnPropNameInTable="SelectedColumn" msprop:Generator_ColumnVarNameInTable="columnSelected" msprop:Generator_UserColumnName="Selected" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="ExtractFilePath" msprop:Generator_ColumnPropNameInTable="ExtractFilePathColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ExtractFilePath" msprop:Generator_UserColumnName="ExtractFilePath" msprop:Generator_ColumnVarNameInTable="columnExtractFilePath" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PlayList" msprop:Generator_RowEvHandlerName="PlayListRowChangeEventHandler" msprop:Generator_RowDeletedName="PlayListRowDeleted" msprop:Generator_RowDeletingName="PlayListRowDeleting" msprop:Generator_RowEvArgName="PlayListRowChangeEvent" msprop:Generator_TablePropName="PlayList" msprop:Generator_RowChangedName="PlayListRowChanged" msprop:Generator_RowChangingName="PlayListRowChanging" msprop:Generator_TableClassName="PlayListDataTable" msprop:Generator_RowClassName="PlayListRow" msprop:Generator_TableVarName="tablePlayList" msprop:Generator_UserTableName="PlayList">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Timestamp" msprop:Generator_ColumnPropNameInRow="Timestamp" msprop:Generator_ColumnPropNameInTable="TimestampColumn" msprop:Generator_ColumnVarNameInTable="columnTimestamp" msprop:Generator_UserColumnName="Timestamp" type="xs:dateTime" />
+              <xs:element name="DeviceId" msprop:Generator_ColumnPropNameInRow="DeviceId" msprop:Generator_ColumnPropNameInTable="DeviceIdColumn" msprop:Generator_ColumnVarNameInTable="columnDeviceId" msprop:Generator_UserColumnName="DeviceId" type="xs:string" />
+              <xs:element name="Ch" msprop:Generator_ColumnPropNameInRow="Ch" msprop:Generator_ColumnPropNameInTable="ChColumn" msprop:Generator_ColumnVarNameInTable="columnCh" msprop:Generator_UserColumnName="Ch" type="xs:int" />
+              <xs:element name="FilePath" msprop:Generator_ColumnPropNameInTable="FilePathColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="FilePath" msprop:Generator_UserColumnName="FilePath" msprop:Generator_ColumnVarNameInTable="columnFilePath" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:OfficeTable" />
+      <xs:field xpath="mstns:OfficeId" />
+    </xs:unique>
+    <xs:unique name="DeviceTable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DeviceTable" />
+      <xs:field xpath="mstns:DeviceId" />
+    </xs:unique>
+    <xs:unique name="EventList_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:EventList" />
+      <xs:field xpath="mstns:Timestamp" />
+      <xs:field xpath="mstns:DeviceId" />
+    </xs:unique>
+    <xs:unique name="PlayList_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PlayList" />
+      <xs:field xpath="mstns:Timestamp" />
+      <xs:field xpath="mstns:Ch" />
+      <xs:field xpath="mstns:DeviceId" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="OfficeTable_DeviceTable" msdata:parent="OfficeTable" msdata:child="DeviceTable" msdata:parentkey="OfficeId" msdata:childkey="OfficeId" msprop:Generator_UserParentTable="OfficeTable" msprop:Generator_UserChildTable="DeviceTable" msprop:Generator_RelationVarName="relationOfficeTable_DeviceTable" msprop:Generator_ChildPropName="GetDeviceTableRows" msprop:Generator_UserRelationName="OfficeTable_DeviceTable" msprop:Generator_ParentPropName="OfficeTableRow" />
+      <msdata:Relationship name="EventList_PlayList" msdata:parent="EventList" msdata:child="PlayList" msdata:parentkey="Timestamp DeviceId" msdata:childkey="Timestamp DeviceId" msprop:Generator_UserParentTable="EventList" msprop:Generator_UserChildTable="PlayList" msprop:Generator_RelationVarName="relationEventList_PlayList" msprop:Generator_ChildPropName="GetPlayListRows" msprop:Generator_ParentPropName="EventListRowParent" msprop:Generator_UserRelationName="EventList_PlayList" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace RealtimeViewer.Movie
 {
-    public class FfmpegCtrl
+    public partial class FfmpegCtrl
     {
         private string strFFMPEG = Application.StartupPath + @"\ffmpeg.exe";
         private string strFFPLAY = Application.StartupPath + @"\ffplay.exe";

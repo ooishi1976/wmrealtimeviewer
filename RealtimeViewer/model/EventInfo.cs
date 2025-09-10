@@ -155,11 +155,14 @@ namespace RealtimeViewer.Model
                     }
                     else
                     {
-                        if (x.device_id < y.device_id)
+                        var compare = x.device_id.CompareTo(y.device_id);
+                        //if (x.device_id < y.device_id)
+                        if (compare < 0)
                         {
                             return -1;
                         }
-                        else if (x.device_id > y.device_id)
+                        //else if (x.device_id > y.device_id)
+                        else if (0 < compare)
                         {
                             return 1;
                         }

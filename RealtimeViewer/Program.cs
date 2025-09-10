@@ -53,29 +53,29 @@ namespace RealtimeViewer
 #endif
                     return;
                 }
-
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                // 緊急通報モード判定
-                string deviceId = string.Empty;
-                string[] args = Environment.GetCommandLineArgs();
-                if (3 <= args.Length)
-                {
-                    if (args[1] == "/e" && !string.IsNullOrEmpty(args[2]))
-                    {
-                        deviceId = args[2];
-                    }
-                }
-                if (string.IsNullOrEmpty(deviceId))
-                {
-                    // 通常モード
-                    Application.Run(new MainForm());
-                }
-                else
-                {
-                    // 緊急通報モード
-                    Application.Run(new MainForm(deviceId));
-                }
+                //// 緊急通報モード判定
+                //string deviceId = string.Empty;
+                //string[] args = Environment.GetCommandLineArgs();
+                //if (3 <= args.Length)
+                //{
+                //    if (args[1] == "/e" && !string.IsNullOrEmpty(args[2]))
+                //    {
+                //        deviceId = args[2];
+                //    }
+                //}
+                //if (string.IsNullOrEmpty(deviceId))
+                //{
+                //    // 通常モード
+                //    Application.Run(new MainForm());
+                //}
+                //else
+                //{
+                //    // 緊急通報モード
+                //    Application.Run(new MainForm(deviceId));
+                //}
+                Application.Run(new RealtimeViewer.WMShipView.MainForm());
             }
             finally
             {

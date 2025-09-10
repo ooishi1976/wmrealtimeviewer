@@ -200,6 +200,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -265,6 +266,30 @@
     <Compile Include="DeviceWatcher.cs" />
     <Compile Include="logger\ErrorInformationManager.cs" />
     <Compile Include="logger\ErrorListWriter.cs" />
+    <Compile Include="movie\FfmpegCtrlExt.cs" />
+    <Compile Include="network\http\HttpRequestExt.cs" />
+    <Compile Include="network\http\RequestSequenceExt.cs" />
+    <Compile Include="WMShipView\BindableModel.cs" />
+    <Compile Include="WMShipView\MainFormEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMShipView\MainFormExt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMShipView\WMDataSet.cs">
+      <DependentUpon>WMDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="WMShipView\WMDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WMDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="WMShipView\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMShipView\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="map\MapUtils.cs" />
     <Compile Include="model\CarInfo.cs" />
     <Compile Include="model\SortableBindingList.cs" />
@@ -340,9 +365,21 @@
       <DependentUpon>WaitingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowRemoteConfigViewModel.cs" />
+    <Compile Include="WMShipView\MainViewModel.cs" />
+    <Compile Include="WMShipView\MqttController.cs" />
+    <Compile Include="WMShipView\WaitFormViewModel.cs" />
+    <Compile Include="WMShipView\WaitingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMShipView\WaitingForm.Designer.cs">
+      <DependentUpon>WaitingForm.cs</DependentUpon>
+    </Compile>
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="WMShipView\WaitingForm.resx">
+      <DependentUpon>WaitingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\DataSources\DeviceStatus.datasource" />
     <None Include="Properties\DataSources\RealtimeViewer.Controls.ConfigPanelModel.datasource" />
     <None Include="Properties\DataSources\WindowRemoteConfigViewModel.datasource" />
@@ -359,6 +396,10 @@
     <Content Include="resources\flipimage\cam_normal_32.png" />
     <Content Include="resources\offices.txt" />
     <None Include="resources\ship.png" />
+    <EmbeddedResource Include="WMShipView\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ship.png" />
     <None Include="ship.ico" />
     <Content Include="vlc\AUTHORS.txt">
@@ -1996,6 +2037,17 @@
     <Content Include="vlc\skins\isdt-ch8.vlt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="WMShipView\WMDataSet.xsc">
+      <DependentUpon>WMDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="WMShipView\WMDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WMDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="WMShipView\WMDataSet.xss">
+      <DependentUpon>WMDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="shadow.png" />

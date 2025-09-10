@@ -179,7 +179,7 @@ namespace RealtimeViewer.Setting
         /// <summary>
         /// イベント映像の時間(秒)
         /// </summary>
-        public double PrePostDuration { get; set; }
+        public double PrePostDuration { get; set; } = 10d;
 
         #region 接続設定
         /// <summary>
