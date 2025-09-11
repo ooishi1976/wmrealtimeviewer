@@ -27,9 +27,9 @@ namespace RealtimeViewer.Network.Http
         /// </summary>
         /// <param name="excludeOfficeList">一覧から除外する事業所IDのリスト</param>
         /// <returns>事業所一覧</returns>
-        public async Task<WMDataSet.OfficeTableDataTable> GetOfficesAsync(List<int> excludeOfficeList)
+        public async Task<WMDataSet.OfficeDataTable> GetOfficesAsync(List<int> excludeOfficeList)
         {
-            var offices = new WMDataSet.OfficeTableDataTable();
+            var offices = new WMDataSet.OfficeDataTable();
             var server = ServerInfo.GetPhygicalServerInfo();
             var hasAccessToken = false;
             if (loginResponse == null || string.IsNullOrEmpty(loginResponse.access_token))
@@ -57,7 +57,7 @@ namespace RealtimeViewer.Network.Http
                             int.TryParse(jo.company_id, out var companyId) &&
                             ServerInfo.IsDisplayOffice(officeId))
                         {
-                            var row = offices.NewOfficeTableRow();
+                            var row = offices.NewOfficeRow();
                             row.OfficeId = officeId;
                             row.CompanyId = companyId;
                             row.Name = jo.name;
@@ -74,7 +74,7 @@ namespace RealtimeViewer.Network.Http
                                 row.Longitude = 0;
                                 row.Latitude = 0;
                             }
-                            offices.AddOfficeTableRow(row);
+                            offices.AddOfficeRow(row);
                         }
                     }
                     offices.AcceptChanges();
@@ -83,9 +83,9 @@ namespace RealtimeViewer.Network.Http
             return offices;
         }
 
-        public async Task<WMDataSet.DeviceTableDataTable> GetDevicesAsync()
+        public async Task<WMDataSet.DeviceDataTable> GetDevicesAsync()
         {
-            var devices = new WMDataSet.DeviceTableDataTable();
+            var devices = new WMDataSet.DeviceDataTable();
             var hasAccessToken = false;
             var result = new JsonDeviceSearchResult();
             ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();
@@ -112,12 +112,12 @@ namespace RealtimeViewer.Network.Http
             {
                 foreach (var device in result.data)
                 {
-                    var row = devices.NewDeviceTableRow();
+                    var row = devices.NewDeviceRow();
                     row.DeviceId = device.device_id;
                     row.CarId = device.car_id;
                     row.CarNumber = device.car_number;
                     row.OfficeId = device.office_id;
-                    devices.AddDeviceTableRow(row);
+                    devices.AddDeviceRow(row);
                 }
                 devices.AcceptChanges();
             }
@@ -125,7 +125,7 @@ namespace RealtimeViewer.Network.Http
         }
 
         public async Task<WMDataSet.EventListDataTable> GetAllEventsAsync(
-               EnumerableRowCollection<WMDataSet.DeviceTableRow> devices, 
+               EnumerableRowCollection<WMDataSet.DeviceRow> devices, 
                CancellationToken token,
                UpdateEventsProgress progress)
         {
@@ -218,7 +218,7 @@ namespace RealtimeViewer.Network.Http
         }
 
         private async Task<List<JsonMovie>> GetEventListAsync(
-                WMDataSet.DeviceTableRow device, DateTime baseDate, CancellationToken cancelToken)
+                WMDataSet.DeviceRow device, DateTime baseDate, CancellationToken cancelToken)
         {
             cancelToken.ThrowIfCancellationRequested();
             var serverInfo = ServerInfo.GetPhygicalServerInfo();
@@ -252,7 +252,7 @@ namespace RealtimeViewer.Network.Http
         }
 
         private async Task<List<JsonMovie>> GetEventListByRangeAsync(
-            WMDataSet.DeviceTableRow device, DateTime baseDate, CancellationToken cancelToken)
+            WMDataSet.DeviceRow device, DateTime baseDate, CancellationToken cancelToken)
         {
             List<JsonMovie> resultList = new List<JsonMovie>();
             ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();

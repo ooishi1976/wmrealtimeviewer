@@ -1002,12 +1002,12 @@ namespace RealtimeViewer.WMShipView
             this.tableLayoutPanelHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelHeader.Controls.Add(this.panelCarDisplayMode, 0, 0);
             this.tableLayoutPanelHeader.Controls.Add(this.comboBoxOffice, 1, 0);
             this.tableLayoutPanelHeader.Controls.Add(this.labelUserName, 5, 0);
             this.tableLayoutPanelHeader.Controls.Add(this.labelUpdateDate, 3, 0);
             this.tableLayoutPanelHeader.Controls.Add(this.labelUserNameCaption, 4, 0);
             this.tableLayoutPanelHeader.Controls.Add(this.labelUpdateDateCaption, 2, 0);
+            this.tableLayoutPanelHeader.Controls.Add(this.panelCarDisplayMode, 0, 0);
             this.tableLayoutPanelHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelHeader.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelHeader.Name = "tableLayoutPanelHeader";

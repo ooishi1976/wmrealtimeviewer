@@ -48,102 +48,12 @@ namespace RealtimeViewer.WMShipView
 
     public partial class MainForm : Form
     {
-        ///// <summary>
-        /////  サイドパネルサイズ
-        ///// </summary>
-        //private const int LEFT_PANEL_WIDTH = 240;
-
         /// <summary>
-        /// コンフィグタブ(TabPage.Name)
+        ///  サイドパネルサイズ
         /// </summary>
-        private const string TabPageConfigName = "tabPageConfig";
+        private const int LEFT_PANEL_WIDTH = 240;
 
-        /// <summary>
-        /// コンフィグタブ(TabPage.Text)
-        /// </summary>
-        private const string tabPageConfigText = "コンフィグ";
-
-        private OperationLogger OperationLogger => ViewModel.OperationLogger;
-
-        //// カスタム情報プロパティ値
-        //private CustomProperty m_customProperty = new CustomProperty();
-
-        //private MqttClient mqttClient;
-
-        //private System.Timers.Timer reconnectTimer;
-
-        /// <summary>
-        /// INIファイル情報
-        /// </summary>
-        private SettingIni LocalSettings => ViewModel.LocalSettings;
-
-        private OperationServerInfo OperationServerInfo => ViewModel.OperationServerInfo;
-
-        //private int m_SelectOfficeID = 0;  // 選択中の事業所ID
-
-        private MainViewModel ViewModel { get; set; } = new MainViewModel();
-
-        private WaitingForm m_wform;
-        //private EventAlertWindow m_alertForm;
-
-        //private RequestSequence httpSequence;
-        //private CancellationTokenSource downloadCancelTokenSource;
-        //private CancellationTokenSource eventListCancelTokenSource;
-
-        //private Dictionary<string, bool> tempPaths = new Dictionary<string, bool>();
-        //private FormMessage formMessage;
-        //private RtvIpcMessageServer messageServer;
-        private CancellationTokenSource MovieCancellationTokenSource { get; set; } = new CancellationTokenSource();
-
-        private FfmpegCtrl FfmpegCtrl { get; set; } = new FfmpegCtrl();
-        //private CancellationTokenSource gtaskCancelSource;
-        //private int streamingBeforeWaitSec;
-        //private Dictionary<string, StreamingStatus> streamingDic = new Dictionary<string, StreamingStatus>();
-
-        //private List<TopicRegex> topicRegexes = new List<TopicRegex>();  // topic用正規表現
-
-        //private int streamingPreparationSecond = 0;
-
-        /// <summary>
-        /// USB監視
-        /// </summary>
-        private DeviceWatcher deviceWatcher;
-
-        private ConfigPanel configPanel;
-        //private CarInfo emergencyCar;
-
-
-        ///// <summary>
-        ///// イベント情報のコンパレータ
-        ///// </summary>
-        //private EventInfoComparer eventComparer;
-
-        ///// <summary>
-        ///// イベントリスト用DataGridのソート列
-        ///// </summary>
-        //private DataGridViewColumn eventListSortedColumn;
-
-        ///// <summary>
-        ///// 地図登録情報のコンパレータ
-        ///// </summary>
-        //private MapEntryInfoComparer mapEntryInfoComparer;
-
-        ///// <summary>
-        ///// 車両リスト用DataGridのソート列
-        ///// </summary>
-        //private DataGridViewColumn carListSortedColumn;
-
-        ///// <summary>
-        ///// WebAPI呼び出し用のHTTPクライアントハンドラ
-        ///// </summary>
-        //private HttpClientHandler httpClientHandler;
-
-        ///// <summary>
-        ///// WebAPI呼び出し用のHTTPクライアント
-        ///// </summary>
-        //private HttpClient httpClient;
-
-        private Bitmap markerBitmap;
+        //private CountdownEvent WaitCountDown { get; set; } = new CountdownEvent(1);
 
         /// <summary>
         /// コンストラクタ
@@ -180,214 +90,6 @@ namespace RealtimeViewer.WMShipView
             if (!string.IsNullOrEmpty(deviceId))
             {
                 ViewModel.SetEmergencyMode(deviceId);
-            }
-        }
-
-        private BindingSource DeviceBindingSource { get; set; } = new BindingSource();
-
-        private BindingSource OfficeBindingSource { get; set; } = new BindingSource();
-
-        private BindingSource EventListBindingSource { get; set; } = new BindingSource();
-
-
-        private void BindViewModel()
-        {
-            // 指紋認証済み
-            // タブパネルと車両リストの操作を許可する
-            tabControlMain.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.IsUserAuthCompleted));
-            gridCarList.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.IsUserAuthCompleted));
-            // ユーザが営業所操作権があれば、操作を許可する
-            comboBoxOffice.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.IsOfficeEditable));
-
-            // ユーザ名
-            labelUserName.DataBindings.Add("Text", ViewModel, nameof(ViewModel.UserName), true, DataSourceUpdateMode.OnPropertyChanged);
-            // 初期データ取得中・・・
-            labelUpdateDate.DataBindings.Add("Text", ViewModel, nameof(ViewModel.DataUpdateDate));
-        }
-
-        private void BindEventTab()
-        {
-            // イベントリストテーブルレイアウト
-            tableLayoutPanelEventList.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.IsEnableEventTable));
-
-            // ダウンロード
-            progressBarDownload.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsDownloadingMovie));
-            labelDownloadStatus.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsDownloadingMovie));
-            
-            // イベント更新
-            progressBarEventListUpdate.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsUpdatingEventList));
-            buttonEventListUpdate.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanUpdateEvent));
-
-            // Gダウンロード/キャンセル
-            labelGstatus.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsDownloadingG));
-            progressBarG.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsDownloadingG));
-            buttonGetG.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanDownloadG));
-            buttonCancelG.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.IsDownloadingG));
-
-            // 動画再生
-            panelPlay.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.CanPlayMovie));
-            labelPanelPlayCarId.DataBindings.Add("Text", ViewModel, nameof(ViewModel.PlayDeviceName));
-            labelPanelPlayDate.DataBindings.Add("Text", ViewModel, nameof(ViewModel.PlayTimestampStr));
-            labelEventProc.DataBindings.Add("Text", ViewModel, nameof(ViewModel.PlayMessage));
-            buttonPlay1.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh1));
-            buttonPlay2.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh2));
-            buttonPlay3.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh3));
-            buttonPlay4.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh4));
-            buttonPlay5.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh5));
-            buttonPlay6.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh6));
-            buttonPlay7.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh7));
-            buttonPlay8.DataBindings.Add("Enabled", ViewModel, nameof(ViewModel.CanPlayCh8));
-            FfmpegCtrl.MovieProgress += FfmpegCtrl_MovieProgress;
-        }
-
-        private void BindDeviceDataSource()
-        {
-            // 車両リスト
-            if (0 < ViewModel.DeviceTable.Rows.Count) 
-            {
-                var currentOffice = OfficeBindingSource.Current;
-
-                DeviceBindingSource.DataSource = ViewModel.WMDataSet;
-                DeviceBindingSource.DataMember = "DeviceTable";
-                DeviceBindingSource.Filter = $"OfficeId = -1";
-                DeviceBindingSource.Sort = "DeviceId";
-                gridCarList.Enabled = true;
-                gridCarList.AutoGenerateColumns = false;
-                gridCarList.DataSource = DeviceBindingSource;
-            }
-
-            // 営業所リスト
-            if (0 < ViewModel.OfficeTable.Rows.Count) 
-            {
-                OfficeBindingSource.DataSource = ViewModel.WMDataSet;
-                OfficeBindingSource.DataMember = "OfficeTable";
-                OfficeBindingSource.Filter = "Visible = true";
-                OfficeBindingSource.Sort = "OfficeId";
-                //OfficeBindingSource.CurrentChanged += ComboBoxOffice_SelectedValueChanged;
-                comboBoxOffice.DisplayMember = "Name";
-                comboBoxOffice.ValueMember = "OfficeId";
-                comboBoxOffice.SelectedValueChanged += ComboBoxOffice_SelectedValueChanged;
-                comboBoxOffice.DataSource = OfficeBindingSource;
-            }
-        }
-
-        private void BindEventDataSource(WMDataSet.EventListDataTable eventList)
-        {
-            ViewModel.EventTable = eventList;
-            ViewModel.PlaylistTable = new WMDataSet.PlayListDataTable();
-            EventListBindingSource.DataSource = eventList;
-            EventListBindingSource.Sort = "Timestamp desc, DeviceId";
-            EventListBindingSource.Filter = "MovieType <> 2";
-            gridEventList.AutoGenerateColumns = false;
-            gridEventList.DataSource = EventListBindingSource;
-        }
-
-        private void UnbindEventDataSource()
-        {
-            gridEventList.DataSource = null;
-            ViewModel.EventTable = null;
-            ViewModel.PlaylistTable = null;
-        }
-
-        /// <summary>
-        /// 地図の初期化<br/>
-        /// <ul>
-        ///   <li>DPI変更</li>
-        ///   <li>ズームバースケール設定</li>
-        ///   <li>マウス右ボタンの回転禁止</li>
-        /// </ul>
-        /// </summary>
-        private void InitMapScale(int mappingScale)
-        {
-            PointF dpi = GetDPI();
-            mpgMap.SetDPI(dpi.X, dpi.Y);
-            //m_customProperty.Icon = new Bitmap(GetType(), "bus.png");
-            // m_customProperty.Icon = GetMarkerBitmap();  
-            mpgMap.MouseWheel += new MouseEventHandler(MpgMap_MouseWheel);
-            ChangeMapMode(MapMode.Move);
-
-            // ズームバー設定
-            zoomBar.Minimum = 0;
-            zoomBar.Maximum = ViewModel.MapScales.Length - 1;
-            zoomBar.Value = ViewModel.GetNearIndexInMapScales(mpgMap.MapScale);
-            zoomBar.TickFrequency = 1;
-            zoomBar.TickStyle = TickStyle.Both;
-
-            // マウスの右ボタンでの回転禁止
-            mpgMap.MapRotateButton = MouseButtons.None;
-            mpgMap.MapScale = mappingScale;
-        }
-
-        [DllImport("gdi32.dll")]
-        private static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
-
-        private PointF GetDPI()
-        {
-            PointF dpi = new PointF();
-            Graphics g = this.CreateGraphics();
-
-            // ★画面DPIの制御を行う。(SMDと同じ処理)
-            var hDC = g.GetHdc();
-            var horzSize = GetDeviceCaps(hDC, 4);   //  4:= HORZSIZE物理画面の幅(ミリメートル単位)
-            var vertSize = GetDeviceCaps(hDC, 6);   //  6:= VERTSIZE物理画面の高さ(ミリメートル単位)
-            var horzS = GetDeviceCaps(hDC, 8);  //  8:= HORZRES画面の幅(ピクセル単位)
-            var vertS = GetDeviceCaps(hDC, 10); // 10:= VERTRES画面の高さ(ピクセル単位)
-            g.ReleaseHdc(hDC);
-
-            dpi.X = (float)horzS * 25.4f / (float)horzSize; // (float)g.DpiX, 120.0f, 96.0f, 72.0fなど ※72dpi にするとSMDとサイズが近い。
-            dpi.Y = (float)vertS * 25.4f / (float)vertSize; // (float)g.DpiY, 120.0f, 96.0f, 72.0fなど
-            return dpi;
-        }
-
-        /// <summary>
-        /// 地図操作モードの変更を行う。
-        /// </summary>
-        /// <param name="mode"></param>
-        private void ChangeMapMode(MapMode mode)
-        {
-            // 地図モードを設定する。
-            mpgMap.MapMode = mode;
-
-            // 縮尺表示を同期する。
-            SyncMapScale(true);
-        }
-
-        /// <summary>
-        /// 現在の地図縮尺に応じてUI表示を同期させる。
-        /// </summary>
-        /// <param name="mode"></param>
-        private void SyncMapScale(bool syncZoombar)
-        {
-            if (syncZoombar)
-            {
-                zoomBar.Value = ViewModel.GetNearIndexInMapScales(mpgMap.MapScale);
-            }
-        }
-
-        private void LeftPanelHide()
-        {
-            panelLeft.Enabled = false;
-            panelLeft.Width = 0;
-            tableLayoutPanelStreamingOnCar.Visible = false;
-        }
-
-        /// <summary>
-        /// 車載器用機能パネルの有効/無効<br/>
-        /// 左パネルのタブ選択、ボタン選択。<br/>
-        /// tabPageにEnabledが無いので、<br/>
-        /// ボタンのEnabledとタブの選択イベントで対処する<br/>
-        /// WPFならば。。。。OTL
-        /// </summary>
-        /// <param name="index"></param>
-        private void SetSpecifyLayout(ServerIndex index)
-        {
-            if (ServerIndex.WeatherMedia == index)
-            {
-                buttonShowDrivingMovie.Enabled = false;
-                buttonShowRemoteSetting.Enabled = false;
-                //gridCarList.Columns[0].MinimumWidth = 100;
-                //gridCarList.Columns[0].Width = 100;
-                //tabControlRtSelect.Selecting += TabControlRtSelect_Selecting;
             }
         }
 
@@ -463,7 +165,8 @@ namespace RealtimeViewer.WMShipView
             ViewModel.CreateRequestController();
 
             // MQTTサーバー接続
-            ViewModel.AddLocationHandler(OnLocationReceived);
+            ViewModel.AddMqttReceivedHandler<MqttJsonLocation>(OnLocationReceived);
+            ViewModel.AddMqttReceivedHandler<MqttJsonError>(OnErrorReceived);
             ViewModel.ConnectMqttServer();
 
             // 地図描画
@@ -489,11 +192,10 @@ namespace RealtimeViewer.WMShipView
                 var devices = await ViewModel.GetDevicesAsync();
                 SetDevices(devices);
 
-                //var events = await ViewModel.GetEventsAsync(3);
-
                 Invoke((MethodInvoker)(() =>
                 {
                     BindDeviceDataSource();
+                    DrawMapEntries();
                     timerGPSDraw.Start();
                 }));
             });
@@ -513,10 +215,8 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void timerGPSDraw_Tick(object sender, EventArgs e)
         {
-            var arrayList = new ArrayList();
-            var list = CreateMapEntries();
-            arrayList.AddRange(list);
-            mpgMap.SetCustomData(arrayList);
+            DrawMapEntries();
+            ViewModel.DataUpdateDate = DateTime.Now;
         }
 
         /// <summary>
@@ -524,8 +224,30 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CarListBindingSource_CurrentChanged(object sender, EventArgs e)
+        private void DeviceBindingSource_CurrentChanged(object sender, EventArgs e)
         {
+            if (DeviceBindingSource.Current is DataRowView rowView &&
+                rowView.Row is WMDataSet.DeviceRow device)
+            {
+                ViewModel.SelectedDeviceId = device.DeviceId;
+                ViewModel.SelectedDevice = device;
+                ViewModel.SelectedDeviceError = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+            }
+            else
+            {
+                ViewModel.SelectedDeviceId = string.Empty;
+                ViewModel.SelectedDevice = default;
+                ViewModel.SelectedDeviceError = default;
+            }
+
+
+            if (ViewModel.IsDeviceFocus)
+            {
+                timerGPSDraw.Stop();
+                MoveToDeviceLocation();
+                DrawMapEntries();
+                timerGPSDraw.Start();
+            }
         }
 
         /// <summary>
@@ -535,6 +257,23 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void GridCarList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            //var deviceId = ViewModel.SelectedDeviceId;
+            LeftPanelShow();
+            //if (!string.IsNullOrEmpty(deviceId))
+            //{
+            //    var deviceRow = ViewModel.DeviceTable.FirstOrDefault(item => item.DeviceId == deviceId);
+            //    var errorRow = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == deviceId);
+            //    if (deviceRow is WMDataSet.DeviceRow device &&
+            //        device.TryGetLocation(out var location))
+            //    {
+            //        var errorCode = 0;
+            //        if (errorRow is WMDataSet.ErrorRow error)
+            //        {
+            //            errorCode = error.GetCode();
+            //        }
+            //        LeftPanelShow(deviceId, errorCode);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -556,6 +295,16 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void RadioButtonSelect_CheckedChanged(object sender, EventArgs e)
         {
+            if (sender is RadioButton radio) 
+            {
+                ViewModel.IsDeviceFocus = radio.Checked;
+            }
+
+            if (ViewModel.IsDeviceFocus)
+            {
+                MoveToDeviceLocation();
+            }
+            DrawMapEntries();
         }
 
         /// <summary>
@@ -570,77 +319,6 @@ namespace RealtimeViewer.WMShipView
 #endregion フォームイベント処理
 
 #region 地図コントロールイベント処理
-        /// <summary>
-        /// 運行車両情報の地図オブジェクトを作成する。
-        /// </summary>
-        /// <param name="carInfo">車両情報</param>
-        /// <returns></returns>
-        private List<TextObject> CreateMapEntries()
-        {
-            var result = new List<TextObject>();
-            var target = ViewModel.DeviceTable.Where(item => item.OfficeId == ViewModel.SelectedOfficeId);
-            if (target.Any())
-            {
-                foreach (var device in target)
-                {
-                    if (string.IsNullOrEmpty(device.Latitude) || string.IsNullOrEmpty(device.Longitude))
-                    {
-                        continue;
-                    }
-
-                    PointLL center = MapUtils.ConvertJdgToTky(device.Latitude, device.Longitude);
-
-                    TextObject entryObject = new TextObject
-                    {
-                        Title = device.CarNumber,
-                        TitleFont = new Font("Meiryo UI", 9),
-                        CommentFont = new Font("Meiryo UI", 9),
-                        pen = new Pen(Color.Orange, 1),
-                        brush = new SolidBrush(Color.White),
-                        TextColor = Color.Black
-                    };
-
-                    // TODO: エラー
-                    //result.ErrorCode = 0;
-                    //result.ErrorMessage = DeviceErrorCode.MakeErrorMessage(result.ErrorCode);  // 「正常」で初期化
-                    //if (carInfo.ErrorCode != null)
-                    //{
-                    //    result.ErrorCode = carInfo.ErrorCode.GetErrorCode();
-                    //    result.ErrorMessage = DeviceErrorCode.MakeErrorMessage(carInfo.ErrorCode.GetErrorCode());
-                    //    if (result.ErrorCode != 0)
-                    //    {
-                    //        entryObject.brush = new SolidBrush(DeviceErrorCode.GetBackgroundColor(carInfo.ErrorCode.GetErrorCode()));
-                    //        entryObject.Comment = result.ErrorMessage;
-                    //    }
-                    //}
-
-                    // 座標を設定する
-                    entryObject.Point = center;
-                    // 原点の描画を設定する
-                    entryObject.OriginStyle = MpgCustomEnum.OriginStyleEnum.Icon;
-
-                    //  テキスト表示
-                    entryObject.BallonStyle = MpgCustomEnum.BallonStyleEnum.TitleAndComment;
-                    entryObject.TextZoom = 2.0f;
-
-                    // アイコン
-                    entryObject.Icon = Properties.Resources.shipBmp;
-                    entryObject.IconZoom = MpgCustomEnum.IconZoomLevelEnum.Level2; // アイコン拡大率
-
-                    // 予め決めた円周上に配置する
-                    //entryObject.Offset = ViewModel.GetRandomBalloonOffset();
-                    entryObject.Offset = new Point(0, -50);
-
-
-                    //  車両ID情報追加
-                    entryObject.ID = device.DeviceId;
-                    result.Add(entryObject);
-                }
-
-            }
-            return result;
-        }
-
 
 
         /// <summary>
@@ -685,47 +363,6 @@ namespace RealtimeViewer.WMShipView
 #endregion 地図コントロールイベント処理
 
 #region イベントタブ イベント
-        private void ReadyToPlay(WMDataSet.EventListRow row)
-        {
-            var playlist = ViewModel.PlaylistTable.Where(
-                content => (content.DeviceId == row.DeviceId && content.Timestamp == row.Timestamp));
-            if (playlist.Any()) 
-            {
-                ViewModel.PlayDeviceId = row.DeviceId;
-                ViewModel.PlayDeviceName = row.CarNumber;
-                ViewModel.PlayTimestamp = row.Timestamp;
-                for (var i = 0; i < 8; i++)
-                {
-                    var canPlay = true;
-                    if (playlist.FirstOrDefault(item => item.Ch == i) is null) 
-                    {
-                        canPlay = false;
-                    }
-                    ViewModel.SetCanPlayMovies(i, canPlay);
-                }
-            }
-            else
-            {
-                ViewModel.PlayDeviceName = string.Empty;
-                ViewModel.PlayTimestamp = DateTime.MinValue;
-                for (var i = 0; i < 8; i++)
-                {
-                    ViewModel.SetCanPlayMovies(i, false);
-                }
-            }
-        }
-
-        private void PlayffmpegControl(
-            int ch, string filepath, string audioFilePath, string windowTitle, int windowHeight, int fps)
-        {
-            MovieCancellationTokenSource?.Cancel();
-            MovieCancellationTokenSource = new CancellationTokenSource();
-            Task.Run(async () => 
-            {
-                await FfmpegCtrl.PlayMovieAsync(ch, filepath, audioFilePath, fps, MovieCancellationTokenSource.Token);
-            });
-        }
-
         private void GridEventList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
         }
@@ -763,6 +400,12 @@ namespace RealtimeViewer.WMShipView
 
         private void buttonLeftPanelClose_Click(object sender, EventArgs e)
         {
+            LeftPanelHide();
+            // TODO 
+            //if (!isStreaming)
+            //{
+            //    LeftPanelHide();
+            //}
         }
 
 #region "リアルタイム再生関係"
@@ -1000,37 +643,393 @@ namespace RealtimeViewer.WMShipView
             configPanel.DataModel.LoadConfigData();
         }
 
-        #endregion 拡張設定
+#endregion 拡張設定
 
-        #region サーバ情報取得
+
         /// <summary>
-        /// サーバー情報取得<br/>
-        /// Iniファイルにサーバー情報の定義がある場合、<br/>
-        /// そちらを優先する。
-        /// ・ServerIndex -> 内部リストからサーバ情報を取得する。<br/>
-        /// ・RestServer, MqttServer, AccessId, AccessPassword<br/>
-        ///     -> ４つの情報が存在する場合、これらを返す
-        /// ・未設定 -> ユーザプロパティのServerIndexから取得する
+        /// タブ選択イベント
         /// </summary>
-        /// <returns>サーバー情報</returns>
-        private OperationServerInfo GetServerInfo()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabControlMain_Selected(object sender, TabControlEventArgs e)
         {
-            OperationServerInfo result;
-            try
+            if (!IsEventTabBinded) 
             {
-                ServerIndex serverIndex = (ServerIndex)Enum.ToObject(typeof(ServerIndex), LocalSettings.ServerIndex);
-                result = LocalSettings.AllowedServers.FirstOrDefault(x => x.Id == serverIndex);
-                if (result == null)
+                BindEventTab();
+                IsEventTabBinded = true;
+            }
+        }
+
+        /// <summary>
+        /// イベントリストのセル値変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridEventList_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (sender is DataGridView dataGrid && e.ColumnIndex == 0)
+            {
+                for (var i = 0; i < dataGrid.Rows.Count; i++)
                 {
-                    result = LocalSettings.AllowedServers[0];
+                    if (i != e.RowIndex)
+                    {
+                        dataGrid.Rows[i].Cells[e.ColumnIndex].Value = false;
+                    }
                 }
             }
-            catch (Exception)
-            {
-                result = LocalSettings.AllowedServers[0];
-            }
-            return result;
         }
-        #endregion サーバ情報取得
+
+        /// <summary>
+        /// イベントリストセル値変更確定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridEventList_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (sender is DataGridView dataGrid &&
+                dataGrid.IsCurrentCellDirty)
+            {
+                dataGrid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        /// <summary>
+        /// 営業所選択変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxOffice_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (sender is ComboBox comboBox &&
+                int.TryParse($"{comboBox.SelectedValue}", out var officeId))
+            {
+                ViewModel.SelectedOfficeId = officeId;
+                CancellationTokenSource?.Cancel();
+                // 車両リストの更新
+                CancellationTokenSource = new CancellationTokenSource();
+                DeviceBindingSource.Filter = $"OfficeId = {officeId}";
+
+                MoveToOfficeLocation();
+                if (ViewModel.IsDeviceFocus)
+                {
+                    MoveToDeviceLocation();
+                }
+
+                // イベントリストの更新
+                UnbindEventDataSource();
+
+                Task.Run(async () =>
+                {
+                    ViewModel.IsUpdatingEventList = true;
+                    try
+                    {
+                        var eventList = await ViewModel.GetEventsAsync(officeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
+                        {
+                            this.Invoke((MethodInvoker)(() => {
+                                if (isCompleted)
+                                {
+                                    progressBarEventListUpdate.Visible = false;
+                                } 
+                                else
+                                {
+                                    progressBarEventListUpdate.Value = now;
+                                    progressBarEventListUpdate.Maximum = total;
+                                    progressBarEventListUpdate.Visible = true;
+                                }
+                            }));
+                        });
+
+                        this.Invoke((MethodInvoker)(() => 
+                        { 
+                            BindEventDataSource(eventList);
+                        }));
+                    }
+                    finally
+                    {
+                        ViewModel.IsUpdatingEventList = false;
+                    }
+                }, CancellationTokenSource.Token);
+            }
+        }
+
+        /// <summary>
+        /// ダウンロードボタンクリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDownload_Click(object sender, EventArgs e)
+        {
+            //  閲覧権限あり
+            if (ViewModel.IsBrowsable &&
+                EventListBindingSource.Current is DataRowView rowView &&
+                rowView.Row is WMDataSet.EventListRow row)
+            {
+                CancellationTokenSource?.Cancel();
+                // 車両リストの更新
+                CancellationTokenSource = new CancellationTokenSource();
+
+                Task.Run(async () =>
+                {
+                    ViewModel.IsDownloadingMovie = true;
+                    try
+                    {
+                        var movies = await ViewModel.EventListDownloadAsync(row, CancellationTokenSource.Token);
+                        if (movies.Result == 0)  // 正常
+                        {
+                            var playlist = ViewModel.PlaylistTable;
+                            row.ExtractFilePath = movies.UnzippedPath;
+                            foreach (var keyValue in movies.chFile)
+                            {
+                                var playChannel = playlist.NewPlayListRow();
+                                playChannel.Timestamp = row.Timestamp;
+                                playChannel.DeviceId = row.DeviceId;
+                                playChannel.Ch = keyValue.Key;
+                                playChannel.FilePath = keyValue.Value;
+                                playlist.AddPlayListRow(playChannel);
+                            }
+                            playlist.AcceptChanges();
+                        }
+                        else
+                        {
+                            row.ExtractFilePath = string.Empty;
+                        }
+
+                        // 画面に反映
+                        Invoke((MethodInvoker)(() => 
+                        { 
+                            ReadyToPlay(row);
+                        }));
+                    }
+                    finally
+                    {
+                        ViewModel.IsDownloadingMovie = false;
+                    }
+                }, CancellationTokenSource.Token);
+            }
+            else
+            {
+                MessageBox.Show("閲覧する権限がありません", "確認", MessageBoxButtons.OK
+                                   , MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            }
+        }
+
+        /// <summary>
+        /// イベント更新ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonEventListUpdate_Click(object sender, EventArgs e)
+        {
+            CancellationTokenSource?.Cancel();
+
+            // イベントリストの更新
+            CancellationTokenSource = new CancellationTokenSource();
+            UnbindEventDataSource();
+
+            Task.Run(async () =>
+            {
+                ViewModel.IsUpdatingEventList = true;
+                try
+                {
+                    var eventList = await ViewModel.GetEventsAsync(ViewModel.SelectedOfficeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
+                    {
+                        Invoke((MethodInvoker)(() => {
+                            if (isCompleted)
+                            {
+                                progressBarEventListUpdate.Visible = false;
+                            } 
+                            else
+                            {
+                                progressBarEventListUpdate.Value = now;
+                                progressBarEventListUpdate.Maximum = total;
+                                progressBarEventListUpdate.Visible = true;
+                            }
+                        }));
+                    });
+
+                    Invoke((MethodInvoker)(() => 
+                    { 
+                        BindEventDataSource(eventList);
+                    }));
+                }
+                finally
+                {
+                    ViewModel.IsUpdatingEventList = false;
+                }
+            }, CancellationTokenSource.Token);
+        }
+
+        /// <summary>
+        /// G取得
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonGetG_Click(object sender, EventArgs e)
+        {
+            CancellationTokenSource?.Cancel();
+            CancellationTokenSource = new CancellationTokenSource();
+            Task.Run(async () =>
+            {
+                ViewModel.IsDownloadingG = true;
+                try
+                {
+                    await ViewModel.GetGravityAsync(CancellationTokenSource.Token, (now, total, isCompleted) =>
+                    {
+                        Invoke((MethodInvoker)(() => {
+                            if (isCompleted)
+                            {
+                                //progressBarG.Visible = false;
+                            } 
+                            else
+                            {
+                                progressBarG.Value = now;
+                                progressBarG.Maximum = total;
+                                //progressBarG.Visible = true;
+                                labelGstatus.Text = $"取得 {now} / {total} 件";
+                            }
+                        }));
+
+                    });
+                }
+                finally
+                {
+                    ViewModel.IsDownloadingG = false;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Gキャンセル
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCancelG_Click(object sender, EventArgs e)
+        {
+            CancellationTokenSource?.Cancel();
+        }
+
+        /// <summary>
+        /// 再生ボタン1～8
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonPlay_Click(object sender, EventArgs e)
+        {
+            var pattern = @"^buttonPlay(?<ch>\d)$";
+            if (sender is Button button && Regex.IsMatch(button.Name, pattern))
+            { 
+                var match = Regex.Match(button.Name, pattern);
+                if (match.Success && int.TryParse(match.Groups["ch"].Value, out var channel)) 
+                {
+                    channel -= 1;
+                    var playlist = ViewModel.GetPlaylist();
+                    var audio = playlist.FirstOrDefault(item => item.Ch == RealtimeViewer.Model.EventInfo.AUDIO_CHANNEL_BASE);
+                    var movie = playlist.FirstOrDefault(item => item.Ch == channel);
+
+                    var title = $"Event {ViewModel.PlayDeviceId} | {ViewModel.PlayTimestampStr} | Ch{channel}";
+                    ViewModel.OperationLogger.Out(OperationLogger.Category.EventData, ViewModel.AuthedUser.Name, $"Play {title}");
+                    var fps = 15;
+                    if (4 < channel)
+                    {
+                        fps = 10; // for Analog.
+                    }
+                    PlayffmpegControl(channel, movie.FilePath, audio.FilePath, title, 480, fps);
+                }
+            }
+        }
+
+        #region Class Handlers
+        /// <summary>
+        /// プリポスト動画再生準備進捗
+        /// </summary>
+        /// <param name="progress"></param>
+        private void FfmpegCtrl_MovieProgress(PlayMovieProgress progress)
+        {
+            var msg = string.Empty;
+            if (PlayMovieStatus.PreProcess == progress.PlayMovieStatus)
+            {
+                msg = @"準備中です...";
+            }
+
+            Invoke((MethodInvoker)(() =>
+            {
+                ViewModel.PlayMessage = msg;
+            }));
+        }
+
+        /// <summary>
+        /// MQTT位置情報受信
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLocationReceived(object sender, MqttMessageEventArgs<MqttJsonLocation> e)
+        {
+            try
+            {
+                var deviceTable = ViewModel.DeviceTable;
+                var message = e.DeserializeMessage();
+                var row = deviceTable.FirstOrDefault(item => item.DeviceId == message.Device_id);
+                if (row is WMDataSet.DeviceRow device)
+                {
+                    Invoke((MethodInvoker)(() => 
+                    { 
+                        device.Longitude = message.Lon;
+                        device.Latitude = message.Lat;
+                        device.AcceptChanges();
+                        //deviceTable.AcceptChanges();
+                    }));
+
+                }
+            }
+            catch (Exception) 
+            {
+                // 処理なし
+            }
+        }
+
+        private void OnErrorReceived(object sender, MqttMessageEventArgs<MqttJsonError> e)
+        {
+            var message = e.DeserializeMessage();
+            try
+            {
+                var errors = ViewModel.ErrorTable;
+                var row = errors.FirstOrDefault(item => item.DeviceId == message.DeviceId);
+                WMDataSet.ErrorRow error;
+                if (row is WMDataSet.ErrorRow)
+                {
+                    // 更新
+                    error = (WMDataSet.ErrorRow)row;
+                    error.AcceptChanges();
+                }
+                else
+                {
+                    error = errors.NewErrorRow();
+                    error.DeviceId = message.DeviceId;
+                    errors.AddErrorRow(error);
+                }
+                error.Timestamp = string.IsNullOrEmpty(message.Ts) ? string.Empty : message.Ts;
+                error.SdFree = string.IsNullOrEmpty(message.SdFree) ? string.Empty : message.SdFree;
+                error.SsdFree = string.IsNullOrEmpty(message.SsdFree) ? string.Empty : message.SsdFree;
+                error.IccId = string.IsNullOrEmpty(message.IccId) ? string.Empty : message.IccId;
+                error.Error = string.IsNullOrEmpty(message.Error) ? string.Empty : message.Error;
+                error.ErrorStr = error.GetMessage();
+                error.Version = string.Empty;
+                errors.AcceptChanges();
+            }
+            catch (Exception) { }
+        }
+
+        private void OnAccOnReceived(object sender, MqttMessageEventArgs<MqttJsonEventAccOn> e)
+        {
+
+        }
+
+        private void OnPrepostReceived(object sender, MqttMessageEventArgs<MqttJsonPrepostEvent> e)
+        {
+
+        }
+        #endregion
+
+
     }
 }

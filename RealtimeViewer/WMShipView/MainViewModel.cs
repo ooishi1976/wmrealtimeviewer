@@ -30,8 +30,6 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         private UserIndex UserIndex { get; set; } = UserIndex.Tobu;
 
-
-
         public OperationLogger OperationLogger { get; private set; }
 
         /// <summary>
@@ -46,29 +44,13 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         public int[] MapScales { get; private set; }
 
-        public Point[] BalloonOffsets;
-
-        public Random Random { get; private set; }
-
-        /// <summary>
-        /// 地図に描画しているオブジェクト(管理用)
-        /// </summary>
-        public Dictionary<string, MapEntryInfo> MapEntries { get; set; }
-
-        /// <summary>
-        /// 地図に描画しているオブジェクト(描画用)
-        /// </summary>
-        public ArrayList MapEntriesForMpgMap { get; set; }
-
-        public SortableBindingList<MapEntryInfo> BindingCarList { get; set; }
-
-        public SortableBindingList<CarInfo> RecieveErrorList { get; set; }
-
         public WMDataSet WMDataSet { get; private set; } = new WMDataSet();
 
-        public WMShipView.WMDataSet.OfficeTableDataTable OfficeTable => WMDataSet.OfficeTable;
+        public WMShipView.WMDataSet.OfficeDataTable OfficeTable => WMDataSet.Office;
 
-        public WMShipView.WMDataSet.DeviceTableDataTable DeviceTable => WMDataSet.DeviceTable;
+        public WMShipView.WMDataSet.DeviceDataTable DeviceTable => WMDataSet.Device;
+
+        public WMShipView.WMDataSet.ErrorDataTable ErrorTable => WMDataSet.Error;
 
         public WMShipView.WMDataSet.EventListDataTable EventTable { get; set; } = new WMDataSet.EventListDataTable();
 
@@ -192,14 +174,9 @@ namespace RealtimeViewer.WMShipView
 
         #region HTTP
         /// <summary>
-        /// WebAPI呼び出し用のHTTPクライアントハンドラ
-        /// </summary>
-        private HttpClientHandler httpClientHandler;
-
-        /// <summary>
         /// WebAPI呼び出し用のHTTPクライアント
         /// </summary>
-        private HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new HttpClient();
 
         private RequestSequence RequestController { get; set; }
 
@@ -210,11 +187,93 @@ namespace RealtimeViewer.WMShipView
         #region データ
         public CancellationTokenSource CancellationTokenSource { get; private set; } = null;
 
+        private bool isDeviceFocus = false;
+        public bool IsDeviceFocus
+        {
+            get => isDeviceFocus;
+            set => SetProperty(ref isDeviceFocus, value);
+        }
+
         private int selectedOfficeId = -1;
+        /// <summary>
+        /// 選択営業所
+        /// </summary>
         public int SelectedOfficeId
         {
             get => selectedOfficeId;
             set => SetProperty(ref selectedOfficeId, value);
+        }
+
+        private string selectedDeviceId = string.Empty;
+        /// <summary>
+        /// 選択車両
+        /// </summary>
+        public string SelectedDeviceId
+        {
+            get => selectedDeviceId;
+            set => SetProperty(ref selectedDeviceId, value);
+        }
+
+        public string SelectedDeviceName => (SelectedDevice is null) ? string.Empty : SelectedDevice.CarId;
+
+        public string SelectedDeviceErrorStr 
+        {
+            get
+            {
+                var result = string.Empty;
+                if (SelectedDevice != null)
+                {
+                    if (SelectedDeviceError != null)
+                    {
+                        result = SelectedDeviceError.ErrorStr;
+                    }
+                    else if (SelectedDevice.TryGetLocation(out var _))
+                    {
+                        result = "正常";
+                    }
+                    else
+                    {
+                        result = string.Empty;
+                    }
+                }
+                return result;
+            }
+        }
+
+        public Color SelectedDeviceBackColor
+        {
+            get
+            {
+                var result = Color.Gray;
+                if (SelectedDevice != null && SelectedDevice.TryGetLocation(out var _)) 
+                {
+                    result = Color.CornflowerBlue;
+                }
+                return result;
+            }
+        }
+
+        private WMDataSet.DeviceRow selectedDevice;
+        public WMDataSet.DeviceRow SelectedDevice
+        {
+            get => selectedDevice;
+            set
+            {
+                SetProperty(ref selectedDevice, value);
+                NotifyPropertyChanged(nameof(SelectedDeviceName));
+                NotifyPropertyChanged(nameof(SelectedDeviceBackColor));
+            }
+        }
+
+        private WMDataSet.ErrorRow selectedDeviceError;
+        public WMDataSet.ErrorRow SelectedDeviceError
+        {
+            get => selectedDeviceError;
+            set
+            {
+                SetProperty(ref selectedDeviceError, value);
+                NotifyPropertyChanged(nameof(SelectedDeviceErrorStr));
+            }
         }
 
         private DateTime dataUpdateDate = DateTime.Now;
@@ -362,24 +421,22 @@ namespace RealtimeViewer.WMShipView
                 1000000, 2500000, 5000000,
             };
 
-            const int OFFSET_COUNT = 64;
-            const int OFFSET_R = 64;
-            var p = new List<System.Drawing.Point>();
-            for (var n = 0; n < OFFSET_COUNT; n++)
-            {
-                var x = OFFSET_R * Math.Cos(n * 2 * Math.PI / OFFSET_COUNT);
-                var y = OFFSET_R * Math.Sin(n * 2 * Math.PI / OFFSET_COUNT);
-                p.Add(new System.Drawing.Point((int)(x + 0.5), (int)(y + 0.5)));
-            }
-            BalloonOffsets = p.ToArray();
+            //const int OFFSET_COUNT = 64;
+            //const int OFFSET_R = 64;
+            //var p = new List<System.Drawing.Point>();
+            //for (var n = 0; n < OFFSET_COUNT; n++)
+            //{
+            //    var x = OFFSET_R * Math.Cos(n * 2 * Math.PI / OFFSET_COUNT);
+            //    var y = OFFSET_R * Math.Sin(n * 2 * Math.PI / OFFSET_COUNT);
+            //    p.Add(new System.Drawing.Point((int)(x + 0.5), (int)(y + 0.5)));
+            //}
+            //BalloonOffsets = p.ToArray();
 
-            Random = new Random();
-            MapEntries = new Dictionary<string, MapEntryInfo>();
-            MapEntriesForMpgMap = new ArrayList();
-            RecieveErrorList = new SortableBindingList<CarInfo>();
-            BindingCarList = new SortableBindingList<MapEntryInfo>();
-
-
+            //Random = new Random();
+            //MapEntries = new Dictionary<string, MapEntryInfo>();
+            //MapEntriesForMpgMap = new ArrayList();
+            //RecieveErrorList = new SortableBindingList<CarInfo>();
+            //BindingCarList = new SortableBindingList<MapEntryInfo>();
         }
 
         /// <summary>
@@ -427,17 +484,23 @@ namespace RealtimeViewer.WMShipView
             MqttController.DisposeMQTTServer();
         }
 
-        public void AddLocationHandler(MqttMessageHandler<MqttJsonLocation> handler) => MqttController.AddLocationHandler(handler);
+        public void AddMqttReceivedHandler<T>(MqttMessageHandler<T> handler)
+        {
+            MqttController.AddReceivedHandler(handler);
+        }
 
-        public void RemoveLocationHandler(MqttMessageHandler<MqttJsonLocation> handler) => MqttController.RemoveLocationHandler(handler);
+        public void RemoveLocationHandler<T>(MqttMessageHandler<T> handler)
+        {
+            MqttController.AddReceivedHandler(handler);
+        }
         #endregion
 
-        public async Task<WMDataSet.OfficeTableDataTable> GetOfficesAsync()
+        public async Task<WMDataSet.OfficeDataTable> GetOfficesAsync()
         {
             return await RequestController.GetOfficesAsync(LocalSettings.ExcludeOfficeId);
         }
 
-        public async Task<WMDataSet.DeviceTableDataTable> GetDevicesAsync()
+        public async Task<WMDataSet.DeviceDataTable> GetDevicesAsync()
         {
             return await RequestController.GetDevicesAsync();
         }
@@ -516,10 +579,10 @@ namespace RealtimeViewer.WMShipView
             return result;
         }
 
-        public Point GetRandomBalloonOffset()
-        {
-            return BalloonOffsets[Random.Next(BalloonOffsets.Length)];
-        }
+        //public Point GetRandomBalloonOffset()
+        //{
+        //    return BalloonOffsets[Random.Next(BalloonOffsets.Length)];
+        //}
 
         public Icon GetMarkerIcon()
         {

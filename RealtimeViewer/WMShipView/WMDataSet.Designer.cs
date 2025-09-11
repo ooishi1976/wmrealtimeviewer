@@ -24,17 +24,21 @@ namespace RealtimeViewer.WMShipView {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class WMDataSet : global::System.Data.DataSet {
         
-        private OfficeTableDataTable tableOfficeTable;
+        private OfficeDataTable tableOffice;
         
-        private DeviceTableDataTable tableDeviceTable;
+        private DeviceDataTable tableDevice;
         
         private EventListDataTable tableEventList;
         
         private PlayListDataTable tablePlayList;
         
+        private ErrorDataTable tableError;
+        
         private global::System.Data.DataRelation relationOfficeTable_DeviceTable;
         
         private global::System.Data.DataRelation relationEventList_PlayList;
+        
+        private global::System.Data.DataRelation relationDeviceTable_Error;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -64,17 +68,20 @@ namespace RealtimeViewer.WMShipView {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["OfficeTable"] != null)) {
-                    base.Tables.Add(new OfficeTableDataTable(ds.Tables["OfficeTable"]));
+                if ((ds.Tables["Office"] != null)) {
+                    base.Tables.Add(new OfficeDataTable(ds.Tables["Office"]));
                 }
-                if ((ds.Tables["DeviceTable"] != null)) {
-                    base.Tables.Add(new DeviceTableDataTable(ds.Tables["DeviceTable"]));
+                if ((ds.Tables["Device"] != null)) {
+                    base.Tables.Add(new DeviceDataTable(ds.Tables["Device"]));
                 }
                 if ((ds.Tables["EventList"] != null)) {
                     base.Tables.Add(new EventListDataTable(ds.Tables["EventList"]));
                 }
                 if ((ds.Tables["PlayList"] != null)) {
                     base.Tables.Add(new PlayListDataTable(ds.Tables["PlayList"]));
+                }
+                if ((ds.Tables["Error"] != null)) {
+                    base.Tables.Add(new ErrorDataTable(ds.Tables["Error"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -98,9 +105,9 @@ namespace RealtimeViewer.WMShipView {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public OfficeTableDataTable OfficeTable {
+        public OfficeDataTable Office {
             get {
-                return this.tableOfficeTable;
+                return this.tableOffice;
             }
         }
         
@@ -108,9 +115,9 @@ namespace RealtimeViewer.WMShipView {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public DeviceTableDataTable DeviceTable {
+        public DeviceDataTable Device {
             get {
-                return this.tableDeviceTable;
+                return this.tableDevice;
             }
         }
         
@@ -131,6 +138,16 @@ namespace RealtimeViewer.WMShipView {
         public PlayListDataTable PlayList {
             get {
                 return this.tablePlayList;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ErrorDataTable Error {
+            get {
+                return this.tableError;
             }
         }
         
@@ -201,17 +218,20 @@ namespace RealtimeViewer.WMShipView {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["OfficeTable"] != null)) {
-                    base.Tables.Add(new OfficeTableDataTable(ds.Tables["OfficeTable"]));
+                if ((ds.Tables["Office"] != null)) {
+                    base.Tables.Add(new OfficeDataTable(ds.Tables["Office"]));
                 }
-                if ((ds.Tables["DeviceTable"] != null)) {
-                    base.Tables.Add(new DeviceTableDataTable(ds.Tables["DeviceTable"]));
+                if ((ds.Tables["Device"] != null)) {
+                    base.Tables.Add(new DeviceDataTable(ds.Tables["Device"]));
                 }
                 if ((ds.Tables["EventList"] != null)) {
                     base.Tables.Add(new EventListDataTable(ds.Tables["EventList"]));
                 }
                 if ((ds.Tables["PlayList"] != null)) {
                     base.Tables.Add(new PlayListDataTable(ds.Tables["PlayList"]));
+                }
+                if ((ds.Tables["Error"] != null)) {
+                    base.Tables.Add(new ErrorDataTable(ds.Tables["Error"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -246,16 +266,16 @@ namespace RealtimeViewer.WMShipView {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableOfficeTable = ((OfficeTableDataTable)(base.Tables["OfficeTable"]));
+            this.tableOffice = ((OfficeDataTable)(base.Tables["Office"]));
             if ((initTable == true)) {
-                if ((this.tableOfficeTable != null)) {
-                    this.tableOfficeTable.InitVars();
+                if ((this.tableOffice != null)) {
+                    this.tableOffice.InitVars();
                 }
             }
-            this.tableDeviceTable = ((DeviceTableDataTable)(base.Tables["DeviceTable"]));
+            this.tableDevice = ((DeviceDataTable)(base.Tables["Device"]));
             if ((initTable == true)) {
-                if ((this.tableDeviceTable != null)) {
-                    this.tableDeviceTable.InitVars();
+                if ((this.tableDevice != null)) {
+                    this.tableDevice.InitVars();
                 }
             }
             this.tableEventList = ((EventListDataTable)(base.Tables["EventList"]));
@@ -270,8 +290,15 @@ namespace RealtimeViewer.WMShipView {
                     this.tablePlayList.InitVars();
                 }
             }
+            this.tableError = ((ErrorDataTable)(base.Tables["Error"]));
+            if ((initTable == true)) {
+                if ((this.tableError != null)) {
+                    this.tableError.InitVars();
+                }
+            }
             this.relationOfficeTable_DeviceTable = this.Relations["OfficeTable_DeviceTable"];
             this.relationEventList_PlayList = this.Relations["EventList_PlayList"];
+            this.relationDeviceTable_Error = this.Relations["DeviceTable_Error"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -282,17 +309,19 @@ namespace RealtimeViewer.WMShipView {
             this.Namespace = "http://tempuri.org/DataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableOfficeTable = new OfficeTableDataTable();
-            base.Tables.Add(this.tableOfficeTable);
-            this.tableDeviceTable = new DeviceTableDataTable();
-            base.Tables.Add(this.tableDeviceTable);
+            this.tableOffice = new OfficeDataTable();
+            base.Tables.Add(this.tableOffice);
+            this.tableDevice = new DeviceDataTable();
+            base.Tables.Add(this.tableDevice);
             this.tableEventList = new EventListDataTable();
             base.Tables.Add(this.tableEventList);
             this.tablePlayList = new PlayListDataTable();
             base.Tables.Add(this.tablePlayList);
+            this.tableError = new ErrorDataTable();
+            base.Tables.Add(this.tableError);
             this.relationOfficeTable_DeviceTable = new global::System.Data.DataRelation("OfficeTable_DeviceTable", new global::System.Data.DataColumn[] {
-                        this.tableOfficeTable.OfficeIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDeviceTable.OfficeIdColumn}, false);
+                        this.tableOffice.OfficeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDevice.OfficeIdColumn}, false);
             this.Relations.Add(this.relationOfficeTable_DeviceTable);
             this.relationEventList_PlayList = new global::System.Data.DataRelation("EventList_PlayList", new global::System.Data.DataColumn[] {
                         this.tableEventList.TimestampColumn,
@@ -300,17 +329,21 @@ namespace RealtimeViewer.WMShipView {
                         this.tablePlayList.TimestampColumn,
                         this.tablePlayList.DeviceIdColumn}, false);
             this.Relations.Add(this.relationEventList_PlayList);
+            this.relationDeviceTable_Error = new global::System.Data.DataRelation("DeviceTable_Error", new global::System.Data.DataColumn[] {
+                        this.tableDevice.DeviceIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableError.DeviceIdColumn}, false);
+            this.Relations.Add(this.relationDeviceTable_Error);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializeOfficeTable() {
+        private bool ShouldSerializeOffice() {
             return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializeDeviceTable() {
+        private bool ShouldSerializeDevice() {
             return false;
         }
         
@@ -323,6 +356,12 @@ namespace RealtimeViewer.WMShipView {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private bool ShouldSerializePlayList() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        private bool ShouldSerializeError() {
             return false;
         }
         
@@ -382,10 +421,10 @@ namespace RealtimeViewer.WMShipView {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void OfficeTableRowChangeEventHandler(object sender, OfficeTableRowChangeEvent e);
+        public delegate void OfficeRowChangeEventHandler(object sender, OfficeRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void DeviceTableRowChangeEventHandler(object sender, DeviceTableRowChangeEvent e);
+        public delegate void DeviceRowChangeEventHandler(object sender, DeviceRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public delegate void EventListRowChangeEventHandler(object sender, EventListRowChangeEvent e);
@@ -393,12 +432,15 @@ namespace RealtimeViewer.WMShipView {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public delegate void PlayListRowChangeEventHandler(object sender, PlayListRowChangeEvent e);
         
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        public delegate void ErrorRowChangeEventHandler(object sender, ErrorRowChangeEvent e);
+        
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class OfficeTableDataTable : global::System.Data.TypedTableBase<OfficeTableRow> {
+        public partial class OfficeDataTable : global::System.Data.TypedTableBase<OfficeRow> {
             
             private global::System.Data.DataColumn columnCompanyId;
             
@@ -414,8 +456,8 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableDataTable() {
-                this.TableName = "OfficeTable";
+            public OfficeDataTable() {
+                this.TableName = "Office";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -423,7 +465,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal OfficeTableDataTable(global::System.Data.DataTable table) {
+            internal OfficeDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -440,7 +482,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected OfficeTableDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected OfficeDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -504,34 +546,34 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow this[int index] {
+            public OfficeRow this[int index] {
                 get {
-                    return ((OfficeTableRow)(this.Rows[index]));
+                    return ((OfficeRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event OfficeTableRowChangeEventHandler OfficeTableRowChanging;
+            public event OfficeRowChangeEventHandler OfficeRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event OfficeTableRowChangeEventHandler OfficeTableRowChanged;
+            public event OfficeRowChangeEventHandler OfficeRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event OfficeTableRowChangeEventHandler OfficeTableRowDeleting;
+            public event OfficeRowChangeEventHandler OfficeRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event OfficeTableRowChangeEventHandler OfficeTableRowDeleted;
+            public event OfficeRowChangeEventHandler OfficeRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddOfficeTableRow(OfficeTableRow row) {
+            public void AddOfficeRow(OfficeRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow AddOfficeTableRow(int CompanyId, int OfficeId, string Name, int Longitude, int Latitude, bool Visible) {
-                OfficeTableRow rowOfficeTableRow = ((OfficeTableRow)(this.NewRow()));
+            public OfficeRow AddOfficeRow(int CompanyId, int OfficeId, string Name, int Longitude, int Latitude, bool Visible) {
+                OfficeRow rowOfficeRow = ((OfficeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CompanyId,
                         OfficeId,
@@ -539,22 +581,22 @@ namespace RealtimeViewer.WMShipView {
                         Longitude,
                         Latitude,
                         Visible};
-                rowOfficeTableRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowOfficeTableRow);
-                return rowOfficeTableRow;
+                rowOfficeRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowOfficeRow);
+                return rowOfficeRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow FindByOfficeId(int OfficeId) {
-                return ((OfficeTableRow)(this.Rows.Find(new object[] {
+            public OfficeRow FindByOfficeId(int OfficeId) {
+                return ((OfficeRow)(this.Rows.Find(new object[] {
                             OfficeId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                OfficeTableDataTable cln = ((OfficeTableDataTable)(base.Clone()));
+                OfficeDataTable cln = ((OfficeDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -562,7 +604,7 @@ namespace RealtimeViewer.WMShipView {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new OfficeTableDataTable();
+                return new OfficeDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -602,28 +644,28 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow NewOfficeTableRow() {
-                return ((OfficeTableRow)(this.NewRow()));
+            public OfficeRow NewOfficeRow() {
+                return ((OfficeRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new OfficeTableRow(builder);
+                return new OfficeRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(OfficeTableRow);
+                return typeof(OfficeRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.OfficeTableRowChanged != null)) {
-                    this.OfficeTableRowChanged(this, new OfficeTableRowChangeEvent(((OfficeTableRow)(e.Row)), e.Action));
+                if ((this.OfficeRowChanged != null)) {
+                    this.OfficeRowChanged(this, new OfficeRowChangeEvent(((OfficeRow)(e.Row)), e.Action));
                 }
             }
             
@@ -631,8 +673,8 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.OfficeTableRowChanging != null)) {
-                    this.OfficeTableRowChanging(this, new OfficeTableRowChangeEvent(((OfficeTableRow)(e.Row)), e.Action));
+                if ((this.OfficeRowChanging != null)) {
+                    this.OfficeRowChanging(this, new OfficeRowChangeEvent(((OfficeRow)(e.Row)), e.Action));
                 }
             }
             
@@ -640,8 +682,8 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.OfficeTableRowDeleted != null)) {
-                    this.OfficeTableRowDeleted(this, new OfficeTableRowChangeEvent(((OfficeTableRow)(e.Row)), e.Action));
+                if ((this.OfficeRowDeleted != null)) {
+                    this.OfficeRowDeleted(this, new OfficeRowChangeEvent(((OfficeRow)(e.Row)), e.Action));
                 }
             }
             
@@ -649,14 +691,14 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.OfficeTableRowDeleting != null)) {
-                    this.OfficeTableRowDeleting(this, new OfficeTableRowChangeEvent(((OfficeTableRow)(e.Row)), e.Action));
+                if ((this.OfficeRowDeleting != null)) {
+                    this.OfficeRowDeleting(this, new OfficeRowChangeEvent(((OfficeRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemoveOfficeTableRow(OfficeTableRow row) {
+            public void RemoveOfficeRow(OfficeRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -683,7 +725,7 @@ namespace RealtimeViewer.WMShipView {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "OfficeTableDataTable";
+                attribute2.FixedValue = "OfficeDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -729,7 +771,7 @@ namespace RealtimeViewer.WMShipView {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class DeviceTableDataTable : global::System.Data.TypedTableBase<DeviceTableRow> {
+        public partial class DeviceDataTable : global::System.Data.TypedTableBase<DeviceRow> {
             
             private global::System.Data.DataColumn columnDeviceId;
             
@@ -747,8 +789,8 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableDataTable() {
-                this.TableName = "DeviceTable";
+            public DeviceDataTable() {
+                this.TableName = "Device";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -756,7 +798,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal DeviceTableDataTable(global::System.Data.DataTable table) {
+            internal DeviceDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -773,7 +815,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected DeviceTableDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected DeviceDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -845,34 +887,34 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow this[int index] {
+            public DeviceRow this[int index] {
                 get {
-                    return ((DeviceTableRow)(this.Rows[index]));
+                    return ((DeviceRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event DeviceTableRowChangeEventHandler DeviceTableRowChanging;
+            public event DeviceRowChangeEventHandler DeviceRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event DeviceTableRowChangeEventHandler DeviceTableRowChanged;
+            public event DeviceRowChangeEventHandler DeviceRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event DeviceTableRowChangeEventHandler DeviceTableRowDeleting;
+            public event DeviceRowChangeEventHandler DeviceRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event DeviceTableRowChangeEventHandler DeviceTableRowDeleted;
+            public event DeviceRowChangeEventHandler DeviceRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddDeviceTableRow(DeviceTableRow row) {
+            public void AddDeviceRow(DeviceRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow AddDeviceTableRow(string DeviceId, OfficeTableRow parentOfficeTableRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string Address) {
-                DeviceTableRow rowDeviceTableRow = ((DeviceTableRow)(this.NewRow()));
+            public DeviceRow AddDeviceRow(string DeviceId, OfficeRow parentOfficeRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string Address) {
+                DeviceRow rowDeviceRow = ((DeviceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DeviceId,
                         null,
@@ -881,25 +923,25 @@ namespace RealtimeViewer.WMShipView {
                         Longitude,
                         Latitude,
                         Address};
-                if ((parentOfficeTableRowByOfficeTable_DeviceTable != null)) {
-                    columnValuesArray[1] = parentOfficeTableRowByOfficeTable_DeviceTable[1];
+                if ((parentOfficeRowByOfficeTable_DeviceTable != null)) {
+                    columnValuesArray[1] = parentOfficeRowByOfficeTable_DeviceTable[1];
                 }
-                rowDeviceTableRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowDeviceTableRow);
-                return rowDeviceTableRow;
+                rowDeviceRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDeviceRow);
+                return rowDeviceRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow FindByDeviceId(string DeviceId) {
-                return ((DeviceTableRow)(this.Rows.Find(new object[] {
+            public DeviceRow FindByDeviceId(string DeviceId) {
+                return ((DeviceRow)(this.Rows.Find(new object[] {
                             DeviceId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                DeviceTableDataTable cln = ((DeviceTableDataTable)(base.Clone()));
+                DeviceDataTable cln = ((DeviceDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -907,7 +949,7 @@ namespace RealtimeViewer.WMShipView {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new DeviceTableDataTable();
+                return new DeviceDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -948,28 +990,28 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow NewDeviceTableRow() {
-                return ((DeviceTableRow)(this.NewRow()));
+            public DeviceRow NewDeviceRow() {
+                return ((DeviceRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new DeviceTableRow(builder);
+                return new DeviceRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(DeviceTableRow);
+                return typeof(DeviceRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.DeviceTableRowChanged != null)) {
-                    this.DeviceTableRowChanged(this, new DeviceTableRowChangeEvent(((DeviceTableRow)(e.Row)), e.Action));
+                if ((this.DeviceRowChanged != null)) {
+                    this.DeviceRowChanged(this, new DeviceRowChangeEvent(((DeviceRow)(e.Row)), e.Action));
                 }
             }
             
@@ -977,8 +1019,8 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.DeviceTableRowChanging != null)) {
-                    this.DeviceTableRowChanging(this, new DeviceTableRowChangeEvent(((DeviceTableRow)(e.Row)), e.Action));
+                if ((this.DeviceRowChanging != null)) {
+                    this.DeviceRowChanging(this, new DeviceRowChangeEvent(((DeviceRow)(e.Row)), e.Action));
                 }
             }
             
@@ -986,8 +1028,8 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.DeviceTableRowDeleted != null)) {
-                    this.DeviceTableRowDeleted(this, new DeviceTableRowChangeEvent(((DeviceTableRow)(e.Row)), e.Action));
+                if ((this.DeviceRowDeleted != null)) {
+                    this.DeviceRowDeleted(this, new DeviceRowChangeEvent(((DeviceRow)(e.Row)), e.Action));
                 }
             }
             
@@ -995,14 +1037,14 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.DeviceTableRowDeleting != null)) {
-                    this.DeviceTableRowDeleting(this, new DeviceTableRowChangeEvent(((DeviceTableRow)(e.Row)), e.Action));
+                if ((this.DeviceRowDeleting != null)) {
+                    this.DeviceRowDeleting(this, new DeviceRowChangeEvent(((DeviceRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemoveDeviceTableRow(DeviceTableRow row) {
+            public void RemoveDeviceRow(DeviceRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -1029,7 +1071,7 @@ namespace RealtimeViewer.WMShipView {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "DeviceTableDataTable";
+                attribute2.FixedValue = "DeviceDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1800,17 +1842,365 @@ namespace RealtimeViewer.WMShipView {
         }
         
         /// <summary>
-        ///Represents strongly named DataRow class.
+        ///Represents the strongly named DataTable class.
         ///</summary>
-        public partial class OfficeTableRow : global::System.Data.DataRow {
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class ErrorDataTable : global::System.Data.TypedTableBase<ErrorRow> {
             
-            private OfficeTableDataTable tableOfficeTable;
+            private global::System.Data.DataColumn columnDeviceId;
+            
+            private global::System.Data.DataColumn columnTimestamp;
+            
+            private global::System.Data.DataColumn columnError;
+            
+            private global::System.Data.DataColumn columnErrorStr;
+            
+            private global::System.Data.DataColumn columnSdFree;
+            
+            private global::System.Data.DataColumn columnSsdFree;
+            
+            private global::System.Data.DataColumn columnIccId;
+            
+            private global::System.Data.DataColumn columnVersion;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal OfficeTableRow(global::System.Data.DataRowBuilder rb) : 
+            public ErrorDataTable() {
+                this.TableName = "Error";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            internal ErrorDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected ErrorDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DeviceIdColumn {
+                get {
+                    return this.columnDeviceId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn TimestampColumn {
+                get {
+                    return this.columnTimestamp;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ErrorColumn {
+                get {
+                    return this.columnError;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ErrorStrColumn {
+                get {
+                    return this.columnErrorStr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SdFreeColumn {
+                get {
+                    return this.columnSdFree;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SsdFreeColumn {
+                get {
+                    return this.columnSsdFree;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn IccIdColumn {
+                get {
+                    return this.columnIccId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn VersionColumn {
+                get {
+                    return this.columnVersion;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRow this[int index] {
+                get {
+                    return ((ErrorRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public event ErrorRowChangeEventHandler ErrorRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public event ErrorRowChangeEventHandler ErrorRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public event ErrorRowChangeEventHandler ErrorRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public event ErrorRowChangeEventHandler ErrorRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void AddErrorRow(ErrorRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRow AddErrorRow(DeviceRow parentDeviceRowByDeviceTable_Error, string Timestamp, string Error, string ErrorStr, string SdFree, string SsdFree, string IccId, string Version) {
+                ErrorRow rowErrorRow = ((ErrorRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Timestamp,
+                        Error,
+                        ErrorStr,
+                        SdFree,
+                        SsdFree,
+                        IccId,
+                        Version};
+                if ((parentDeviceRowByDeviceTable_Error != null)) {
+                    columnValuesArray[0] = parentDeviceRowByDeviceTable_Error[0];
+                }
+                rowErrorRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowErrorRow);
+                return rowErrorRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                ErrorDataTable cln = ((ErrorDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new ErrorDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            internal void InitVars() {
+                this.columnDeviceId = base.Columns["DeviceId"];
+                this.columnTimestamp = base.Columns["Timestamp"];
+                this.columnError = base.Columns["Error"];
+                this.columnErrorStr = base.Columns["ErrorStr"];
+                this.columnSdFree = base.Columns["SdFree"];
+                this.columnSsdFree = base.Columns["SsdFree"];
+                this.columnIccId = base.Columns["IccId"];
+                this.columnVersion = base.Columns["Version"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            private void InitClass() {
+                this.columnDeviceId = new global::System.Data.DataColumn("DeviceId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeviceId);
+                this.columnTimestamp = new global::System.Data.DataColumn("Timestamp", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTimestamp);
+                this.columnError = new global::System.Data.DataColumn("Error", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnError);
+                this.columnErrorStr = new global::System.Data.DataColumn("ErrorStr", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnErrorStr);
+                this.columnSdFree = new global::System.Data.DataColumn("SdFree", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSdFree);
+                this.columnSsdFree = new global::System.Data.DataColumn("SsdFree", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSsdFree);
+                this.columnIccId = new global::System.Data.DataColumn("IccId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIccId);
+                this.columnVersion = new global::System.Data.DataColumn("Version", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVersion);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRow NewErrorRow() {
+                return ((ErrorRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new ErrorRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(ErrorRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ErrorRowChanged != null)) {
+                    this.ErrorRowChanged(this, new ErrorRowChangeEvent(((ErrorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ErrorRowChanging != null)) {
+                    this.ErrorRowChanging(this, new ErrorRowChangeEvent(((ErrorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ErrorRowDeleted != null)) {
+                    this.ErrorRowDeleted(this, new ErrorRowChangeEvent(((ErrorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ErrorRowDeleting != null)) {
+                    this.ErrorRowDeleting(this, new ErrorRowChangeEvent(((ErrorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void RemoveErrorRow(ErrorRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                WMDataSet ds = new WMDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "ErrorDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class OfficeRow : global::System.Data.DataRow {
+            
+            private OfficeDataTable tableOffice;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            internal OfficeRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableOfficeTable = ((OfficeTableDataTable)(this.Table));
+                this.tableOffice = ((OfficeDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1818,14 +2208,14 @@ namespace RealtimeViewer.WMShipView {
             public int CompanyId {
                 get {
                     try {
-                        return ((int)(this[this.tableOfficeTable.CompanyIdColumn]));
+                        return ((int)(this[this.tableOffice.CompanyIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'OfficeTable\' にある列 \'CompanyId\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Office\' にある列 \'CompanyId\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableOfficeTable.CompanyIdColumn] = value;
+                    this[this.tableOffice.CompanyIdColumn] = value;
                 }
             }
             
@@ -1833,10 +2223,10 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int OfficeId {
                 get {
-                    return ((int)(this[this.tableOfficeTable.OfficeIdColumn]));
+                    return ((int)(this[this.tableOffice.OfficeIdColumn]));
                 }
                 set {
-                    this[this.tableOfficeTable.OfficeIdColumn] = value;
+                    this[this.tableOffice.OfficeIdColumn] = value;
                 }
             }
             
@@ -1845,14 +2235,14 @@ namespace RealtimeViewer.WMShipView {
             public string Name {
                 get {
                     try {
-                        return ((string)(this[this.tableOfficeTable.NameColumn]));
+                        return ((string)(this[this.tableOffice.NameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'OfficeTable\' にある列 \'Name\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Office\' にある列 \'Name\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableOfficeTable.NameColumn] = value;
+                    this[this.tableOffice.NameColumn] = value;
                 }
             }
             
@@ -1861,14 +2251,14 @@ namespace RealtimeViewer.WMShipView {
             public int Longitude {
                 get {
                     try {
-                        return ((int)(this[this.tableOfficeTable.LongitudeColumn]));
+                        return ((int)(this[this.tableOffice.LongitudeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'OfficeTable\' にある列 \'Longitude\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Office\' にある列 \'Longitude\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableOfficeTable.LongitudeColumn] = value;
+                    this[this.tableOffice.LongitudeColumn] = value;
                 }
             }
             
@@ -1877,14 +2267,14 @@ namespace RealtimeViewer.WMShipView {
             public int Latitude {
                 get {
                     try {
-                        return ((int)(this[this.tableOfficeTable.LatitudeColumn]));
+                        return ((int)(this[this.tableOffice.LatitudeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'OfficeTable\' にある列 \'Latitude\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Office\' にある列 \'Latitude\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableOfficeTable.LatitudeColumn] = value;
+                    this[this.tableOffice.LatitudeColumn] = value;
                 }
             }
             
@@ -1893,85 +2283,85 @@ namespace RealtimeViewer.WMShipView {
             public bool Visible {
                 get {
                     try {
-                        return ((bool)(this[this.tableOfficeTable.VisibleColumn]));
+                        return ((bool)(this[this.tableOffice.VisibleColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'OfficeTable\' にある列 \'Visible\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Office\' にある列 \'Visible\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableOfficeTable.VisibleColumn] = value;
+                    this[this.tableOffice.VisibleColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsCompanyIdNull() {
-                return this.IsNull(this.tableOfficeTable.CompanyIdColumn);
+                return this.IsNull(this.tableOffice.CompanyIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetCompanyIdNull() {
-                this[this.tableOfficeTable.CompanyIdColumn] = global::System.Convert.DBNull;
+                this[this.tableOffice.CompanyIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsNameNull() {
-                return this.IsNull(this.tableOfficeTable.NameColumn);
+                return this.IsNull(this.tableOffice.NameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetNameNull() {
-                this[this.tableOfficeTable.NameColumn] = global::System.Convert.DBNull;
+                this[this.tableOffice.NameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsLongitudeNull() {
-                return this.IsNull(this.tableOfficeTable.LongitudeColumn);
+                return this.IsNull(this.tableOffice.LongitudeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLongitudeNull() {
-                this[this.tableOfficeTable.LongitudeColumn] = global::System.Convert.DBNull;
+                this[this.tableOffice.LongitudeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsLatitudeNull() {
-                return this.IsNull(this.tableOfficeTable.LatitudeColumn);
+                return this.IsNull(this.tableOffice.LatitudeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLatitudeNull() {
-                this[this.tableOfficeTable.LatitudeColumn] = global::System.Convert.DBNull;
+                this[this.tableOffice.LatitudeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsVisibleNull() {
-                return this.IsNull(this.tableOfficeTable.VisibleColumn);
+                return this.IsNull(this.tableOffice.VisibleColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetVisibleNull() {
-                this[this.tableOfficeTable.VisibleColumn] = global::System.Convert.DBNull;
+                this[this.tableOffice.VisibleColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow[] GetDeviceTableRows() {
+            public DeviceRow[] GetDeviceRows() {
                 if ((this.Table.ChildRelations["OfficeTable_DeviceTable"] == null)) {
-                    return new DeviceTableRow[0];
+                    return new DeviceRow[0];
                 }
                 else {
-                    return ((DeviceTableRow[])(base.GetChildRows(this.Table.ChildRelations["OfficeTable_DeviceTable"])));
+                    return ((DeviceRow[])(base.GetChildRows(this.Table.ChildRelations["OfficeTable_DeviceTable"])));
                 }
             }
         }
@@ -1979,25 +2369,25 @@ namespace RealtimeViewer.WMShipView {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class DeviceTableRow : global::System.Data.DataRow {
+        public partial class DeviceRow : global::System.Data.DataRow {
             
-            private DeviceTableDataTable tableDeviceTable;
+            private DeviceDataTable tableDevice;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal DeviceTableRow(global::System.Data.DataRowBuilder rb) : 
+            internal DeviceRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableDeviceTable = ((DeviceTableDataTable)(this.Table));
+                this.tableDevice = ((DeviceDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string DeviceId {
                 get {
-                    return ((string)(this[this.tableDeviceTable.DeviceIdColumn]));
+                    return ((string)(this[this.tableDevice.DeviceIdColumn]));
                 }
                 set {
-                    this[this.tableDeviceTable.DeviceIdColumn] = value;
+                    this[this.tableDevice.DeviceIdColumn] = value;
                 }
             }
             
@@ -2006,14 +2396,14 @@ namespace RealtimeViewer.WMShipView {
             public int OfficeId {
                 get {
                     try {
-                        return ((int)(this[this.tableDeviceTable.OfficeIdColumn]));
+                        return ((int)(this[this.tableDevice.OfficeIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'DeviceTable\' にある列 \'OfficeId\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Device\' にある列 \'OfficeId\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.OfficeIdColumn] = value;
+                    this[this.tableDevice.OfficeIdColumn] = value;
                 }
             }
             
@@ -2025,11 +2415,11 @@ namespace RealtimeViewer.WMShipView {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableDeviceTable.CarIdColumn]));
+                        return ((string)(this[this.tableDevice.CarIdColumn]));
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.CarIdColumn] = value;
+                    this[this.tableDevice.CarIdColumn] = value;
                 }
             }
             
@@ -2041,11 +2431,11 @@ namespace RealtimeViewer.WMShipView {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableDeviceTable.CarNumberColumn]));
+                        return ((string)(this[this.tableDevice.CarNumberColumn]));
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.CarNumberColumn] = value;
+                    this[this.tableDevice.CarNumberColumn] = value;
                 }
             }
             
@@ -2057,11 +2447,11 @@ namespace RealtimeViewer.WMShipView {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableDeviceTable.LongitudeColumn]));
+                        return ((string)(this[this.tableDevice.LongitudeColumn]));
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.LongitudeColumn] = value;
+                    this[this.tableDevice.LongitudeColumn] = value;
                 }
             }
             
@@ -2070,14 +2460,14 @@ namespace RealtimeViewer.WMShipView {
             public string Latitude {
                 get {
                     try {
-                        return ((string)(this[this.tableDeviceTable.LatitudeColumn]));
+                        return ((string)(this[this.tableDevice.LatitudeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'DeviceTable\' にある列 \'Latitude\' の値は DBNull です。", e);
+                        throw new global::System.Data.StrongTypingException("テーブル \'Device\' にある列 \'Latitude\' の値は DBNull です。", e);
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.LatitudeColumn] = value;
+                    this[this.tableDevice.LatitudeColumn] = value;
                 }
             }
             
@@ -2089,19 +2479,19 @@ namespace RealtimeViewer.WMShipView {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableDeviceTable.AddressColumn]));
+                        return ((string)(this[this.tableDevice.AddressColumn]));
                     }
                 }
                 set {
-                    this[this.tableDeviceTable.AddressColumn] = value;
+                    this[this.tableDevice.AddressColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow OfficeTableRow {
+            public OfficeRow OfficeTableRow {
                 get {
-                    return ((OfficeTableRow)(this.GetParentRow(this.Table.ParentRelations["OfficeTable_DeviceTable"])));
+                    return ((OfficeRow)(this.GetParentRow(this.Table.ParentRelations["OfficeTable_DeviceTable"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["OfficeTable_DeviceTable"]);
@@ -2111,73 +2501,84 @@ namespace RealtimeViewer.WMShipView {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsOfficeIdNull() {
-                return this.IsNull(this.tableDeviceTable.OfficeIdColumn);
+                return this.IsNull(this.tableDevice.OfficeIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetOfficeIdNull() {
-                this[this.tableDeviceTable.OfficeIdColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.OfficeIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsCarIdNull() {
-                return this.IsNull(this.tableDeviceTable.CarIdColumn);
+                return this.IsNull(this.tableDevice.CarIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetCarIdNull() {
-                this[this.tableDeviceTable.CarIdColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.CarIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsCarNumberNull() {
-                return this.IsNull(this.tableDeviceTable.CarNumberColumn);
+                return this.IsNull(this.tableDevice.CarNumberColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetCarNumberNull() {
-                this[this.tableDeviceTable.CarNumberColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.CarNumberColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsLongitudeNull() {
-                return this.IsNull(this.tableDeviceTable.LongitudeColumn);
+                return this.IsNull(this.tableDevice.LongitudeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLongitudeNull() {
-                this[this.tableDeviceTable.LongitudeColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.LongitudeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsLatitudeNull() {
-                return this.IsNull(this.tableDeviceTable.LatitudeColumn);
+                return this.IsNull(this.tableDevice.LatitudeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLatitudeNull() {
-                this[this.tableDeviceTable.LatitudeColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.LatitudeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsAddressNull() {
-                return this.IsNull(this.tableDeviceTable.AddressColumn);
+                return this.IsNull(this.tableDevice.AddressColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetAddressNull() {
-                this[this.tableDeviceTable.AddressColumn] = global::System.Convert.DBNull;
+                this[this.tableDevice.AddressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRow[] GetErrorRows() {
+                if ((this.Table.ChildRelations["DeviceTable_Error"] == null)) {
+                    return new ErrorRow[0];
+                }
+                else {
+                    return ((ErrorRow[])(base.GetChildRows(this.Table.ChildRelations["DeviceTable_Error"])));
+                }
             }
         }
         
@@ -2625,25 +3026,275 @@ namespace RealtimeViewer.WMShipView {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class ErrorRow : global::System.Data.DataRow {
+            
+            private ErrorDataTable tableError;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            internal ErrorRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableError = ((ErrorDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string DeviceId {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.DeviceIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'DeviceId\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.DeviceIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Timestamp {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.TimestampColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'Timestamp\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.TimestampColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Error {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.ErrorColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'Error\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.ErrorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string ErrorStr {
+                get {
+                    if (this.IsErrorStrNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableError.ErrorStrColumn]));
+                    }
+                }
+                set {
+                    this[this.tableError.ErrorStrColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string SdFree {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.SdFreeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'SdFree\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.SdFreeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string SsdFree {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.SsdFreeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'SsdFree\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.SsdFreeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string IccId {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.IccIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'IccId\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.IccIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Version {
+                get {
+                    try {
+                        return ((string)(this[this.tableError.VersionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'Error\' にある列 \'Version\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableError.VersionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public DeviceRow DeviceTableRow {
+                get {
+                    return ((DeviceRow)(this.GetParentRow(this.Table.ParentRelations["DeviceTable_Error"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["DeviceTable_Error"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsDeviceIdNull() {
+                return this.IsNull(this.tableError.DeviceIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetDeviceIdNull() {
+                this[this.tableError.DeviceIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsTimestampNull() {
+                return this.IsNull(this.tableError.TimestampColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetTimestampNull() {
+                this[this.tableError.TimestampColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsErrorNull() {
+                return this.IsNull(this.tableError.ErrorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetErrorNull() {
+                this[this.tableError.ErrorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsErrorStrNull() {
+                return this.IsNull(this.tableError.ErrorStrColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetErrorStrNull() {
+                this[this.tableError.ErrorStrColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsSdFreeNull() {
+                return this.IsNull(this.tableError.SdFreeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetSdFreeNull() {
+                this[this.tableError.SdFreeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsSsdFreeNull() {
+                return this.IsNull(this.tableError.SsdFreeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetSsdFreeNull() {
+                this[this.tableError.SsdFreeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsIccIdNull() {
+                return this.IsNull(this.tableError.IccIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetIccIdNull() {
+                this[this.tableError.IccIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsVersionNull() {
+                return this.IsNull(this.tableError.VersionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetVersionNull() {
+                this[this.tableError.VersionColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class OfficeTableRowChangeEvent : global::System.EventArgs {
+        public class OfficeRowChangeEvent : global::System.EventArgs {
             
-            private OfficeTableRow eventRow;
+            private OfficeRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRowChangeEvent(OfficeTableRow row, global::System.Data.DataRowAction action) {
+            public OfficeRowChangeEvent(OfficeRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public OfficeTableRow Row {
+            public OfficeRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -2662,22 +3313,22 @@ namespace RealtimeViewer.WMShipView {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class DeviceTableRowChangeEvent : global::System.EventArgs {
+        public class DeviceRowChangeEvent : global::System.EventArgs {
             
-            private DeviceTableRow eventRow;
+            private DeviceRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRowChangeEvent(DeviceTableRow row, global::System.Data.DataRowAction action) {
+            public DeviceRowChangeEvent(DeviceRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceTableRow Row {
+            public DeviceRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -2746,6 +3397,40 @@ namespace RealtimeViewer.WMShipView {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public PlayListRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        public class ErrorRowChangeEvent : global::System.EventArgs {
+            
+            private ErrorRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRowChangeEvent(ErrorRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ErrorRow Row {
                 get {
                     return this.eventRow;
                 }

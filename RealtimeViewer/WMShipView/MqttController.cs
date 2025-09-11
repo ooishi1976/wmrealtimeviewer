@@ -49,24 +49,57 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// 配信イベント
         /// </summary>
-        public event MqttClient.MqttMsgPublishedEventHandler Published;
+        protected event MqttClient.MqttMsgPublishedEventHandler Published;
 
         /// <summary>
         /// 受信イベント
         /// </summary>
-        public event MqttClient.MqttMsgPublishEventHandler PublishReceived;
-
-        /// <summary>
-        /// 位置情報
-        /// </summary>
-        public event MqttMessageHandler<MqttJsonLocation> LocationReceived;
+        protected event MqttClient.MqttMsgPublishEventHandler PublishReceived;
 
         /// <summary>
         /// 切断イベント
         /// </summary>
-        public event MqttClient.ConnectionClosedEventHandler Closed;
+        protected event MqttClient.ConnectionClosedEventHandler Closed;
 
+        /// <summary>
+        /// 位置情報
+        /// </summary>
+        protected event MqttMessageHandler<MqttJsonLocation> LocationReceived;
+
+        /// <summary>
+        /// エラー
+        /// </summary>
+        protected event MqttMessageHandler<MqttJsonError> ErrorReceived;
+
+        /// <summary>
+        /// ACC ON/OFF
+        /// </summary>
+        protected event MqttMessageHandler<MqttJsonEventAccOn> AccOnReceived;
+
+        /// <summary>
+        /// プリポスト
+        /// </summary>
+        protected event MqttMessageHandler<MqttJsonPrepostEvent> PrepostReceived;
+        
+        /// <summary>
+        /// 位置情報ハンドラリスト
+        /// </summary>
         private readonly List<MqttMessageHandler<MqttJsonLocation>> loactionHandlers = new List<MqttMessageHandler<MqttJsonLocation>>();
+
+        /// <summary>
+        /// エラーハンドラリスト
+        /// </summary>
+        private readonly List<MqttMessageHandler<MqttJsonError>> errorHandlers = new List<MqttMessageHandler<MqttJsonError>>();
+
+        /// <summary>
+        /// AccOnハンドラリスト
+        /// </summary>
+        private readonly List<MqttMessageHandler<MqttJsonEventAccOn>> accOnHandlers = new List<MqttMessageHandler<MqttJsonEventAccOn>>();
+
+        /// <summary>
+        /// PrePostハンドラリスト
+        /// </summary>
+        private readonly List<MqttMessageHandler<MqttJsonPrepostEvent>> prepostHandlers = new List<MqttMessageHandler<MqttJsonPrepostEvent>>();
 
         /// <summary>
         /// 接続済みか
@@ -164,22 +197,53 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
-        public void AddLocationHandler(MqttMessageHandler<MqttJsonLocation> handler)
+        public void AddReceivedHandler<T>(MqttMessageHandler<T> handler)
         {
-            if (!loactionHandlers.Contains(handler))
+            if (handler is MqttMessageHandler<MqttJsonLocation> locationHandler &&
+                !loactionHandlers.Contains(locationHandler))
             {
-                LocationReceived += handler;
+                LocationReceived += locationHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonError> errorHandler &&
+                     !errorHandlers.Contains(errorHandler))
+            {
+                ErrorReceived += errorHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonEventAccOn> accOnHandler &&
+                     !accOnHandlers.Contains(accOnHandler))
+            {
+                AccOnReceived += accOnHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonPrepostEvent> prepostHandler &&
+                     !prepostHandlers.Contains(prepostHandler))
+            {
+                PrepostReceived += prepostHandler;
             }
         }
 
-        public void RemoveLocationHandler(MqttMessageHandler<MqttJsonLocation> handler)
+        public void RemoveReceivedHandler<T>(MqttMessageHandler<T> handler)
         {
-            if (loactionHandlers.Contains(handler))
+            if (handler is MqttMessageHandler<MqttJsonLocation> locationHandler &&
+                loactionHandlers.Contains(locationHandler))
             {
-                LocationReceived -= handler;
+                LocationReceived -= locationHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonError> errorHandler &&
+                     errorHandlers.Contains(errorHandler))
+            {
+                ErrorReceived -= errorHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonEventAccOn> accOnHandler &&
+                     accOnHandlers.Contains(accOnHandler))
+            {
+                AccOnReceived -= accOnHandler;
+            }
+            else if (handler is MqttMessageHandler<MqttJsonPrepostEvent> prepostHandler &&
+                     prepostHandlers.Contains(prepostHandler))
+            {
+                PrepostReceived -= prepostHandler;
             }
         }
-
 
         private void MqttClient_ConnectionClosed(object sender, EventArgs e)
         {
@@ -214,9 +278,11 @@ namespace RealtimeViewer.WMShipView
                             break;
 
                         case TopicLabel.TopicErrorStatus:
+                            ErrorReceived?.Invoke(this, new MqttMessageEventArgs<MqttJsonError>(label, msg));
                             break;
 
                         case TopicLabel.TopicEventAccOn:
+                            AccOnReceived?.Invoke(this, new MqttMessageEventArgs<MqttJsonEventAccOn>(label, msg));
                             break;
 
                         case TopicLabel.TopicLocation:
@@ -227,6 +293,7 @@ namespace RealtimeViewer.WMShipView
                             break;
 
                         case TopicLabel.TopicEventPrepost:
+                            PrepostReceived?.Invoke(this, new MqttMessageEventArgs<MqttJsonPrepostEvent>(label, msg));
                             break;
 
                         case TopicLabel.TopicStreamingStatus:
