@@ -182,14 +182,50 @@ namespace RealtimeViewer.WMShipView
             // 地図描画
             SyncMapScale(true);
             mpgMap.RePaint();
-
-            // TODO 拡張パネル追加
-            // CreateExtTabPage(this);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ViewModel.CloseMqttServer();
+            try
+            {
+                // ストリーミング中止
+                ViewModel.AbortAllStreaming();
+
+                // イベント関連情報取得タスクキャンセル
+                if (CancellationTokenSource != null &&
+                    !CancellationTokenSource.IsCancellationRequested)
+                {
+                    CancellationTokenSource.Cancel();
+                }
+
+                // 動画再生関連タスクキャンセル
+                if (MovieCancellationTokenSource != null &&
+                    !MovieCancellationTokenSource.IsCancellationRequested) 
+                { 
+                    MovieCancellationTokenSource.Cancel();
+                }
+
+                // FFMPEG 関連タスクキャンセル
+                FfmpegCtrl.KillAllProcesses();
+
+                if (!ViewModel.IsEmergencyMode && 
+                    ViewModel.LocalSettings.OperationServer.IsShowWaitDialog)
+                {
+                    ViewModel.StopUserAuth();
+                    StopDeviceWatcher();
+                }
+
+                // MQTT停止
+                ViewModel.CloseMqttServer();
+
+                // イベント動画のテンポラリ削除
+                ViewModel.RemoveAllPlayListFile();
+            }
+            finally 
+            {
+                // 最終状態保存
+                ViewModel.WriteLastState(mpgMap.MapScale);
+            }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -204,6 +240,10 @@ namespace RealtimeViewer.WMShipView
 
                 Invoke((MethodInvoker)(() =>
                 {
+                    // TODO 拡張パネル追加
+                    CreateExtTabPage(this);
+
+                    // 画面項目のバインド
                     BindDeviceDataSource();
                     BindStreamingDataSource();
                     DrawMapEntries();
@@ -394,6 +434,7 @@ namespace RealtimeViewer.WMShipView
 
         private void TimerStartMQTT_Tick(object sender, EventArgs e)
         {
+
         }
 
         private void buttonLeftPanelClose_Click(object sender, EventArgs e)
@@ -671,17 +712,20 @@ namespace RealtimeViewer.WMShipView
         private void CreateExtTabPage(Form owner)
         {
             var sessionWaitMin = (OperationServerInfo.Id == ServerIndex.WeatherMedia) ? 5 : 30;
-            // コンフィグパネル設定
-            configPanel = new ConfigPanel();
-            configPanel.Dock = DockStyle.Fill;
-            configPanel.DataModel = new ConfigPanelModel()
+
+            var configModel = new ConfigPanelModel()
             {
                 Settings = LocalSettings,
-//                OfficeList = httpSequence.Offices,
+                OfficeList = ViewModel.GetOfficeInfos(),
                 Owner = owner,
                 StreamingSessionWaitMin = sessionWaitMin
             };
-            configPanel.DataModel.LoadConfigData();
+            configModel.LoadConfigData();
+
+            // コンフィグパネル設定
+            configPanel = new ConfigPanel();
+            configPanel.Dock = DockStyle.Fill;
+            configPanel.DataModel = configModel;
         }
 
 #endregion 拡張設定
@@ -914,6 +958,7 @@ namespace RealtimeViewer.WMShipView
                 ViewModel.IsDownloadingG = true;
                 try
                 {
+                    
                     await ViewModel.GetGravityAsync(CancellationTokenSource.Token, (now, total, isCompleted) =>
                     {
                         Invoke((MethodInvoker)(() => {

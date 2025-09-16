@@ -13,6 +13,7 @@ using Mamt.Args;
 using Mamt;
 using System.Threading;
 using RealtimeViewer.Network;
+using RealtimeViewer.WMShipView;
 
 namespace RealtimeViewer.Controls
 {
@@ -22,10 +23,12 @@ namespace RealtimeViewer.Controls
         /// Iniファイル情報
         /// </summary>
         public SettingIni Settings { get; set; }
+
         /// <summary>
         /// 営業所リスト
         /// </summary>
         public IList<OfficeInfo> OfficeList { get; set; }
+
         /// <summary>
         /// ConfigPanelのOwner
         /// </summary>
@@ -51,8 +54,8 @@ namespace RealtimeViewer.Controls
         /// <summary>
         /// 配信要求リトライ回数
         /// </summary>
-        private int streamingRequestRetryCount = 0;
-        public int StreamingRequestRetryCount {
+        private decimal streamingRequestRetryCount = 0;
+        public decimal StreamingRequestRetryCount {
             get { 
                 return streamingRequestRetryCount; 
             }
@@ -66,8 +69,8 @@ namespace RealtimeViewer.Controls
         /// <summary>
         /// 配信セッションリトライ回数
         /// </summary>
-        private int streamingSessionRetryCount = 0;
-        public int StreamingSessionRetryCount
+        private decimal streamingSessionRetryCount = 0;
+        public decimal StreamingSessionRetryCount
         {
             get
             {
@@ -83,8 +86,8 @@ namespace RealtimeViewer.Controls
         /// <summary>
         /// 配信要求待ち時間(秒)
         /// </summary>
-        private int streamingRequestWait = 0;
-        public int StreamingRequestWait
+        private decimal streamingRequestWait = 0;
+        public decimal StreamingRequestWait
         {
             get
             {
@@ -100,8 +103,8 @@ namespace RealtimeViewer.Controls
         /// <summary>
         /// 配信セッション待ち時間(秒)
         /// </summary>
-        private int streamingSessionWait = 0;
-        public int StreamingSessionWait {
+        private decimal streamingSessionWait = 0;
+        public decimal StreamingSessionWait {
             get
             {
                 return streamingSessionWait;
@@ -181,8 +184,8 @@ namespace RealtimeViewer.Controls
         /// <summary>
         /// Gセンサー検索範囲(時間)
         /// </summary>
-        private double prepostDuration = 0;
-        public double PrepostDuration
+        private decimal prepostDuration = 0;
+        public decimal PrepostDuration
         {
             get
             {
@@ -244,13 +247,13 @@ namespace RealtimeViewer.Controls
         {
             if (Settings != null)
             {
-                StreamingRequestRetryCount = Settings.StreamingRequestRetryCount;
-                StreamingSessionRetryCount = Settings.StreamingSessionRetryCount;
-                StreamingRequestWait = Settings.StreamingRequestWait;
-                StreamingSessionWait = Settings.StreamingSessionWait;
+                StreamingRequestRetryCount = Convert.ToDecimal(Settings.StreamingRequestRetryCount);
+                StreamingSessionRetryCount = Convert.ToDecimal(Settings.StreamingSessionRetryCount);
+                StreamingRequestWait = Convert.ToDecimal(Settings.StreamingRequestWait);
+                StreamingSessionWait = Convert.ToDecimal(Settings.StreamingSessionWait);
                 UseEmergencyPopUp = Settings.UseEmergencyPopUp;
                 LogFileDirectory = Settings.LogFileDirectory;
-                PrepostDuration = Settings.PrePostDuration;
+                PrepostDuration = Convert.ToDecimal(Settings.PrePostDuration);
                 
                 officeInfoDataSource.Clear();
                 if (OfficeList != null)
@@ -279,13 +282,13 @@ namespace RealtimeViewer.Controls
         {
             if (Settings != null)
             {
-                Settings.StreamingRequestRetryCount = streamingRequestRetryCount;
-                Settings.StreamingRequestWait = streamingRequestWait;
-                Settings.StreamingSessionRetryCount = streamingSessionRetryCount;
-                Settings.StreamingSessionWait = streamingSessionWait;
+                Settings.StreamingRequestRetryCount = Convert.ToInt32(streamingRequestRetryCount);
+                Settings.StreamingRequestWait = Convert.ToInt32(streamingRequestWait);
+                Settings.StreamingSessionRetryCount = Convert.ToInt32(streamingSessionRetryCount);
+                Settings.StreamingSessionWait = Convert.ToInt32(streamingSessionWait);
                 Settings.UseEmergencyPopUp = useEmergencyPopUp;
                 Settings.LogFileDirectory = logFileDirectory;
-                Settings.PrePostDuration = prepostDuration;
+                Settings.PrePostDuration = Convert.ToDouble(prepostDuration);
 
                 List<int> excludeOfficeList = new List<int>();
                 //Dictionary<int, (int latitude, int longitude)> officeLocations = new Dictionary<int, (int latitude, int longitude)>();

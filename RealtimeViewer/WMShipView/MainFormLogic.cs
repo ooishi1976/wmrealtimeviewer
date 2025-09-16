@@ -50,7 +50,7 @@ namespace RealtimeViewer.WMShipView
 
         private MainViewModel ViewModel { get; set; } = new MainViewModel();
 
-        private CancellationTokenSource MovieCancellationTokenSource { get; set; } = new CancellationTokenSource();
+        private CancellationTokenSource MovieCancellationTokenSource { get; set; } = null;
 
         /// <summary>
         /// イベント関連のキャンセルトークンソース
@@ -220,6 +220,10 @@ namespace RealtimeViewer.WMShipView
             EventListBindingSource.Filter = "MovieType <> 2";
             gridEventList.AutoGenerateColumns = false;
             gridEventList.DataSource = EventListBindingSource;
+            if (EventListBindingSource.List is DataView dataView)
+            {
+                ViewModel.FilteredEventTable = dataView;
+            }
         }
 
         private void UnbindEventDataSource()

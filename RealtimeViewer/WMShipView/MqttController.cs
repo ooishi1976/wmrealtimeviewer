@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.ServiceModel.Channels;
+using System.ServiceModel.Dispatcher;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -133,6 +134,14 @@ namespace RealtimeViewer.WMShipView
         private List<TopicRegex> TopicRegexes { get; set; } = new List<TopicRegex>();
 
         /// <summary>
+        /// 再接続用タイマー
+        /// </summary>
+        private System.Timers.Timer ReconnectTimer { get; set; } = null;
+
+
+        private ServerInfo ServerInfo { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public MqttController()
@@ -159,9 +168,9 @@ namespace RealtimeViewer.WMShipView
             //  MQTTサーバ設定
             var topic_list = new List<string>();
             var qos_list = new List<byte>();
-            var serverInfo = phygicalServerInfo;
+            ServerInfo = phygicalServerInfo;
 
-            MqttClient = new MqttClient(serverInfo.MqttAddr);
+            MqttClient = new MqttClient(ServerInfo.MqttAddr);
             MqttClient.MqttMsgPublishReceived += MqttClient_MqttMsgPublishReceived; ;
             MqttClient.MqttMsgPublished += MqttClient_MqttMsgPublished;
             MqttClient.ConnectionClosed += MqttClient_ConnectionClosed;
@@ -203,8 +212,9 @@ namespace RealtimeViewer.WMShipView
             if (MqttClient != null)
             {
                 // MQTTクライアントからイベントハンドラを取り除いておく。
+                MqttClient.MqttMsgPublishReceived -= MqttClient_MqttMsgPublishReceived;
+                MqttClient.MqttMsgPublished -= MqttClient_MqttMsgPublished;
                 MqttClient.ConnectionClosed -= MqttClient_ConnectionClosed;
-
                 if (MqttClient.IsConnected)
                 {
                     MqttClient.Disconnect();
@@ -218,28 +228,32 @@ namespace RealtimeViewer.WMShipView
                 !loactionHandlers.Contains(locationHandler))
             {
                 LocationReceived += locationHandler;
+                loactionHandlers.Add(locationHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonError> errorHandler &&
                      !errorHandlers.Contains(errorHandler))
             {
                 ErrorReceived += errorHandler;
+                errorHandlers.Add(errorHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonEventAccOn> accOnHandler &&
                      !accOnHandlers.Contains(accOnHandler))
             {
                 AccOnReceived += accOnHandler;
+                accOnHandlers.Add(accOnHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonPrepostEvent> prepostHandler &&
                      !prepostHandlers.Contains(prepostHandler))
             {
                 PrepostReceived += prepostHandler;
+                prepostHandlers.Add(prepostHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonStreamingStatus> streamingHandler &&
                      !streamingHandlers.Contains(streamingHandler))
             {
                 StreamingReceived += streamingHandler;
+                streamingHandlers.Add(streamingHandler);
             }
-
         }
 
         public void RemoveReceivedHandler<T>(MqttMessageHandler<T> handler)
@@ -248,32 +262,49 @@ namespace RealtimeViewer.WMShipView
                 loactionHandlers.Contains(locationHandler))
             {
                 LocationReceived -= locationHandler;
+                loactionHandlers.Remove(locationHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonError> errorHandler &&
                      errorHandlers.Contains(errorHandler))
             {
                 ErrorReceived -= errorHandler;
+               errorHandlers.Remove(errorHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonEventAccOn> accOnHandler &&
                      accOnHandlers.Contains(accOnHandler))
             {
                 AccOnReceived -= accOnHandler;
+                accOnHandlers.Remove(accOnHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonPrepostEvent> prepostHandler &&
                      prepostHandlers.Contains(prepostHandler))
             {
                 PrepostReceived -= prepostHandler;
+                prepostHandlers.Remove(prepostHandler);
             }
             else if (handler is MqttMessageHandler<MqttJsonStreamingStatus> streamingHandler &&
                      streamingHandlers.Contains(streamingHandler))
             {
                 StreamingReceived -= streamingHandler;
+                streamingHandlers.Remove(streamingHandler);
             }
         }
 
         private void MqttClient_ConnectionClosed(object sender, EventArgs e)
         {
             Closed?.Invoke(sender, e);
+
+            // 再接続する。Form Closed 時、再接続しないよう、先にこのイベントハンドラを取り除くこと！
+            if (ReconnectTimer != null)
+            {
+                ReconnectTimer.Dispose();
+                ReconnectTimer = null;
+            }
+            ReconnectTimer = new System.Timers.Timer(10 * 1000);
+            ReconnectTimer.Elapsed += ReconnectTimer_Elapsed;
+            ReconnectTimer.AutoReset = true; // true:繰り返す。
+            ReconnectTimer.Enabled = true;
+
         }
 
         private void MqttClient_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
@@ -324,6 +355,61 @@ namespace RealtimeViewer.WMShipView
                         case TopicLabel.TopicStreamingStatus:
                             StreamingReceived?.Invoke(this, new MqttMessageEventArgs<MqttJsonStreamingStatus>(label, msg));
                             break;
+                    }
+                }
+            }
+        }
+
+        private void ReconnectTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Debug.WriteLine($"MQTT try reconnect {e.SignalTime}");
+            if (MqttClient == null)
+            {
+                ConnectMQTTServer(ServerInfo);
+
+            }
+            else
+            {
+                if (MqttClient.IsConnected)
+                {
+                    Debug.WriteLine($"MQTT reconnect succeeded");
+                    ReconnectTimer.AutoReset = false;
+                    ReconnectTimer.Enabled = false;
+                    foreach (var handler in loactionHandlers)
+                    {
+                        LocationReceived += handler;
+                    }
+                    foreach (var handler in errorHandlers)
+                    {
+                        ErrorReceived += handler;
+                    }
+                    foreach (var handler in accOnHandlers)
+                    {
+                        AccOnReceived += handler;
+                    }
+                    foreach (var handler in prepostHandlers)
+                    {
+                        PrepostReceived += handler;
+                    }
+                    foreach (var handler in streamingHandlers)
+                    {
+                        StreamingReceived += handler;
+                    }
+                }
+                else
+                {
+                    // 切断してからリトライ。
+                    try
+                    {
+                        MqttClient.Disconnect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"@@@ Exception : {ex}, {ex.StackTrace}");
+                    }
+                    finally 
+                    {
+                        MqttClient = null;
                     }
                 }
             }

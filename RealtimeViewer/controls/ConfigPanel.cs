@@ -16,9 +16,38 @@ namespace RealtimeViewer.Controls
 {
     public partial class ConfigPanel : UserControl
     {
+        private BindingSource officeBindingSource;
+        private BindingSource serverBindingSource;
+
         public ConfigPanel()
         {
             InitializeComponent();
+        }
+
+        protected void BindViewModel()
+        {
+            officeBindingSource = new BindingSource();
+            officeBindingSource.DataSource = dataModel.OfficeInfoDataSource;
+            officeBindingSource.Sort = "Id";
+            dataGridViewOffice.AutoGenerateColumns = false;
+            dataGridViewOffice.DataSource = officeBindingSource;
+
+            serverBindingSource = new BindingSource();
+            serverBindingSource.DataSource = dataModel.ServerInfoDataSource;
+            comboBoxServers.DisplayMember = "Name";
+            comboBoxServers.ValueMember = "Id";
+            comboBoxServers.DataSource = serverBindingSource;
+            //comboBoxServers.DataSource = dataModel.ServerInfoDataSource;
+            comboBoxServers.DataBindings.Add("SelectedValue", DataModel, nameof(DataModel.OperationServer));
+
+            numericUpDownRequestWait.DataBindings.Add("Value", DataModel, nameof(DataModel.StreamingRequestWait));
+            numericUpDownSessionWait.DataBindings.Add("Value", DataModel, nameof(DataModel.StreamingSessionWait));
+            numericUpDownRequestRetryCount.DataBindings.Add("Value", DataModel, nameof(DataModel.StreamingRequestRetryCount));
+            numericUpDownSessionRetryCount.DataBindings.Add("Value", DataModel, nameof(DataModel.StreamingSessionRetryCount));
+            checkBoxPopUpEmergency.DataBindings.Add("Checked", DataModel, nameof(DataModel.UseEmergencyPopUp));
+            labelLogFileDirectory.DataBindings.Add("Text", DataModel, nameof(DataModel.LogFileDirectory));
+            numericUpDownPrepostDuration.DataBindings.Add("Value", DataModel, nameof(DataModel.PrepostDuration));
+
         }
 
         /// <summary>
@@ -26,7 +55,8 @@ namespace RealtimeViewer.Controls
         /// コントロールやデータソースにバインドする
         /// </summary>
         private ConfigPanelModel dataModel = null;
-        public ConfigPanelModel DataModel {
+        public ConfigPanelModel DataModel 
+        {
             get 
             {
                 return dataModel;
@@ -39,8 +69,9 @@ namespace RealtimeViewer.Controls
                 // パネルのコンボボックスにDataSourceを設定すると例外が発生する
                 dataModel = value;
                 numericUpDownSessionWait.Minimum = value.StreamingSessionWaitMin;
-                officeInfoDataSourceBindingSource.DataSource = dataModel.OfficeInfoDataSource;
-                configPanelModelBindingSource.DataSource = dataModel;
+                BindViewModel();
+                //officeInfoDataSourceBindingSource.DataSource = dataModel.OfficeInfoDataSource;
+                //configPanelModelBindingSource.DataSource = dataModel;
 
             }
         }

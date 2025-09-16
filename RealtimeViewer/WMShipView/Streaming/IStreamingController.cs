@@ -29,6 +29,11 @@ namespace RealtimeViewer.WMShipView.Streaming
         void Stop(string deviceId);
 
         /// <summary>
+        /// 全停止
+        /// </summary>
+        void AbortAll();
+
+        /// <summary>
         /// チャンネル変更
         /// </summary>
         /// <param name="deviceId"></param>

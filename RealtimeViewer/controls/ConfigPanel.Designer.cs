@@ -34,7 +34,6 @@ namespace RealtimeViewer.Controls
             this.groupBoxServers = new System.Windows.Forms.GroupBox();
             this.comboBoxServers = new System.Windows.Forms.ComboBox();
             this.serverInfoDataSourceBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.configPanelModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBoxPrePostDuration = new System.Windows.Forms.GroupBox();
             this.labelPrepostDuration = new System.Windows.Forms.Label();
             this.numericUpDownPrepostDuration = new System.Windows.Forms.NumericUpDown();
@@ -47,11 +46,6 @@ namespace RealtimeViewer.Controls
             this.checkBoxPopUpEmergency = new System.Windows.Forms.CheckBox();
             this.groupBoxOfficeSetting = new System.Windows.Forms.GroupBox();
             this.dataGridViewOffice = new System.Windows.Forms.DataGridView();
-            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.companyIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.officeInfoDataSourceBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBoxRealtimeSetting = new System.Windows.Forms.GroupBox();
             this.numericUpDownSessionWait = new System.Windows.Forms.NumericUpDown();
@@ -66,10 +60,13 @@ namespace RealtimeViewer.Controls
             this.buttonConfigCancel = new System.Windows.Forms.Button();
             this.buttonConfigApply = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.ColumnSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnOfficeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.configPanelModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panelConfigMain.SuspendLayout();
             this.groupBoxServers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverInfoDataSourceBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configPanelModelBindingSource)).BeginInit();
             this.groupBoxPrePostDuration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrepostDuration)).BeginInit();
             this.groupBoxLogPath.SuspendLayout();
@@ -84,6 +81,7 @@ namespace RealtimeViewer.Controls
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSessionRetryCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRequestRetryCount)).BeginInit();
             this.panelConfigButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // panelConfigMain
@@ -113,14 +111,11 @@ namespace RealtimeViewer.Controls
             // 
             // comboBoxServers
             // 
-            this.comboBoxServers.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.configPanelModelBindingSource, "OperationServer", true));
-            this.comboBoxServers.DataSource = this.serverInfoDataSourceBindingSource;
-            this.comboBoxServers.DisplayMember = "Name";
             this.comboBoxServers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxServers.FormattingEnabled = true;
             this.comboBoxServers.Location = new System.Drawing.Point(17, 28);
             this.comboBoxServers.Name = "comboBoxServers";
-            this.comboBoxServers.Size = new System.Drawing.Size(309, 26);
+            this.comboBoxServers.Size = new System.Drawing.Size(309, 28);
             this.comboBoxServers.TabIndex = 0;
             this.comboBoxServers.ValueMember = "Id";
             // 
@@ -129,10 +124,6 @@ namespace RealtimeViewer.Controls
             this.serverInfoDataSourceBindingSource.DataMember = "ServerInfoDataSource";
             this.serverInfoDataSourceBindingSource.DataSource = this.configPanelModelBindingSource;
             this.serverInfoDataSourceBindingSource.CurrentChanged += new System.EventHandler(this.serverInfoDataSourceBindingSource_CurrentChanged);
-            // 
-            // configPanelModelBindingSource
-            // 
-            this.configPanelModelBindingSource.DataSource = typeof(RealtimeViewer.Controls.ConfigPanelModel);
             // 
             // groupBoxPrePostDuration
             // 
@@ -150,13 +141,12 @@ namespace RealtimeViewer.Controls
             this.labelPrepostDuration.AutoSize = true;
             this.labelPrepostDuration.Location = new System.Drawing.Point(144, 32);
             this.labelPrepostDuration.Name = "labelPrepostDuration";
-            this.labelPrepostDuration.Size = new System.Drawing.Size(40, 18);
+            this.labelPrepostDuration.Size = new System.Drawing.Size(41, 20);
             this.labelPrepostDuration.TabIndex = 1;
             this.labelPrepostDuration.Text = "秒間";
             // 
             // numericUpDownPrepostDuration
             // 
-            this.numericUpDownPrepostDuration.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.configPanelModelBindingSource, "PrepostDuration", true));
             this.numericUpDownPrepostDuration.Location = new System.Drawing.Point(17, 28);
             this.numericUpDownPrepostDuration.Maximum = new decimal(new int[] {
             60,
@@ -222,7 +212,6 @@ namespace RealtimeViewer.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLogFileDirectory.AutoSize = true;
             this.tableLayoutPanelLogFileDirectory.SetColumnSpan(this.labelLogFileDirectory, 2);
-            this.labelLogFileDirectory.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.configPanelModelBindingSource, "LogFileDirectory", true));
             this.labelLogFileDirectory.Location = new System.Drawing.Point(3, 3);
             this.labelLogFileDirectory.Margin = new System.Windows.Forms.Padding(3);
             this.labelLogFileDirectory.Name = "labelLogFileDirectory";
@@ -248,7 +237,7 @@ namespace RealtimeViewer.Controls
             // 
             this.groupBoxNotification.Controls.Add(this.checkBoxPopUpEmergency);
             this.groupBoxNotification.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.configPanelModelBindingSource, "IsApplyConfig", true));
-            this.groupBoxNotification.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxNotification.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.groupBoxNotification.Location = new System.Drawing.Point(22, 404);
             this.groupBoxNotification.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.groupBoxNotification.Name = "groupBoxNotification";
@@ -261,11 +250,10 @@ namespace RealtimeViewer.Controls
             // checkBoxPopUpEmergency
             // 
             this.checkBoxPopUpEmergency.AutoSize = true;
-            this.checkBoxPopUpEmergency.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.configPanelModelBindingSource, "UseEmergencyPopUp", true));
             this.checkBoxPopUpEmergency.Location = new System.Drawing.Point(17, 29);
             this.checkBoxPopUpEmergency.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.checkBoxPopUpEmergency.Name = "checkBoxPopUpEmergency";
-            this.checkBoxPopUpEmergency.Size = new System.Drawing.Size(164, 22);
+            this.checkBoxPopUpEmergency.Size = new System.Drawing.Size(162, 24);
             this.checkBoxPopUpEmergency.TabIndex = 0;
             this.checkBoxPopUpEmergency.Text = "緊急通報を表示する";
             this.checkBoxPopUpEmergency.UseVisualStyleBackColor = true;
@@ -273,7 +261,7 @@ namespace RealtimeViewer.Controls
             // groupBoxOfficeSetting
             // 
             this.groupBoxOfficeSetting.Controls.Add(this.dataGridViewOffice);
-            this.groupBoxOfficeSetting.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxOfficeSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.groupBoxOfficeSetting.Location = new System.Drawing.Point(22, 159);
             this.groupBoxOfficeSetting.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.groupBoxOfficeSetting.Name = "groupBoxOfficeSetting";
@@ -288,15 +276,11 @@ namespace RealtimeViewer.Controls
             this.dataGridViewOffice.AllowUserToAddRows = false;
             this.dataGridViewOffice.AllowUserToDeleteRows = false;
             this.dataGridViewOffice.AllowUserToResizeRows = false;
-            this.dataGridViewOffice.AutoGenerateColumns = false;
             this.dataGridViewOffice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewOffice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.visibleDataGridViewCheckBoxColumn,
-            this.nameDataGridViewTextBoxColumn,
-            this.locationDataGridViewTextBoxColumn,
-            this.idDataGridViewTextBoxColumn,
-            this.companyIdDataGridViewTextBoxColumn});
-            this.dataGridViewOffice.DataSource = this.officeInfoDataSourceBindingSource;
+            this.ColumnSelect,
+            this.ColumnOfficeName,
+            this.ColumnAddress});
             this.dataGridViewOffice.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewOffice.Location = new System.Drawing.Point(17, 34);
             this.dataGridViewOffice.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -310,47 +294,6 @@ namespace RealtimeViewer.Controls
             this.dataGridViewOffice.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.DataGridViewOffice_CellParsing);
             this.dataGridViewOffice.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridViewOffice_CellValidating);
             this.dataGridViewOffice.CurrentCellDirtyStateChanged += new System.EventHandler(this.DataGridViewOffice_CurrentCellDirtyStateChanged);
-            // 
-            // visibleDataGridViewCheckBoxColumn
-            // 
-            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
-            this.visibleDataGridViewCheckBoxColumn.HeaderText = "";
-            this.visibleDataGridViewCheckBoxColumn.MinimumWidth = 25;
-            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
-            this.visibleDataGridViewCheckBoxColumn.Width = 25;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "営業所名";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // locationDataGridViewTextBoxColumn
-            // 
-            this.locationDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.locationDataGridViewTextBoxColumn.DataPropertyName = "Location";
-            this.locationDataGridViewTextBoxColumn.HeaderText = "所在地(緯度, 経度)";
-            this.locationDataGridViewTextBoxColumn.MinimumWidth = 84;
-            this.locationDataGridViewTextBoxColumn.Name = "locationDataGridViewTextBoxColumn";
-            this.locationDataGridViewTextBoxColumn.Width = 119;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // companyIdDataGridViewTextBoxColumn
-            // 
-            this.companyIdDataGridViewTextBoxColumn.DataPropertyName = "CompanyId";
-            this.companyIdDataGridViewTextBoxColumn.HeaderText = "CompanyId";
-            this.companyIdDataGridViewTextBoxColumn.Name = "companyIdDataGridViewTextBoxColumn";
-            this.companyIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.companyIdDataGridViewTextBoxColumn.Visible = false;
             // 
             // officeInfoDataSourceBindingSource
             // 
@@ -368,7 +311,7 @@ namespace RealtimeViewer.Controls
             this.groupBoxRealtimeSetting.Controls.Add(this.labelRetrySession);
             this.groupBoxRealtimeSetting.Controls.Add(this.labelRetryRequest);
             this.groupBoxRealtimeSetting.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.configPanelModelBindingSource, "IsApplyConfig", true));
-            this.groupBoxRealtimeSetting.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxRealtimeSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.groupBoxRealtimeSetting.Location = new System.Drawing.Point(22, 27);
             this.groupBoxRealtimeSetting.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.groupBoxRealtimeSetting.Name = "groupBoxRealtimeSetting";
@@ -380,7 +323,6 @@ namespace RealtimeViewer.Controls
             // 
             // numericUpDownSessionWait
             // 
-            this.numericUpDownSessionWait.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.configPanelModelBindingSource, "StreamingSessionWait", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDownSessionWait.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numericUpDownSessionWait.Location = new System.Drawing.Point(499, 29);
             this.numericUpDownSessionWait.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -409,13 +351,12 @@ namespace RealtimeViewer.Controls
             this.labelWaitSession.Location = new System.Drawing.Point(293, 31);
             this.labelWaitSession.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelWaitSession.Name = "labelWaitSession";
-            this.labelWaitSession.Size = new System.Drawing.Size(196, 18);
+            this.labelWaitSession.Size = new System.Drawing.Size(182, 20);
             this.labelWaitSession.TabIndex = 2;
             this.labelWaitSession.Text = "配信セッション待ち時間(秒)";
             // 
             // numericUpDownRequestWait
             // 
-            this.numericUpDownRequestWait.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.configPanelModelBindingSource, "StreamingRequestWait", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDownRequestWait.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numericUpDownRequestWait.Location = new System.Drawing.Point(186, 29);
             this.numericUpDownRequestWait.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -444,13 +385,12 @@ namespace RealtimeViewer.Controls
             this.labelWaitRequest.Location = new System.Drawing.Point(12, 31);
             this.labelWaitRequest.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelWaitRequest.Name = "labelWaitRequest";
-            this.labelWaitRequest.Size = new System.Drawing.Size(164, 18);
+            this.labelWaitRequest.Size = new System.Drawing.Size(159, 20);
             this.labelWaitRequest.TabIndex = 0;
             this.labelWaitRequest.Text = "配信要求待ち時間(秒)";
             // 
             // numericUpDownSessionRetryCount
             // 
-            this.numericUpDownSessionRetryCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.configPanelModelBindingSource, "StreamingSessionRetryCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDownSessionRetryCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numericUpDownSessionRetryCount.Location = new System.Drawing.Point(499, 71);
             this.numericUpDownSessionRetryCount.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -465,7 +405,6 @@ namespace RealtimeViewer.Controls
             // 
             // numericUpDownRequestRetryCount
             // 
-            this.numericUpDownRequestRetryCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.configPanelModelBindingSource, "StreamingRequestRetryCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDownRequestRetryCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numericUpDownRequestRetryCount.Location = new System.Drawing.Point(186, 71);
             this.numericUpDownRequestRetryCount.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -484,7 +423,7 @@ namespace RealtimeViewer.Controls
             this.labelRetrySession.Location = new System.Drawing.Point(293, 73);
             this.labelRetrySession.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelRetrySession.Name = "labelRetrySession";
-            this.labelRetrySession.Size = new System.Drawing.Size(183, 18);
+            this.labelRetrySession.Size = new System.Drawing.Size(171, 20);
             this.labelRetrySession.TabIndex = 6;
             this.labelRetrySession.Text = "配信セッションリトライ回数";
             // 
@@ -494,7 +433,7 @@ namespace RealtimeViewer.Controls
             this.labelRetryRequest.Location = new System.Drawing.Point(12, 73);
             this.labelRetryRequest.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelRetryRequest.Name = "labelRetryRequest";
-            this.labelRetryRequest.Size = new System.Drawing.Size(151, 18);
+            this.labelRetryRequest.Size = new System.Drawing.Size(148, 20);
             this.labelRetryRequest.TabIndex = 4;
             this.labelRetryRequest.Text = "配信要求リトライ回数";
             // 
@@ -512,7 +451,7 @@ namespace RealtimeViewer.Controls
             // 
             // buttonConfigCancel
             // 
-            this.buttonConfigCancel.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonConfigCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonConfigCancel.Location = new System.Drawing.Point(136, 13);
             this.buttonConfigCancel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.buttonConfigCancel.Name = "buttonConfigCancel";
@@ -524,7 +463,7 @@ namespace RealtimeViewer.Controls
             // 
             // buttonConfigApply
             // 
-            this.buttonConfigApply.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonConfigApply.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonConfigApply.Location = new System.Drawing.Point(22, 13);
             this.buttonConfigApply.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.buttonConfigApply.Name = "buttonConfigApply";
@@ -534,20 +473,51 @@ namespace RealtimeViewer.Controls
             this.buttonConfigApply.UseVisualStyleBackColor = true;
             this.buttonConfigApply.Click += new System.EventHandler(this.ButtonConfigApply_Click);
             // 
+            // ColumnSelect
+            // 
+            this.ColumnSelect.DataPropertyName = "Visible";
+            this.ColumnSelect.HeaderText = "";
+            this.ColumnSelect.MinimumWidth = 25;
+            this.ColumnSelect.Name = "ColumnSelect";
+            this.ColumnSelect.Width = 25;
+            // 
+            // ColumnOfficeName
+            // 
+            this.ColumnOfficeName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnOfficeName.DataPropertyName = "Name";
+            this.ColumnOfficeName.HeaderText = "営業所";
+            this.ColumnOfficeName.Name = "ColumnOfficeName";
+            this.ColumnOfficeName.ReadOnly = true;
+            this.ColumnOfficeName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnOfficeName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ColumnAddress
+            // 
+            this.ColumnAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.ColumnAddress.DataPropertyName = "Location";
+            this.ColumnAddress.HeaderText = "所在地(緯度, 経度)";
+            this.ColumnAddress.Name = "ColumnAddress";
+            this.ColumnAddress.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColumnAddress.Width = 97;
+            // 
+            // configPanelModelBindingSource
+            // 
+            this.configPanelModelBindingSource.DataSource = typeof(RealtimeViewer.Controls.ConfigPanelModel);
+            // 
             // ConfigPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelConfigButton);
             this.Controls.Add(this.panelConfigMain);
-            this.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "ConfigPanel";
             this.Size = new System.Drawing.Size(1517, 1059);
             this.panelConfigMain.ResumeLayout(false);
             this.groupBoxServers.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serverInfoDataSourceBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configPanelModelBindingSource)).EndInit();
             this.groupBoxPrePostDuration.ResumeLayout(false);
             this.groupBoxPrePostDuration.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrepostDuration)).EndInit();
@@ -566,6 +536,7 @@ namespace RealtimeViewer.Controls
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSessionRetryCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRequestRetryCount)).EndInit();
             this.panelConfigButton.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -590,11 +561,6 @@ namespace RealtimeViewer.Controls
         private System.Windows.Forms.Panel panelConfigButton;
         private System.Windows.Forms.Button buttonConfigCancel;
         private System.Windows.Forms.Button buttonConfigApply;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn companyIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.GroupBox groupBoxLogPath;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLogFileDirectory;
         private System.Windows.Forms.Button buttonOpenLogDirectory;
@@ -607,5 +573,8 @@ namespace RealtimeViewer.Controls
         private System.Windows.Forms.GroupBox groupBoxServers;
         private System.Windows.Forms.ComboBox comboBoxServers;
         private System.Windows.Forms.BindingSource serverInfoDataSourceBindingSource;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnSelect;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOfficeName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAddress;
     }
 }

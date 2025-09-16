@@ -190,30 +190,37 @@ namespace RealtimeViewer.Network.Http
         }
 
         public async Task GetGravity(
-            WMDataSet.EventListDataTable eventTable, 
+            //WMDataSet.EventListDataTable eventTable, 
+            DataView eventTable,
             CancellationToken token,
             UpdateEventsProgress progress)
         {
             var count = 0;
             var total = eventTable.Count;
-            foreach (var eventData in eventTable)
+
+
+            foreach (var data in eventTable)
             {
-                token.ThrowIfCancellationRequested();
-                if (string.IsNullOrEmpty(eventData.Remarks))
+                if (data is DataRowView rowView && 
+                    rowView.Row is WMDataSet.EventListRow eventData)
                 {
-                    var dig = await GetDig(eventData.DeviceId, eventData.Timestamp, token);
-                    if (dig.GravityRecord is GravityRecord g)
+                    token.ThrowIfCancellationRequested();
+                    if (string.IsNullOrEmpty(eventData.Remarks))
                     {
-                        eventData.GX = g.X;
-                        eventData.GY = g.Y;
-                        eventData.GZ = g.Z;
-                        eventData.Remarks = $"X:{g.X:0.00}, Y:{g.Y:0.00}, Z:{g.Z:0.00}";
+                        var dig = await GetDig(eventData.DeviceId, eventData.Timestamp, token);
+                        if (dig.GravityRecord is GravityRecord g)
+                        {
+                            eventData.GX = g.X;
+                            eventData.GY = g.Y;
+                            eventData.GZ = g.Z;
+                            eventData.Remarks = $"X:{g.X:0.00}, Y:{g.Y:0.00}, Z:{g.Z:0.00}";
+                        }
                     }
+                    progress.Invoke(count, total, false);
+                    count++;
                 }
-                progress.Invoke(count, total, false);
-                count++;
             }
-            eventTable.AcceptChanges();
+            //eventTable.AcceptChanges();
             progress.Invoke(count, total, false);
         }
 

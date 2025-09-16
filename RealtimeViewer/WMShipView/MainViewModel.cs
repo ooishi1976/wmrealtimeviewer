@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using MpgCustom;
+using MpgMap;
 using RealtimeViewer.Logger;
 using RealtimeViewer.Model;
 using RealtimeViewer.Movie;
@@ -58,7 +60,9 @@ namespace RealtimeViewer.WMShipView
 
         public WMShipView.WMDataSet.EventListDataTable EventTable { get; set; } = new WMDataSet.EventListDataTable();
 
-        public WMShipView.WMDataSet.PlayListDataTable PlaylistTable { get; set; } = new WMDataSet.PlayListDataTable();
+        public DataView FilteredEventTable { get; set; } 
+
+        public WMShipView.WMDataSet.PlayListDataTable PlaylistTable { get; set; }
 
         #region ユーザ認証
         /// <summary>
@@ -472,23 +476,6 @@ namespace RealtimeViewer.WMShipView
                 100000, 250000, 500000,
                 1000000, 2500000, 5000000,
             };
-
-            //const int OFFSET_COUNT = 64;
-            //const int OFFSET_R = 64;
-            //var p = new List<System.Drawing.Point>();
-            //for (var n = 0; n < OFFSET_COUNT; n++)
-            //{
-            //    var x = OFFSET_R * Math.Cos(n * 2 * Math.PI / OFFSET_COUNT);
-            //    var y = OFFSET_R * Math.Sin(n * 2 * Math.PI / OFFSET_COUNT);
-            //    p.Add(new System.Drawing.Point((int)(x + 0.5), (int)(y + 0.5)));
-            //}
-            //BalloonOffsets = p.ToArray();
-
-            //Random = new Random();
-            //MapEntries = new Dictionary<string, MapEntryInfo>();
-            //MapEntriesForMpgMap = new ArrayList();
-            //RecieveErrorList = new SortableBindingList<CarInfo>();
-            //BindingCarList = new SortableBindingList<MapEntryInfo>();
         }
 
         /// <summary>
@@ -567,6 +554,27 @@ namespace RealtimeViewer.WMShipView
             return await RequestController.GetOfficesAsync(LocalSettings.ExcludeOfficeId);
         }
 
+        public IList<OfficeInfo> GetOfficeInfos()
+        {
+            var result = new BindingList<OfficeInfo>();
+            lock (OfficeTable)
+            {
+                foreach (var row in OfficeTable)
+                {
+                    var office = new OfficeInfo()
+                    {
+                        Id = row.OfficeId,
+                        CompanyId = row.CompanyId,
+                        Location = (row.Longitude, row.Latitude),
+                        Name = row.Name,
+                        Visible = row.Visible
+                    };
+                    result.Add(office);
+                }
+            }
+            return result;
+        }
+
         public async Task<WMDataSet.DeviceDataTable> GetDevicesAsync()
         {
             return await RequestController.GetDevicesAsync();
@@ -589,7 +597,8 @@ namespace RealtimeViewer.WMShipView
             CancellationToken token,
             UpdateEventsProgress progress)
         {
-            await RequestController.GetGravity(EventTable, token, progress);
+            await RequestController.GetGravity(FilteredEventTable, token, progress);
+            //await RequestController.GetGravity(EventTable, token, progress);
         }
 
         public async Task<DownloadResult> EventListDownloadAsync(WMDataSet.EventListRow row, CancellationToken token)
@@ -609,17 +618,23 @@ namespace RealtimeViewer.WMShipView
             return PlaylistTable.Where(item => (item.DeviceId == deviceId && item.Timestamp == timestamp));
         }
 
-        public void PlayffmpegControl(
-            int channel, 
-            string movieFilePath, 
-            string audioFilePath, 
-            string windowTitle, 
-            int windowHeight, 
-            int fps,
-            Action<PlayMovieProgress> movieProgressAction)
+        public void RemoveAllPlayListFile()
         {
-            Debug.WriteLine($"PlayffmpegControl {movieFilePath}, {audioFilePath}");
-            var task = FfmpegCtrl.PlayMovie(channel, movieFilePath, audioFilePath, fps, movieProgressAction);
+            if (PlaylistTable != null)
+            {
+                foreach (var playList in PlaylistTable)
+                {
+                    try
+                    {
+                        var dir = Path.GetDirectoryName(playList.FilePath);
+                        if (Directory.Exists(dir))
+                        {
+                            Directory.Delete(dir, true);
+                        }
+                    }
+                    catch (Exception) {}
+                }
+            }
         }
 
         public void StartStreaming()
@@ -638,6 +653,11 @@ namespace RealtimeViewer.WMShipView
             {
                 StreamingController.Stop(deviceId);
             }
+        }
+
+        public void AbortAllStreaming()
+        {
+            StreamingController.AbortAll();
         }
 
         public void NotifyStreamingStatus()
@@ -766,6 +786,40 @@ namespace RealtimeViewer.WMShipView
         }
 
         /// <summary>
+        /// 指紋認証終了
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        public void StopUserAuth()
+        {
+            userAuthDp?.Dispose();
+        }
+
+        /// <summary>
+        /// 最終状態保存
+        /// </summary>
+        /// <param name="mapScale"></param>
+        public void WriteLastState(int mapScale)
+        {
+            LocalSettings.MappingScale = mapScale;
+            LocalSettings.SelectOfficeID = SelectedOfficeId;
+            LocalSettings.WriteIniFile();
+            WriteEndLog();
+        }
+
+        /// <summary>
+        /// 終了ログ出力
+        /// </summary>
+        private void WriteEndLog()
+        {
+            var userName = string.Empty;
+            if (AuthedUser != null && !string.IsNullOrEmpty(AuthedUser.Name))
+            {
+                userName = AuthedUser.Name;
+            }
+            OperationLogger.Out(OperationLogger.Category.Application, userName, @"RealtimeViewer End");
+        }
+
+        /// <summary>
         /// 指紋認証ハンドラ
         /// </summary>
         /// <param name="sender"></param>
@@ -786,3 +840,4 @@ namespace RealtimeViewer.WMShipView
         }
     }
 }
+

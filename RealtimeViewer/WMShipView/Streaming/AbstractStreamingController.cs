@@ -111,6 +111,14 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
+        public void AbortAll()
+        {
+            foreach (var keyValue in StreamingClients.Values)
+            {
+                Abort(keyValue.DeviceId, StreamingStatuses.None);
+            }
+        }
+
         /// <summary>
         /// クライアントはリストから消さない
         /// </summary>
