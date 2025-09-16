@@ -46,9 +46,6 @@ namespace RealtimeViewer.WMShipView
             this.labelUpdateDate = new System.Windows.Forms.Label();
             this.labelCarListCaption = new System.Windows.Forms.Label();
             this.gridCarList = new System.Windows.Forms.DataGridView();
-            this.DeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelBase = new System.Windows.Forms.Panel();
@@ -103,12 +100,12 @@ namespace RealtimeViewer.WMShipView
             this.zoomBar = new System.Windows.Forms.TrackBar();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.tableLayoutPanelHeader = new System.Windows.Forms.TableLayoutPanel();
-            this.panelCarDisplayMode = new System.Windows.Forms.Panel();
-            this.radioButtonSelect = new System.Windows.Forms.RadioButton();
-            this.radioButtonALL = new System.Windows.Forms.RadioButton();
             this.comboBoxOffice = new System.Windows.Forms.ComboBox();
             this.labelUserName = new System.Windows.Forms.Label();
             this.labelUserNameCaption = new System.Windows.Forms.Label();
+            this.panelCarDisplayMode = new System.Windows.Forms.Panel();
+            this.radioButtonSelect = new System.Windows.Forms.RadioButton();
+            this.radioButtonALL = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelEventList = new System.Windows.Forms.TableLayoutPanel();
             this.buttonDownload = new System.Windows.Forms.Button();
@@ -150,6 +147,9 @@ namespace RealtimeViewer.WMShipView
             this.timerStartMQTT = new System.Windows.Forms.Timer(this.components);
             this.sqliteCommand1 = new Microsoft.Data.Sqlite.SqliteCommand();
             this.timerStreamingPreparation = new System.Windows.Forms.Timer(this.components);
+            this.DeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridCarList)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -256,7 +256,6 @@ namespace RealtimeViewer.WMShipView
             // 
             this.gridCarList.AllowUserToAddRows = false;
             this.gridCarList.AllowUserToDeleteRows = false;
-            this.gridCarList.AllowUserToResizeColumns = false;
             this.gridCarList.AllowUserToResizeRows = false;
             this.gridCarList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
@@ -281,27 +280,6 @@ namespace RealtimeViewer.WMShipView
             this.gridCarList.TabStop = false;
             this.gridCarList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridCarList_CellDoubleClick);
             this.gridCarList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridCarList_ColumnHeaderMouseClick);
-            // 
-            // DeviceName
-            // 
-            this.DeviceName.DataPropertyName = "DeviceId";
-            this.DeviceName.HeaderText = "船名";
-            this.DeviceName.Name = "DeviceName";
-            this.DeviceName.ReadOnly = true;
-            // 
-            // Longitude
-            // 
-            this.Longitude.DataPropertyName = "Longitude";
-            this.Longitude.HeaderText = "経度";
-            this.Longitude.Name = "Longitude";
-            this.Longitude.ReadOnly = true;
-            // 
-            // Latitude
-            // 
-            this.Latitude.DataPropertyName = "Latitude";
-            this.Latitude.HeaderText = "緯度";
-            this.Latitude.Name = "Latitude";
-            this.Latitude.ReadOnly = true;
             // 
             // tabControlMain
             // 
@@ -452,7 +430,6 @@ namespace RealtimeViewer.WMShipView
             this.tableLayoutPanelStreamingOnCar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelStreamingOnCar.Size = new System.Drawing.Size(202, 196);
             this.tableLayoutPanelStreamingOnCar.TabIndex = 1;
-            this.tableLayoutPanelStreamingOnCar.Visible = false;
             // 
             // labelStreamingOnCarCaption
             // 
@@ -724,7 +701,6 @@ namespace RealtimeViewer.WMShipView
             this.progressBarRtStart.Size = new System.Drawing.Size(95, 27);
             this.progressBarRtStart.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBarRtStart.TabIndex = 13;
-            this.progressBarRtStart.Visible = false;
             // 
             // labelRtRetryStatus
             // 
@@ -1016,41 +992,6 @@ namespace RealtimeViewer.WMShipView
             this.tableLayoutPanelHeader.Size = new System.Drawing.Size(1431, 50);
             this.tableLayoutPanelHeader.TabIndex = 0;
             // 
-            // panelCarDisplayMode
-            // 
-            this.panelCarDisplayMode.Controls.Add(this.radioButtonSelect);
-            this.panelCarDisplayMode.Controls.Add(this.radioButtonALL);
-            this.panelCarDisplayMode.Location = new System.Drawing.Point(3, 3);
-            this.panelCarDisplayMode.Name = "panelCarDisplayMode";
-            this.panelCarDisplayMode.Size = new System.Drawing.Size(298, 40);
-            this.panelCarDisplayMode.TabIndex = 16;
-            // 
-            // radioButtonSelect
-            // 
-            this.radioButtonSelect.AutoSize = true;
-            this.radioButtonSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.radioButtonSelect.Location = new System.Drawing.Point(132, 11);
-            this.radioButtonSelect.Name = "radioButtonSelect";
-            this.radioButtonSelect.Size = new System.Drawing.Size(142, 28);
-            this.radioButtonSelect.TabIndex = 13;
-            this.radioButtonSelect.TabStop = true;
-            this.radioButtonSelect.Text = "選択船舶表示";
-            this.radioButtonSelect.UseVisualStyleBackColor = true;
-            this.radioButtonSelect.CheckedChanged += new System.EventHandler(this.RadioButtonSelect_CheckedChanged);
-            // 
-            // radioButtonALL
-            // 
-            this.radioButtonALL.AutoSize = true;
-            this.radioButtonALL.Checked = true;
-            this.radioButtonALL.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.radioButtonALL.Location = new System.Drawing.Point(3, 11);
-            this.radioButtonALL.Name = "radioButtonALL";
-            this.radioButtonALL.Size = new System.Drawing.Size(123, 28);
-            this.radioButtonALL.TabIndex = 12;
-            this.radioButtonALL.TabStop = true;
-            this.radioButtonALL.Text = "全船舶表示";
-            this.radioButtonALL.UseVisualStyleBackColor = true;
-            // 
             // comboBoxOffice
             // 
             this.comboBoxOffice.DisplayMember = "Id";
@@ -1091,6 +1032,41 @@ namespace RealtimeViewer.WMShipView
             this.labelUserNameCaption.TabIndex = 2;
             this.labelUserNameCaption.Text = "ユーザー:";
             this.labelUserNameCaption.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelCarDisplayMode
+            // 
+            this.panelCarDisplayMode.Controls.Add(this.radioButtonSelect);
+            this.panelCarDisplayMode.Controls.Add(this.radioButtonALL);
+            this.panelCarDisplayMode.Location = new System.Drawing.Point(3, 3);
+            this.panelCarDisplayMode.Name = "panelCarDisplayMode";
+            this.panelCarDisplayMode.Size = new System.Drawing.Size(298, 40);
+            this.panelCarDisplayMode.TabIndex = 16;
+            // 
+            // radioButtonSelect
+            // 
+            this.radioButtonSelect.AutoSize = true;
+            this.radioButtonSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.radioButtonSelect.Location = new System.Drawing.Point(132, 11);
+            this.radioButtonSelect.Name = "radioButtonSelect";
+            this.radioButtonSelect.Size = new System.Drawing.Size(142, 28);
+            this.radioButtonSelect.TabIndex = 13;
+            this.radioButtonSelect.TabStop = true;
+            this.radioButtonSelect.Text = "選択船舶表示";
+            this.radioButtonSelect.UseVisualStyleBackColor = true;
+            this.radioButtonSelect.CheckedChanged += new System.EventHandler(this.RadioButtonSelect_CheckedChanged);
+            // 
+            // radioButtonALL
+            // 
+            this.radioButtonALL.AutoSize = true;
+            this.radioButtonALL.Checked = true;
+            this.radioButtonALL.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.radioButtonALL.Location = new System.Drawing.Point(3, 11);
+            this.radioButtonALL.Name = "radioButtonALL";
+            this.radioButtonALL.Size = new System.Drawing.Size(123, 28);
+            this.radioButtonALL.TabIndex = 12;
+            this.radioButtonALL.TabStop = true;
+            this.radioButtonALL.Text = "全船舶表示";
+            this.radioButtonALL.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -1598,6 +1574,27 @@ namespace RealtimeViewer.WMShipView
             this.timerStreamingPreparation.Interval = 1000;
             this.timerStreamingPreparation.Tick += new System.EventHandler(this.TimerStreamingPreparation_Tick);
             // 
+            // DeviceName
+            // 
+            this.DeviceName.DataPropertyName = "CarNumber";
+            this.DeviceName.HeaderText = "船名";
+            this.DeviceName.Name = "DeviceName";
+            this.DeviceName.ReadOnly = true;
+            // 
+            // Longitude
+            // 
+            this.Longitude.DataPropertyName = "Longitude";
+            this.Longitude.HeaderText = "経度";
+            this.Longitude.Name = "Longitude";
+            this.Longitude.ReadOnly = true;
+            // 
+            // Latitude
+            // 
+            this.Latitude.DataPropertyName = "Latitude";
+            this.Latitude.HeaderText = "緯度";
+            this.Latitude.Name = "Latitude";
+            this.Latitude.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1762,9 +1759,6 @@ namespace RealtimeViewer.WMShipView
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelHeader;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEventList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelPlay;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn Timestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn CarNumber;
@@ -1772,6 +1766,9 @@ namespace RealtimeViewer.WMShipView
         private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
         private System.Windows.Forms.DataGridViewTextBoxColumn MovieId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sequence;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
     }
 }
 

@@ -21,6 +21,7 @@ using System.Windows.Threading;
 using Mamt;
 using Mamt.Args;
 using Microsoft.Extensions.FileSystemGlobbing;
+using Microsoft.VisualBasic.Devices;
 using MpgCommon;
 using MpgCustom;
 using MpgMap;
@@ -38,6 +39,7 @@ using RealtimeViewer.Network;
 using RealtimeViewer.Network.Http;
 using RealtimeViewer.Network.Mqtt;
 using RealtimeViewer.Setting;
+using RealtimeViewer.WMShipView.Streaming;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using UserBioDP;
@@ -164,9 +166,17 @@ namespace RealtimeViewer.WMShipView
             // HTTP通信用コントローラ作成
             ViewModel.CreateRequestController();
 
-            // MQTTサーバー接続
+            // ストリーミングコントローラ作成
+            ViewModel.CreateStreamingController(Dispatcher.CurrentDispatcher);
+
+            // MQTTリスナー登録
             ViewModel.AddMqttReceivedHandler<MqttJsonLocation>(OnLocationReceived);
             ViewModel.AddMqttReceivedHandler<MqttJsonError>(OnErrorReceived);
+            ViewModel.AddMqttReceivedHandler<MqttJsonEventAccOn>(OnAccOnReceived);
+            ViewModel.AddMqttReceivedHandler<MqttJsonPrepostEvent>(OnPrepostReceived);
+            //ViewModel.AddMqttReceivedHandler<MqttJsonStreamingStatus>(OnStreamingStatusReceived);
+
+            // MQTTサーバー接続
             ViewModel.ConnectMqttServer();
 
             // 地図描画
@@ -195,6 +205,7 @@ namespace RealtimeViewer.WMShipView
                 Invoke((MethodInvoker)(() =>
                 {
                     BindDeviceDataSource();
+                    BindStreamingDataSource();
                     DrawMapEntries();
                     timerGPSDraw.Start();
                 }));
@@ -231,7 +242,10 @@ namespace RealtimeViewer.WMShipView
             {
                 ViewModel.SelectedDeviceId = device.DeviceId;
                 ViewModel.SelectedDevice = device;
-                ViewModel.SelectedDeviceError = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+                lock (ViewModel.ErrorTable)
+                {
+                    ViewModel.SelectedDeviceError = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+                }
             }
             else
             {
@@ -239,7 +253,7 @@ namespace RealtimeViewer.WMShipView
                 ViewModel.SelectedDevice = default;
                 ViewModel.SelectedDeviceError = default;
             }
-
+            ViewModel.NotifyStreamingStatus();
 
             if (ViewModel.IsDeviceFocus)
             {
@@ -257,23 +271,7 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void GridCarList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //var deviceId = ViewModel.SelectedDeviceId;
             LeftPanelShow();
-            //if (!string.IsNullOrEmpty(deviceId))
-            //{
-            //    var deviceRow = ViewModel.DeviceTable.FirstOrDefault(item => item.DeviceId == deviceId);
-            //    var errorRow = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == deviceId);
-            //    if (deviceRow is WMDataSet.DeviceRow device &&
-            //        device.TryGetLocation(out var location))
-            //    {
-            //        var errorCode = 0;
-            //        if (errorRow is WMDataSet.ErrorRow error)
-            //        {
-            //            errorCode = error.GetCode();
-            //        }
-            //        LeftPanelShow(deviceId, errorCode);
-            //    }
-            //}
         }
 
         /// <summary>
@@ -416,10 +414,18 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void buttonStreamStart_Click(object sender, EventArgs e)
         {
+            if (ViewModel.IsAliveSelectedDevice)
+            {
+                ViewModel.StartStreaming();
+            }
         }
 
         private void buttonStreamStop_Click(object sender, EventArgs e)
         {
+            if (ViewModel.IsAliveSelectedDevice)
+            {
+                ViewModel.StopStreaming();
+            }
         }
 
         /// <summary>
@@ -432,6 +438,41 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void RadioButtonRtCh1_CheckedChanged(object sender, EventArgs e)
         {
+            if (sender is RadioButton radio)
+            {
+                if (radio.Checked)
+                {
+                    if (ViewModel.CanChangeStreamingChannel())
+                    {
+                        // Sunken
+                        radio.FlatStyle = FlatStyle.Popup;
+                        radio.BackColor = SystemColors.ControlDark;
+                        radio.UseVisualStyleBackColor = false;
+                        try
+                        {
+                            if (int.TryParse(radio.Tag.ToString(), out var channel))
+                            {
+                                Debug.WriteLine($"MQTT Request a changes streaming channel: {channel}");
+                                ViewModel.ChangeStreamingChannel(channel);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"@@@ Exception: {ex}, {ex.StackTrace}");
+                        }
+                    }
+                    else
+                    {
+                        radio.Checked = false;
+                    }
+                }
+                else
+                {
+                    radio.FlatStyle = FlatStyle.Standard;
+                    radio.BackColor = Color.CornflowerBlue;
+                    radio.UseVisualStyleBackColor = true;
+                }
+            }
         }
 #endregion "リアルタイム再生関係"
 
@@ -975,6 +1016,7 @@ namespace RealtimeViewer.WMShipView
                     { 
                         device.Longitude = message.Lon;
                         device.Latitude = message.Lat;
+                        device.LastNotificationTime = message.Ts;
                         device.AcceptChanges();
                         //deviceTable.AcceptChanges();
                     }));
@@ -989,44 +1031,116 @@ namespace RealtimeViewer.WMShipView
 
         private void OnErrorReceived(object sender, MqttMessageEventArgs<MqttJsonError> e)
         {
-            var message = e.DeserializeMessage();
             try
             {
+                var message = e.DeserializeMessage();
                 var errors = ViewModel.ErrorTable;
-                var row = errors.FirstOrDefault(item => item.DeviceId == message.DeviceId);
-                WMDataSet.ErrorRow error;
-                if (row is WMDataSet.ErrorRow)
+                lock (errors) 
                 {
-                    // 更新
-                    error = (WMDataSet.ErrorRow)row;
-                    error.AcceptChanges();
+                    var row = errors.FirstOrDefault(item => item.DeviceId == message.DeviceId);
+                    WMDataSet.ErrorRow error;
+                    if (row is WMDataSet.ErrorRow)
+                    {
+                        // 更新
+                        error = (WMDataSet.ErrorRow)row;
+                        error.AcceptChanges();
+                    }
+                    else
+                    {
+                        error = errors.NewErrorRow();
+                        error.DeviceId = message.DeviceId;
+                        errors.AddErrorRow(error);
+                    }
+                    error.Timestamp = string.IsNullOrEmpty(message.Ts) ? string.Empty : message.Ts;
+                    error.SdFree = string.IsNullOrEmpty(message.SdFree) ? string.Empty : message.SdFree;
+                    error.SsdFree = string.IsNullOrEmpty(message.SsdFree) ? string.Empty : message.SsdFree;
+                    error.IccId = string.IsNullOrEmpty(message.IccId) ? string.Empty : message.IccId;
+                    error.Error = string.IsNullOrEmpty(message.Error) ? string.Empty : message.Error;
+                    error.ErrorStr = error.GetMessage();
+                    error.Version = string.Empty;
+                    errors.AcceptChanges();
                 }
-                else
+
+                var devices = ViewModel.DeviceTable;
+                var deviceRow = devices.FirstOrDefault(item => item.DeviceId == message.DeviceId);
+                if (deviceRow is WMDataSet.DeviceRow device) 
                 {
-                    error = errors.NewErrorRow();
-                    error.DeviceId = message.DeviceId;
-                    errors.AddErrorRow(error);
+                    device.LastNotificationTime = message.Ts;
                 }
-                error.Timestamp = string.IsNullOrEmpty(message.Ts) ? string.Empty : message.Ts;
-                error.SdFree = string.IsNullOrEmpty(message.SdFree) ? string.Empty : message.SdFree;
-                error.SsdFree = string.IsNullOrEmpty(message.SsdFree) ? string.Empty : message.SsdFree;
-                error.IccId = string.IsNullOrEmpty(message.IccId) ? string.Empty : message.IccId;
-                error.Error = string.IsNullOrEmpty(message.Error) ? string.Empty : message.Error;
-                error.ErrorStr = error.GetMessage();
-                error.Version = string.Empty;
-                errors.AcceptChanges();
             }
             catch (Exception) { }
         }
 
         private void OnAccOnReceived(object sender, MqttMessageEventArgs<MqttJsonEventAccOn> e)
         {
-
+            // TODO AccOn
         }
 
         private void OnPrepostReceived(object sender, MqttMessageEventArgs<MqttJsonPrepostEvent> e)
         {
+            // TODO Prepost
+        }
 
+        private void StreamingStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (sender is ClientStatus clientStatus)
+            {
+                if (e.PropertyName == nameof(clientStatus.Channel))
+                {
+                    RadioButton radio;
+                    switch (clientStatus.Channel)
+                    {
+                        case 1:
+                            radio = radioButtonRtCh2;
+                            break;
+
+                        case 2:
+                            radio = radioButtonRtCh3;
+                            break;
+
+                        case 3:
+                            radio = radioButtonRtCh4;
+                            break;
+
+                        case 4:
+                            radio = radioButtonRtCh5;
+                            break;
+
+                        case 5:
+                            radio = radioButtonRtCh6;
+                            break;
+
+                        case 6:
+                            radio = radioButtonRtCh7;
+                            break;
+
+                        case 7:
+                            radio = radioButtonRtCh8;
+                            break;
+
+                        case 0:
+                        default:
+                            radio = radioButtonRtCh1;
+                            break;
+                    }
+                    radio.Checked = true;
+                    radio.Focus();
+                }
+                else if (e.PropertyName == nameof(clientStatus.Status))
+                {
+                    if (clientStatus.Status != StreamingStatuses.Playing)
+                    {
+                        radioButtonRtCh1.Checked = false;
+                        radioButtonRtCh2.Checked = false;
+                        radioButtonRtCh3.Checked = false;
+                        radioButtonRtCh4.Checked = false;
+                        radioButtonRtCh5.Checked = false;
+                        radioButtonRtCh6.Checked = false;
+                        radioButtonRtCh7.Checked = false;
+                        radioButtonRtCh8.Checked = false;
+                    }
+                }
+            }
         }
         #endregion
 

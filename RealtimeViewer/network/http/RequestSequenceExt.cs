@@ -407,5 +407,10 @@ namespace RealtimeViewer.Network.Http
             return result;
         }
 
+        public async Task<StreamingServerInfo> GetStreamingServerAsync(string deviceId)
+        {
+            var serverInfo = ServerInfo.GetPhygicalServerInfo();
+            return await StreamingRequest.GetStreamingInfo(httpClient, serverInfo.HttpAddr, deviceId);
+        }
     }
 }

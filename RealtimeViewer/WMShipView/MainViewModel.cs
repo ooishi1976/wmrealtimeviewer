@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using MpgCustom;
 using RealtimeViewer.Logger;
 using RealtimeViewer.Model;
@@ -18,6 +19,7 @@ using RealtimeViewer.Network;
 using RealtimeViewer.Network.Http;
 using RealtimeViewer.Network.Mqtt;
 using RealtimeViewer.Setting;
+using RealtimeViewer.WMShipView.Streaming;
 using UserBioDP;
 using static RealtimeViewer.Network.Http.RequestSequence;
 
@@ -29,6 +31,8 @@ namespace RealtimeViewer.WMShipView
         /// リアルタイムビューアの仕向け(東武、開発、明治、others)
         /// </summary>
         private UserIndex UserIndex { get; set; } = UserIndex.Tobu;
+
+        private StreamingTypes StreamingTypes { get; set; } = StreamingTypes.Udp;
 
         public OperationLogger OperationLogger { get; private set; }
 
@@ -182,12 +186,17 @@ namespace RealtimeViewer.WMShipView
 
         private MqttController MqttController { get; set; } = new MqttController();
 
+        private IStreamingController StreamingController { get; set; }
+
         #endregion
 
-        #region データ
+        #region メインパネル
         public CancellationTokenSource CancellationTokenSource { get; private set; } = null;
 
         private bool isDeviceFocus = false;
+        /// <summary>
+        /// 選択車両表示/全車両表示
+        /// </summary>
         public bool IsDeviceFocus
         {
             get => isDeviceFocus;
@@ -211,11 +220,21 @@ namespace RealtimeViewer.WMShipView
         public string SelectedDeviceId
         {
             get => selectedDeviceId;
-            set => SetProperty(ref selectedDeviceId, value);
+            set 
+            {
+                SetProperty(ref selectedDeviceId, value);
+                StreamingController.CurrentDeviceId = value;
+            }
         }
 
-        public string SelectedDeviceName => (SelectedDevice is null) ? string.Empty : SelectedDevice.CarId;
+        /// <summary>
+        /// 選択車両名(CarNumber)
+        /// </summary>
+        public string SelectedDeviceName => (SelectedDevice is null) ? string.Empty : SelectedDevice.CarNumber;
 
+        /// <summary>
+        /// 選択車両エラー表示
+        /// </summary>
         public string SelectedDeviceErrorStr 
         {
             get
@@ -240,12 +259,15 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
+        /// <summary>
+        /// 選択車両サイドパネル色
+        /// </summary>
         public Color SelectedDeviceBackColor
         {
             get
             {
                 var result = Color.Gray;
-                if (SelectedDevice != null && SelectedDevice.TryGetLocation(out var _)) 
+                if (IsAliveSelectedDevice) 
                 {
                     result = Color.CornflowerBlue;
                 }
@@ -253,7 +275,28 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
+        /// <summary>
+        /// 選択車両が生きてるか
+        /// </summary>
+        public bool IsAliveSelectedDevice
+        {
+            get
+            {
+                var result = false;
+                if (SelectedDevice != null && 
+                    SelectedDevice.TryGetLastNotificationTime(out var lastNotificationTime) &&
+                    (DateTime.Now - lastNotificationTime).TotalSeconds < 120)
+                {
+                    result = true;
+                }
+                return result;
+            }
+        }
+
         private WMDataSet.DeviceRow selectedDevice;
+        /// <summary>
+        /// 選択車両データ
+        /// </summary>
         public WMDataSet.DeviceRow SelectedDevice
         {
             get => selectedDevice;
@@ -266,6 +309,9 @@ namespace RealtimeViewer.WMShipView
         }
 
         private WMDataSet.ErrorRow selectedDeviceError;
+        /// <summary>
+        /// 選択車両エラーデータ
+        /// </summary>
         public WMDataSet.ErrorRow SelectedDeviceError
         {
             get => selectedDeviceError;
@@ -277,12 +323,19 @@ namespace RealtimeViewer.WMShipView
         }
 
         private DateTime dataUpdateDate = DateTime.Now;
+        /// <summary>
+        /// 更新日時
+        /// </summary>
         public DateTime DataUpdateDate
         {
             get => dataUpdateDate;
             set => SetProperty(ref dataUpdateDate, value);
         }
-        
+        #endregion
+
+        public ClientStatus StreamingStatus { get; set; }
+
+        #region イベントパネル
         private bool isUpdatingEventList = false;
         public bool IsUpdatingEventList
         {
@@ -327,7 +380,7 @@ namespace RealtimeViewer.WMShipView
         public bool IsEnableEventTable => !IsUpdatingEventList && !IsDownloadingMovie;
         #endregion
 
-        #region Playlist
+        #region Event Playlist
         private FfmpegCtrl FfmpegCtrl { get; set; } = new FfmpegCtrl();
 
         public bool CanPlayMovie => canPlayMovies.ContainsValue(true);
@@ -400,8 +453,6 @@ namespace RealtimeViewer.WMShipView
         public bool CanPlayCh7 => GetCanPlayMovies(6);
 
         public bool CanPlayCh8 => GetCanPlayMovies(7);
-
-
         #endregion
 
         /// <summary>
@@ -410,6 +461,7 @@ namespace RealtimeViewer.WMShipView
         public MainViewModel()
         {
             OperationLogger = OperationLogger.GetInstance();
+
             // マップルのスケールは1ステップが異様に細かい。
             // 適度に間引いたスケールを右側のバーに対して使う。
             // マップルにおけるスケールの範囲は1000から5百万。
@@ -464,6 +516,21 @@ namespace RealtimeViewer.WMShipView
         {
             RequestController = new RequestSequence(LocalSettings, httpClient, OperationServerInfo);
             RequestController.OfficeLocations = LocalSettings.OfficeLocations;
+        }
+
+        public void CreateStreamingController(Dispatcher dispatcher)
+        {
+            if (LocalSettings.StreamingType == StreamingTypes.Udp)
+            {
+                StreamingController = new UdpController(
+                        MqttController, RequestController, dispatcher, LocalSettings);
+            }
+            else
+            {
+                StreamingController = new RtspController(
+                        MqttController, RequestController, dispatcher, LocalSettings);
+            }
+            StreamingStatus = StreamingController.ClientStatus;
         }
 
         #region MQTT
@@ -555,7 +622,38 @@ namespace RealtimeViewer.WMShipView
             var task = FfmpegCtrl.PlayMovie(channel, movieFilePath, audioFilePath, fps, movieProgressAction);
         }
 
+        public void StartStreaming()
+        {
+            var deviceId = SelectedDeviceId;
+            if (!StreamingController.IsStarted(deviceId))
+            {
+                StreamingController.Start(deviceId);
+            }
+        }
 
+        public void StopStreaming()
+        {
+            var deviceId = SelectedDeviceId;
+            if (StreamingController.IsStarted(deviceId))
+            {
+                StreamingController.Stop(deviceId);
+            }
+        }
+
+        public void NotifyStreamingStatus()
+        {
+            StreamingController.NotifyStatus(SelectedDeviceId);
+        }
+
+        public void ChangeStreamingChannel(int channel)
+        {
+            StreamingController.ChangeChannel(SelectedDeviceId, channel);
+        }
+
+        public bool CanChangeStreamingChannel()
+        {
+            return StreamingController.CanChangeChannel(SelectedDeviceId);
+        }
 
         public int GetNearIndexInMapScales(int x)
         {

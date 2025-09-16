@@ -80,6 +80,11 @@ namespace RealtimeViewer.WMShipView
         /// プリポスト
         /// </summary>
         protected event MqttMessageHandler<MqttJsonPrepostEvent> PrepostReceived;
+
+        /// <summary>
+        /// ストリーミング
+        /// </summary>
+        protected event MqttMessageHandler<MqttJsonStreamingStatus> StreamingReceived;
         
         /// <summary>
         /// 位置情報ハンドラリスト
@@ -100,6 +105,11 @@ namespace RealtimeViewer.WMShipView
         /// PrePostハンドラリスト
         /// </summary>
         private readonly List<MqttMessageHandler<MqttJsonPrepostEvent>> prepostHandlers = new List<MqttMessageHandler<MqttJsonPrepostEvent>>();
+
+        /// <summary>
+        /// Streamingハンドラリスト
+        /// </summary>
+        private readonly List<MqttMessageHandler<MqttJsonStreamingStatus>> streamingHandlers = new List<MqttMessageHandler<MqttJsonStreamingStatus>>();
 
         /// <summary>
         /// 接続済みか
@@ -183,6 +193,11 @@ namespace RealtimeViewer.WMShipView
             MqttClient.Subscribe(topic_list.ToArray(), qos_list.ToArray());
         }
 
+        public ushort SendMessage(string topic, byte[] message, byte qos = 2, bool refrain = false)
+        {
+            return MqttClient.Publish(topic, message, qos, refrain);
+        }
+
         public void DisposeMQTTServer()
         {
             if (MqttClient != null)
@@ -219,6 +234,12 @@ namespace RealtimeViewer.WMShipView
             {
                 PrepostReceived += prepostHandler;
             }
+            else if (handler is MqttMessageHandler<MqttJsonStreamingStatus> streamingHandler &&
+                     !streamingHandlers.Contains(streamingHandler))
+            {
+                StreamingReceived += streamingHandler;
+            }
+
         }
 
         public void RemoveReceivedHandler<T>(MqttMessageHandler<T> handler)
@@ -243,6 +264,11 @@ namespace RealtimeViewer.WMShipView
             {
                 PrepostReceived -= prepostHandler;
             }
+            else if (handler is MqttMessageHandler<MqttJsonStreamingStatus> streamingHandler &&
+                     streamingHandlers.Contains(streamingHandler))
+            {
+                StreamingReceived -= streamingHandler;
+            }
         }
 
         private void MqttClient_ConnectionClosed(object sender, EventArgs e)
@@ -264,14 +290,13 @@ namespace RealtimeViewer.WMShipView
         {
             //  MQTT取得
             var msg = Encoding.UTF8.GetString(e.Message);
-            //  トピック検索 (error/status/event...)
-            var label = TopicLabel.TopicNone;
             foreach (var pattern in TopicRegexes)
             {
                 var match = pattern.Regex.Match(e.Topic);
                 if (match.Success)
                 {
-                    label = pattern.Label;
+                    //  トピック検索 (error/status/event...)
+                    var label = pattern.Label;
                     switch (label)
                     {
                         case TopicLabel.TopicNone:
@@ -297,6 +322,7 @@ namespace RealtimeViewer.WMShipView
                             break;
 
                         case TopicLabel.TopicStreamingStatus:
+                            StreamingReceived?.Invoke(this, new MqttMessageEventArgs<MqttJsonStreamingStatus>(label, msg));
                             break;
                     }
                 }

@@ -787,6 +787,8 @@ namespace RealtimeViewer.WMShipView {
             
             private global::System.Data.DataColumn columnAddress;
             
+            private global::System.Data.DataColumn columnLastNotificationTime;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public DeviceDataTable() {
@@ -878,6 +880,14 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn LastNotificationTimeColumn {
+                get {
+                    return this.columnLastNotificationTime;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -913,7 +923,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceRow AddDeviceRow(string DeviceId, OfficeRow parentOfficeRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string Address) {
+            public DeviceRow AddDeviceRow(string DeviceId, OfficeRow parentOfficeRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string Address, string LastNotificationTime) {
                 DeviceRow rowDeviceRow = ((DeviceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DeviceId,
@@ -922,7 +932,8 @@ namespace RealtimeViewer.WMShipView {
                         CarNumber,
                         Longitude,
                         Latitude,
-                        Address};
+                        Address,
+                        LastNotificationTime};
                 if ((parentOfficeRowByOfficeTable_DeviceTable != null)) {
                     columnValuesArray[1] = parentOfficeRowByOfficeTable_DeviceTable[1];
                 }
@@ -962,6 +973,7 @@ namespace RealtimeViewer.WMShipView {
                 this.columnLongitude = base.Columns["Longitude"];
                 this.columnLatitude = base.Columns["Latitude"];
                 this.columnAddress = base.Columns["Address"];
+                this.columnLastNotificationTime = base.Columns["LastNotificationTime"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -981,6 +993,8 @@ namespace RealtimeViewer.WMShipView {
                 base.Columns.Add(this.columnLatitude);
                 this.columnAddress = new global::System.Data.DataColumn("Address", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAddress);
+                this.columnLastNotificationTime = new global::System.Data.DataColumn("LastNotificationTime", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLastNotificationTime);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnDeviceId}, true));
                 this.columnDeviceId.AllowDBNull = false;
@@ -2489,6 +2503,22 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string LastNotificationTime {
+                get {
+                    if (this.IsLastNotificationTimeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableDevice.LastNotificationTimeColumn]));
+                    }
+                }
+                set {
+                    this[this.tableDevice.LastNotificationTimeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public OfficeRow OfficeTableRow {
                 get {
                     return ((OfficeRow)(this.GetParentRow(this.Table.ParentRelations["OfficeTable_DeviceTable"])));
@@ -2568,6 +2598,18 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetAddressNull() {
                 this[this.tableDevice.AddressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsLastNotificationTimeNull() {
+                return this.IsNull(this.tableDevice.LastNotificationTimeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetLastNotificationTimeNull() {
+                this[this.tableDevice.LastNotificationTimeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -52,6 +52,12 @@ namespace RealtimeViewer.WMShipView
 
         private CancellationTokenSource MovieCancellationTokenSource { get; set; } = new CancellationTokenSource();
 
+        /// <summary>
+        /// イベント関連のキャンセルトークンソース
+        /// </summary>
+        private CancellationTokenSource CancellationTokenSource { get; set; } = null;
+
+
         private FfmpegCtrl FfmpegCtrl { get; set; } = new FfmpegCtrl();
 
         private WaitingForm m_wform;
@@ -70,7 +76,14 @@ namespace RealtimeViewer.WMShipView
 
         private BindingSource EventListBindingSource { get; set; } = new BindingSource();
 
+        /// <summary>
+        /// イベントタブ選択済み(項目バインドのためのフラグ)
+        /// </summary>
+        private bool IsEventTabBinded { get; set; } = false;
 
+        /// <summary>
+        /// 最初に表示されている画面項目のバインド
+        /// </summary>
         private void BindViewModel()
         {
             // 指紋認証済み
@@ -83,7 +96,7 @@ namespace RealtimeViewer.WMShipView
             labelUserName.DataBindings.Add("Text", ViewModel, nameof(ViewModel.UserName), true, DataSourceUpdateMode.OnPropertyChanged);
             // 初期データ取得中・・・
             labelUpdateDate.DataBindings.Add("Text", ViewModel, nameof(ViewModel.DataUpdateDate));
-
+            // サイドパネル
             labelRtCarId.DataBindings.Add("Text", ViewModel, nameof(ViewModel.SelectedDeviceName));
             labelRtCarStatus.DataBindings.Add("Text", ViewModel, nameof(ViewModel.SelectedDeviceErrorStr));
             tableLayoutPanelCarInfo.DataBindings.Add("BackColor", ViewModel, nameof(ViewModel.SelectedDeviceBackColor));
@@ -92,6 +105,38 @@ namespace RealtimeViewer.WMShipView
             tabPageRemoteConfig.DataBindings.Add("BackColor", ViewModel, nameof(ViewModel.SelectedDeviceBackColor));
         }
 
+        private void BindStreamingDataSource()
+        {
+            var streamingStatus = ViewModel.StreamingStatus;
+            progressBarRtStart.DataBindings.Add("Visible", streamingStatus, nameof(streamingStatus.IsWaitToReady));
+            labelCarStreamElapsed.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Elapsed));
+            labelCarStreamFrames.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Frames));
+            labelCarStreamBytes.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Bytes));
+            labelCarStreamFps.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Fps));
+            labelCarStreamKbps.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Kbps));
+            labelCarStreamDrops.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Dropped));
+            labelCarStreamSpeed.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.Speed));
+            tableLayoutPanelStreamingOnCar.DataBindings.Add("Visible", streamingStatus, nameof(streamingStatus.IsWaitOrPlaying));
+            labelRtStatus.DataBindings.Add("Visible", streamingStatus, nameof(streamingStatus.IsDisplayMessage));
+            labelRtRetryStatus.DataBindings.Add("Visible", streamingStatus, nameof(streamingStatus.IsDisplayMessage));
+            labelRtStatus.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.StatusText1));
+            labelRtRetryStatus.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.StatusText2));
+            labelRtElapsed.DataBindings.Add("Text", streamingStatus, nameof(streamingStatus.PlayCounter));
+
+            radioButtonRtCh1.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh2.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh3.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh4.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh5.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh6.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh7.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            radioButtonRtCh8.DataBindings.Add("Enabled", streamingStatus, nameof(streamingStatus.IsPlaying));
+            streamingStatus.PropertyChanged += StreamingStatus_PropertyChanged;
+        }
+
+        /// <summary>
+        /// イベントパネルの画面項目のバインド
+        /// </summary>
         private void BindEventTab()
         {
             // イベントリストテーブルレイアウト
@@ -127,6 +172,9 @@ namespace RealtimeViewer.WMShipView
             FfmpegCtrl.MovieProgress += FfmpegCtrl_MovieProgress;
         }
 
+        /// <summary>
+        /// 営業所選択、車両リスト取得後のComboBox, DataGridViewへのバインド
+        /// </summary>
         private void BindDeviceDataSource()
         {
             // 車両リスト
@@ -159,6 +207,10 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
+        /// <summary>
+        /// イベントリスト取得後のDataGridViewへのバインド
+        /// </summary>
+        /// <param name="eventList"></param>
         private void BindEventDataSource(WMDataSet.EventListDataTable eventList)
         {
             ViewModel.EventTable = eventList;
@@ -177,6 +229,37 @@ namespace RealtimeViewer.WMShipView
             ViewModel.PlaylistTable = null;
         }
 
+        private void SetOffices(WMDataSet.OfficeDataTable offices)
+        {
+            foreach (var office in offices)
+            {
+                var row = ViewModel.OfficeTable.NewOfficeRow();
+                row.OfficeId = office.OfficeId;
+                row.CompanyId = office.CompanyId;
+                row.Name = office.Name;
+                row.Visible = office.Visible;
+                row.Latitude = office.Latitude;
+                row.Longitude = office.Longitude;
+                ViewModel.OfficeTable.AddOfficeRow(row);
+            }
+            ViewModel.OfficeTable.AcceptChanges();
+        }
+
+        private void SetDevices(WMDataSet.DeviceDataTable devices)
+        {
+            foreach (var device in devices)
+            {
+                var row = ViewModel.DeviceTable.NewDeviceRow();
+                row.OfficeId = device.OfficeId;
+                row.DeviceId = device.DeviceId;
+                row.CarId = device.CarId;
+                row.CarNumber = device.CarNumber;
+                ViewModel.DeviceTable.AddDeviceRow(row);
+            }
+            ViewModel.DeviceTable.AcceptChanges();
+        }
+
+        #region 地図
         /// <summary>
         /// 地図の初期化<br/>
         /// <ul>
@@ -249,61 +332,6 @@ namespace RealtimeViewer.WMShipView
             if (syncZoombar)
             {
                 zoomBar.Value = ViewModel.GetNearIndexInMapScales(mpgMap.MapScale);
-            }
-        }
-
-        private void LeftPanelShow()
-        {
-            panelLeft.Enabled = true;
-            panelLeft.Width = LEFT_PANEL_WIDTH;
-
-            //labelRtRetryStatus.Text = string.Empty;
-            //if (ViewModel.IsBrowsable)
-            //{
-            //    tabControlRtSelect.Enabled = true;
-            //    labelRtStatus.Text = string.Empty;
-            //}
-            //else
-            //{
-            //    tabControlRtSelect.Enabled = false;
-            //    labelRtStatus.Text = @"権限がありません";
-            //}
-
-            //var msg = @"正常";
-            //if (ErrorCode > 0)
-            //{
-            //    msg = DeviceErrorCode.MakeErrorMessage(ErrorCode);
-            //}
-            //labelRtCarStatus.Text = msg;
-            //labelRtCarId.Text = CarId;
-
-            tableLayoutPanelStreamingOnCar.Visible = false;
-        }
-
-        private void LeftPanelHide()
-        {
-            panelLeft.Enabled = false;
-            panelLeft.Width = 0;
-            tableLayoutPanelStreamingOnCar.Visible = false;
-        }
-
-        /// <summary>
-        /// 車載器用機能パネルの有効/無効<br/>
-        /// 左パネルのタブ選択、ボタン選択。<br/>
-        /// tabPageにEnabledが無いので、<br/>
-        /// ボタンのEnabledとタブの選択イベントで対処する<br/>
-        /// WPFならば。。。。OTL
-        /// </summary>
-        /// <param name="index"></param>
-        private void SetSpecifyLayout(ServerIndex index)
-        {
-            if (ServerIndex.WeatherMedia == index)
-            {
-                buttonShowDrivingMovie.Enabled = false;
-                buttonShowRemoteSetting.Enabled = false;
-                //gridCarList.Columns[0].MinimumWidth = 100;
-                //gridCarList.Columns[0].Width = 100;
-                //tabControlRtSelect.Selecting += TabControlRtSelect_Selecting;
             }
         }
 
@@ -435,7 +463,11 @@ namespace RealtimeViewer.WMShipView
             }
 
             // エラー
-            var errorRow = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+            WMDataSet.ErrorRow errorRow = null;
+            lock (ViewModel.ErrorTable)
+            {
+                errorRow = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+            }
             if (errorRow is WMDataSet.ErrorRow error)
             {
                 var code = error.GetCode();
@@ -452,6 +484,41 @@ namespace RealtimeViewer.WMShipView
                 }
             }
             return entryObject;
+        }
+        #endregion
+
+        private void LeftPanelShow()
+        {
+            panelLeft.Enabled = true;
+            panelLeft.Width = LEFT_PANEL_WIDTH;
+            //tableLayoutPanelStreamingOnCar.Visible = false;
+        }
+
+        private void LeftPanelHide()
+        {
+            panelLeft.Enabled = false;
+            panelLeft.Width = 0;
+            //tableLayoutPanelStreamingOnCar.Visible = false;
+        }
+
+        /// <summary>
+        /// 車載器用機能パネルの有効/無効<br/>
+        /// 左パネルのタブ選択、ボタン選択。<br/>
+        /// tabPageにEnabledが無いので、<br/>
+        /// ボタンのEnabledとタブの選択イベントで対処する<br/>
+        /// WPFならば。。。。OTL
+        /// </summary>
+        /// <param name="index"></param>
+        private void SetSpecifyLayout(ServerIndex index)
+        {
+            if (ServerIndex.WeatherMedia == index)
+            {
+                buttonShowDrivingMovie.Enabled = false;
+                buttonShowRemoteSetting.Enabled = false;
+                //gridCarList.Columns[0].MinimumWidth = 100;
+                //gridCarList.Columns[0].Width = 100;
+                //tabControlRtSelect.Selecting += TabControlRtSelect_Selecting;
+            }
         }
 
         private void ReadyToPlay(WMDataSet.EventListRow row)
@@ -525,18 +592,5 @@ namespace RealtimeViewer.WMShipView
             return result;
         }
         #endregion サーバ情報取得
-
-
-
-        /// <summary>
-        /// イベント関連のキャンセルトークンソース
-        /// </summary>
-        private CancellationTokenSource CancellationTokenSource { get; set; } = null;
-
-        /// <summary>
-        /// タブ選択済み
-        /// </summary>
-        private bool IsEventTabBinded { get; set; } = false;
-
     }
 }

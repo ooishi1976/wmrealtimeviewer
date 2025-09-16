@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,21 @@ namespace RealtimeViewer.WMShipView
             {
                 point = MapUtils.ConvertJdgToTky(device.Latitude, device.Longitude);
                 result = true;
+            }
+            return result;
+        }
+
+        public static bool TryGetLastNotificationTime(this WMDataSet.DeviceRow device, out DateTime timestamp)
+        {
+            var result = false;
+            timestamp = DateTime.MinValue;
+            if (device != null && !string.IsNullOrEmpty(device.LastNotificationTime))
+            {
+                if (DateTime.TryParseExact(
+                    device.LastNotificationTime, "yyyyMMddHHmmss", CultureInfo.CurrentCulture, DateTimeStyles.None, out timestamp))
+                {
+                    result = true;
+                }
             }
             return result;
         }

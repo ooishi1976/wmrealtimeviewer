@@ -11,7 +11,13 @@ namespace RealtimeViewer.Network
 {
     public enum ServerKind
     {
+        /// <summary>
+        /// Aws Prod
+        /// </summary>
         Tobu,
+        /// <summary>
+        /// Aws stg
+        /// </summary>
         Dev
     }
 
@@ -54,6 +60,7 @@ namespace RealtimeViewer.Network
         /// 本番、開発
         /// </summary>
         public ServerKind Kind { get; set; }
+
         /// <summary>
         /// 名前
         /// </summary>

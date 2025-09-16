@@ -269,13 +269,25 @@
     <Compile Include="movie\FfmpegCtrlExt.cs" />
     <Compile Include="network\http\HttpRequestExt.cs" />
     <Compile Include="network\http\RequestSequenceExt.cs" />
+    <Compile Include="WMShipView\StreamingTypes.cs" />
+    <Compile Include="WMShipView\Streaming\AbstractStreamingClient.cs" />
     <Compile Include="WMShipView\BindableModel.cs" />
-    <Compile Include="WMShipView\MainFormEvent.cs">
+    <Compile Include="WMShipView\MainFormLogic.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WMShipView\MainFormExt.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WMShipView\Streaming\ClientStatus.cs" />
+    <Compile Include="WMShipView\Streaming\IStreamingClient.cs" />
+    <Compile Include="WMShipView\Streaming\IStreamingController.cs" />
+    <Compile Include="WMShipView\Streaming\IStreamingSettings.cs" />
+    <Compile Include="WMShipView\Streaming\UdpController.cs" />
+    <Compile Include="WMShipView\Streaming\UdpClient.cs" />
+    <Compile Include="WMShipView\Streaming\RtspController.cs" />
+    <Compile Include="WMShipView\Streaming\RtspClient.cs" />
+    <Compile Include="WMShipView\Streaming\AbstractStreamingController.cs" />
+    <Compile Include="WMShipView\Streaming\StreamingInfomation.cs" />
     <Compile Include="WMShipView\WMDataSet.cs">
       <DependentUpon>WMDataSet.xsd</DependentUpon>
     </Compile>
