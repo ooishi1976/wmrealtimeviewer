@@ -133,13 +133,6 @@ namespace RealtimeViewer.WMShipView
             this.labelPanelPlayDateCaption = new System.Windows.Forms.Label();
             this.labelPanelPlayDate = new System.Windows.Forms.Label();
             this.gridEventList = new System.Windows.Forms.DataGridView();
-            this.ColumnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CarNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MovieType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MovieId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sequence = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelEventListCaption = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -147,6 +140,13 @@ namespace RealtimeViewer.WMShipView
             this.timerStartMQTT = new System.Windows.Forms.Timer(this.components);
             this.sqliteCommand1 = new Microsoft.Data.Sqlite.SqliteCommand();
             this.timerStreamingPreparation = new System.Windows.Forms.Timer(this.components);
+            this.ColumnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CarNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MovieType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MovieId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sequence = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1460,69 +1460,6 @@ namespace RealtimeViewer.WMShipView
             this.gridEventList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridEventList_ColumnHeaderMouseClick);
             this.gridEventList.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridEventList_CurrentCellDirtyStateChanged);
             // 
-            // ColumnCheck
-            // 
-            this.ColumnCheck.DataPropertyName = "Selected";
-            this.ColumnCheck.FalseValue = "False";
-            this.ColumnCheck.HeaderText = "";
-            this.ColumnCheck.MinimumWidth = 25;
-            this.ColumnCheck.Name = "ColumnCheck";
-            this.ColumnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnCheck.TrueValue = "True";
-            this.ColumnCheck.Width = 25;
-            // 
-            // Timestamp
-            // 
-            this.Timestamp.DataPropertyName = "Timestamp";
-            dataGridViewCellStyle1.Format = "yyyy/MM/dd HH:mm:ss";
-            dataGridViewCellStyle1.NullValue = null;
-            this.Timestamp.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Timestamp.HeaderText = "日付";
-            this.Timestamp.MinimumWidth = 200;
-            this.Timestamp.Name = "Timestamp";
-            this.Timestamp.Width = 200;
-            // 
-            // CarNumber
-            // 
-            this.CarNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.CarNumber.DataPropertyName = "DeviceId";
-            this.CarNumber.HeaderText = "船名";
-            this.CarNumber.Name = "CarNumber";
-            this.CarNumber.Width = 66;
-            // 
-            // MovieType
-            // 
-            this.MovieType.DataPropertyName = "MovieTypeName";
-            this.MovieType.HeaderText = "種別";
-            this.MovieType.MinimumWidth = 79;
-            this.MovieType.Name = "MovieType";
-            this.MovieType.Width = 79;
-            // 
-            // Remarks
-            // 
-            this.Remarks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Remarks.DataPropertyName = "Remarks";
-            this.Remarks.HeaderText = "備考";
-            this.Remarks.MinimumWidth = 10;
-            this.Remarks.Name = "Remarks";
-            this.Remarks.ReadOnly = true;
-            this.Remarks.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // MovieId
-            // 
-            this.MovieId.DataPropertyName = "MovieId";
-            this.MovieId.HeaderText = "MovieId";
-            this.MovieId.MinimumWidth = 10;
-            this.MovieId.Name = "MovieId";
-            this.MovieId.Visible = false;
-            this.MovieId.Width = 200;
-            // 
-            // Sequence
-            // 
-            this.Sequence.HeaderText = "Sequence";
-            this.Sequence.Name = "Sequence";
-            this.Sequence.Visible = false;
-            // 
             // labelEventListCaption
             // 
             this.labelEventListCaption.AutoSize = true;
@@ -1574,26 +1511,95 @@ namespace RealtimeViewer.WMShipView
             this.timerStreamingPreparation.Interval = 1000;
             this.timerStreamingPreparation.Tick += new System.EventHandler(this.TimerStreamingPreparation_Tick);
             // 
+            // ColumnCheck
+            // 
+            this.ColumnCheck.DataPropertyName = "Selected";
+            this.ColumnCheck.FalseValue = "False";
+            this.ColumnCheck.HeaderText = "";
+            this.ColumnCheck.MinimumWidth = 25;
+            this.ColumnCheck.Name = "ColumnCheck";
+            this.ColumnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnCheck.TrueValue = "True";
+            this.ColumnCheck.Width = 25;
+            // 
+            // Timestamp
+            // 
+            this.Timestamp.DataPropertyName = "Timestamp";
+            dataGridViewCellStyle1.Format = "yyyy/MM/dd HH:mm:ss";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Timestamp.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Timestamp.HeaderText = "日付";
+            this.Timestamp.MinimumWidth = 200;
+            this.Timestamp.Name = "Timestamp";
+            this.Timestamp.Width = 200;
+            // 
+            // CarNumber
+            // 
+            this.CarNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.CarNumber.DataPropertyName = "CarNumber";
+            this.CarNumber.HeaderText = "船名";
+            this.CarNumber.Name = "CarNumber";
+            this.CarNumber.Width = 66;
+            // 
+            // MovieType
+            // 
+            this.MovieType.DataPropertyName = "MovieTypeName";
+            this.MovieType.HeaderText = "種別";
+            this.MovieType.MinimumWidth = 79;
+            this.MovieType.Name = "MovieType";
+            this.MovieType.Width = 79;
+            // 
+            // Remarks
+            // 
+            this.Remarks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Remarks.DataPropertyName = "Remarks";
+            this.Remarks.HeaderText = "備考";
+            this.Remarks.MinimumWidth = 10;
+            this.Remarks.Name = "Remarks";
+            this.Remarks.ReadOnly = true;
+            this.Remarks.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // MovieId
+            // 
+            this.MovieId.DataPropertyName = "MovieId";
+            this.MovieId.HeaderText = "MovieId";
+            this.MovieId.MinimumWidth = 10;
+            this.MovieId.Name = "MovieId";
+            this.MovieId.Visible = false;
+            this.MovieId.Width = 200;
+            // 
+            // Sequence
+            // 
+            this.Sequence.HeaderText = "Sequence";
+            this.Sequence.Name = "Sequence";
+            this.Sequence.Visible = false;
+            // 
             // DeviceName
             // 
+            this.DeviceName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.DeviceName.DataPropertyName = "CarNumber";
             this.DeviceName.HeaderText = "船名";
             this.DeviceName.Name = "DeviceName";
             this.DeviceName.ReadOnly = true;
+            this.DeviceName.Width = 61;
             // 
             // Longitude
             // 
-            this.Longitude.DataPropertyName = "Longitude";
+            this.Longitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Longitude.DataPropertyName = "LongitudeDMS";
             this.Longitude.HeaderText = "経度";
             this.Longitude.Name = "Longitude";
             this.Longitude.ReadOnly = true;
+            this.Longitude.Width = 61;
             // 
             // Latitude
             // 
-            this.Latitude.DataPropertyName = "Latitude";
+            this.Latitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Latitude.DataPropertyName = "LatitudeDMS";
             this.Latitude.HeaderText = "緯度";
             this.Latitude.Name = "Latitude";
             this.Latitude.ReadOnly = true;
+            this.Latitude.Width = 61;
             // 
             // MainForm
             // 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace RealtimeViewer.WMShipView
 {
@@ -29,8 +30,9 @@ namespace RealtimeViewer.WMShipView
         /// コンストラクタ
         /// </summary>
         /// <param name="waitTask"></param>
-        public WaitFormViewModel(Task waitTask)
+        public WaitFormViewModel(Dispatcher dispatcher, Task waitTask)
         {
+            Dispatcher = dispatcher;
             this.waitTask = waitTask;
         }
     }

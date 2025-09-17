@@ -323,7 +323,7 @@ namespace RealtimeViewer
             this.labelRecBitrate1ch.Location = new System.Drawing.Point(3, 3);
             this.labelRecBitrate1ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate1ch.Name = "labelRecBitrate1ch";
-            this.labelRecBitrate1ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate1ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate1ch.TabIndex = 0;
             this.labelRecBitrate1ch.Text = "1ch";
             this.labelRecBitrate1ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -352,9 +352,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate8ch.Location = new System.Drawing.Point(535, 47);
+            this.comboBoxRecBitrate8ch.Location = new System.Drawing.Point(535, 49);
             this.comboBoxRecBitrate8ch.Name = "comboBoxRecBitrate8ch";
-            this.comboBoxRecBitrate8ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate8ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate8ch.TabIndex = 30;
             // 
             // checkBoxRecBitrate1ch
@@ -366,7 +366,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate1ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate1ch.Checked = true;
             this.checkBoxRecBitrate1ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate1ch.Location = new System.Drawing.Point(3, 27);
+            this.checkBoxRecBitrate1ch.Location = new System.Drawing.Point(3, 29);
             this.checkBoxRecBitrate1ch.Name = "checkBoxRecBitrate1ch";
             this.checkBoxRecBitrate1ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate1ch.TabIndex = 1;
@@ -396,9 +396,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate1ch.Location = new System.Drawing.Point(3, 47);
+            this.comboBoxRecBitrate1ch.Location = new System.Drawing.Point(3, 49);
             this.comboBoxRecBitrate1ch.Name = "comboBoxRecBitrate1ch";
-            this.comboBoxRecBitrate1ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate1ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate1ch.TabIndex = 2;
             // 
             // labelRecBitrate8ch
@@ -410,7 +410,7 @@ namespace RealtimeViewer
             this.labelRecBitrate8ch.Location = new System.Drawing.Point(535, 3);
             this.labelRecBitrate8ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate8ch.Name = "labelRecBitrate8ch";
-            this.labelRecBitrate8ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate8ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate8ch.TabIndex = 28;
             this.labelRecBitrate8ch.Text = "8ch";
             this.labelRecBitrate8ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -424,7 +424,7 @@ namespace RealtimeViewer
             this.labelRecBitrate2ch.Location = new System.Drawing.Point(79, 3);
             this.labelRecBitrate2ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate2ch.Name = "labelRecBitrate2ch";
-            this.labelRecBitrate2ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate2ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate2ch.TabIndex = 4;
             this.labelRecBitrate2ch.Text = "2ch";
             this.labelRecBitrate2ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -438,7 +438,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate2ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate2ch.Checked = true;
             this.checkBoxRecBitrate2ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate2ch.Location = new System.Drawing.Point(79, 27);
+            this.checkBoxRecBitrate2ch.Location = new System.Drawing.Point(79, 29);
             this.checkBoxRecBitrate2ch.Name = "checkBoxRecBitrate2ch";
             this.checkBoxRecBitrate2ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate2ch.TabIndex = 5;
@@ -468,9 +468,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate2ch.Location = new System.Drawing.Point(79, 47);
+            this.comboBoxRecBitrate2ch.Location = new System.Drawing.Point(79, 49);
             this.comboBoxRecBitrate2ch.Name = "comboBoxRecBitrate2ch";
-            this.comboBoxRecBitrate2ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate2ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate2ch.TabIndex = 6;
             // 
             // labelRecBitrate7ch
@@ -482,7 +482,7 @@ namespace RealtimeViewer
             this.labelRecBitrate7ch.Location = new System.Drawing.Point(459, 3);
             this.labelRecBitrate7ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate7ch.Name = "labelRecBitrate7ch";
-            this.labelRecBitrate7ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate7ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate7ch.TabIndex = 24;
             this.labelRecBitrate7ch.Text = "7ch";
             this.labelRecBitrate7ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -511,9 +511,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate3ch.Location = new System.Drawing.Point(155, 47);
+            this.comboBoxRecBitrate3ch.Location = new System.Drawing.Point(155, 49);
             this.comboBoxRecBitrate3ch.Name = "comboBoxRecBitrate3ch";
-            this.comboBoxRecBitrate3ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate3ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate3ch.TabIndex = 10;
             // 
             // labelRecBitrate3ch
@@ -525,7 +525,7 @@ namespace RealtimeViewer
             this.labelRecBitrate3ch.Location = new System.Drawing.Point(155, 3);
             this.labelRecBitrate3ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate3ch.Name = "labelRecBitrate3ch";
-            this.labelRecBitrate3ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate3ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate3ch.TabIndex = 8;
             this.labelRecBitrate3ch.Text = "3ch";
             this.labelRecBitrate3ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -539,7 +539,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate3ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate3ch.Checked = true;
             this.checkBoxRecBitrate3ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate3ch.Location = new System.Drawing.Point(155, 27);
+            this.checkBoxRecBitrate3ch.Location = new System.Drawing.Point(155, 29);
             this.checkBoxRecBitrate3ch.Name = "checkBoxRecBitrate3ch";
             this.checkBoxRecBitrate3ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate3ch.TabIndex = 9;
@@ -554,7 +554,7 @@ namespace RealtimeViewer
             this.labelRecBitrate6ch.Location = new System.Drawing.Point(383, 3);
             this.labelRecBitrate6ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate6ch.Name = "labelRecBitrate6ch";
-            this.labelRecBitrate6ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate6ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate6ch.TabIndex = 20;
             this.labelRecBitrate6ch.Text = "6ch";
             this.labelRecBitrate6ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -568,7 +568,7 @@ namespace RealtimeViewer
             this.labelRecBitrate4ch.Location = new System.Drawing.Point(231, 3);
             this.labelRecBitrate4ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate4ch.Name = "labelRecBitrate4ch";
-            this.labelRecBitrate4ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate4ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate4ch.TabIndex = 12;
             this.labelRecBitrate4ch.Text = "4ch";
             this.labelRecBitrate4ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -582,7 +582,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate4ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate4ch.Checked = true;
             this.checkBoxRecBitrate4ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate4ch.Location = new System.Drawing.Point(231, 27);
+            this.checkBoxRecBitrate4ch.Location = new System.Drawing.Point(231, 29);
             this.checkBoxRecBitrate4ch.Name = "checkBoxRecBitrate4ch";
             this.checkBoxRecBitrate4ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate4ch.TabIndex = 13;
@@ -612,9 +612,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate4ch.Location = new System.Drawing.Point(231, 47);
+            this.comboBoxRecBitrate4ch.Location = new System.Drawing.Point(231, 49);
             this.comboBoxRecBitrate4ch.Name = "comboBoxRecBitrate4ch";
-            this.comboBoxRecBitrate4ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate4ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate4ch.TabIndex = 14;
             // 
             // labelRecBitrate5ch
@@ -626,7 +626,7 @@ namespace RealtimeViewer
             this.labelRecBitrate5ch.Location = new System.Drawing.Point(307, 3);
             this.labelRecBitrate5ch.Margin = new System.Windows.Forms.Padding(3);
             this.labelRecBitrate5ch.Name = "labelRecBitrate5ch";
-            this.labelRecBitrate5ch.Size = new System.Drawing.Size(70, 18);
+            this.labelRecBitrate5ch.Size = new System.Drawing.Size(70, 20);
             this.labelRecBitrate5ch.TabIndex = 16;
             this.labelRecBitrate5ch.Text = "5ch";
             this.labelRecBitrate5ch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -640,7 +640,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate5ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate5ch.Checked = true;
             this.checkBoxRecBitrate5ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate5ch.Location = new System.Drawing.Point(307, 27);
+            this.checkBoxRecBitrate5ch.Location = new System.Drawing.Point(307, 29);
             this.checkBoxRecBitrate5ch.Name = "checkBoxRecBitrate5ch";
             this.checkBoxRecBitrate5ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate5ch.TabIndex = 17;
@@ -670,9 +670,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate5ch.Location = new System.Drawing.Point(307, 47);
+            this.comboBoxRecBitrate5ch.Location = new System.Drawing.Point(307, 49);
             this.comboBoxRecBitrate5ch.Name = "comboBoxRecBitrate5ch";
-            this.comboBoxRecBitrate5ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate5ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate5ch.TabIndex = 18;
             // 
             // checkBoxRecBitrate6ch
@@ -684,7 +684,7 @@ namespace RealtimeViewer
             this.checkBoxRecBitrate6ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxRecBitrate6ch.Checked = true;
             this.checkBoxRecBitrate6ch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRecBitrate6ch.Location = new System.Drawing.Point(383, 27);
+            this.checkBoxRecBitrate6ch.Location = new System.Drawing.Point(383, 29);
             this.checkBoxRecBitrate6ch.Name = "checkBoxRecBitrate6ch";
             this.checkBoxRecBitrate6ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate6ch.TabIndex = 21;
@@ -714,9 +714,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate6ch.Location = new System.Drawing.Point(383, 47);
+            this.comboBoxRecBitrate6ch.Location = new System.Drawing.Point(383, 49);
             this.comboBoxRecBitrate6ch.Name = "comboBoxRecBitrate6ch";
-            this.comboBoxRecBitrate6ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate6ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate6ch.TabIndex = 22;
             // 
             // checkBoxRecBitrate7ch
@@ -726,7 +726,7 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxRecBitrate7ch.AutoSize = true;
             this.checkBoxRecBitrate7ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxRecBitrate7ch.Location = new System.Drawing.Point(459, 27);
+            this.checkBoxRecBitrate7ch.Location = new System.Drawing.Point(459, 29);
             this.checkBoxRecBitrate7ch.Name = "checkBoxRecBitrate7ch";
             this.checkBoxRecBitrate7ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate7ch.TabIndex = 25;
@@ -756,9 +756,9 @@ namespace RealtimeViewer
             "512K",
             "384K",
             "256K"});
-            this.comboBoxRecBitrate7ch.Location = new System.Drawing.Point(459, 47);
+            this.comboBoxRecBitrate7ch.Location = new System.Drawing.Point(459, 49);
             this.comboBoxRecBitrate7ch.Name = "comboBoxRecBitrate7ch";
-            this.comboBoxRecBitrate7ch.Size = new System.Drawing.Size(70, 26);
+            this.comboBoxRecBitrate7ch.Size = new System.Drawing.Size(70, 28);
             this.comboBoxRecBitrate7ch.TabIndex = 26;
             // 
             // comboBoxCamFlip1ch
@@ -766,7 +766,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip1ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip1ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip1ch.FormattingEnabled = true;
-            this.comboBoxCamFlip1ch.Location = new System.Drawing.Point(3, 79);
+            this.comboBoxCamFlip1ch.Location = new System.Drawing.Point(3, 75);
             this.comboBoxCamFlip1ch.Name = "comboBoxCamFlip1ch";
             this.comboBoxCamFlip1ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip1ch.TabIndex = 3;
@@ -777,7 +777,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip2ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip2ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip2ch.FormattingEnabled = true;
-            this.comboBoxCamFlip2ch.Location = new System.Drawing.Point(79, 79);
+            this.comboBoxCamFlip2ch.Location = new System.Drawing.Point(79, 75);
             this.comboBoxCamFlip2ch.Name = "comboBoxCamFlip2ch";
             this.comboBoxCamFlip2ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip2ch.TabIndex = 7;
@@ -788,7 +788,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip3ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip3ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip3ch.FormattingEnabled = true;
-            this.comboBoxCamFlip3ch.Location = new System.Drawing.Point(155, 79);
+            this.comboBoxCamFlip3ch.Location = new System.Drawing.Point(155, 75);
             this.comboBoxCamFlip3ch.Name = "comboBoxCamFlip3ch";
             this.comboBoxCamFlip3ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip3ch.TabIndex = 11;
@@ -799,7 +799,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip4ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip4ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip4ch.FormattingEnabled = true;
-            this.comboBoxCamFlip4ch.Location = new System.Drawing.Point(231, 79);
+            this.comboBoxCamFlip4ch.Location = new System.Drawing.Point(231, 75);
             this.comboBoxCamFlip4ch.Name = "comboBoxCamFlip4ch";
             this.comboBoxCamFlip4ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip4ch.TabIndex = 15;
@@ -810,7 +810,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip5ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip5ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip5ch.FormattingEnabled = true;
-            this.comboBoxCamFlip5ch.Location = new System.Drawing.Point(307, 79);
+            this.comboBoxCamFlip5ch.Location = new System.Drawing.Point(307, 75);
             this.comboBoxCamFlip5ch.Name = "comboBoxCamFlip5ch";
             this.comboBoxCamFlip5ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip5ch.TabIndex = 19;
@@ -821,7 +821,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip6ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip6ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip6ch.FormattingEnabled = true;
-            this.comboBoxCamFlip6ch.Location = new System.Drawing.Point(383, 79);
+            this.comboBoxCamFlip6ch.Location = new System.Drawing.Point(383, 75);
             this.comboBoxCamFlip6ch.Name = "comboBoxCamFlip6ch";
             this.comboBoxCamFlip6ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip6ch.TabIndex = 23;
@@ -832,7 +832,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip7ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip7ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip7ch.FormattingEnabled = true;
-            this.comboBoxCamFlip7ch.Location = new System.Drawing.Point(459, 79);
+            this.comboBoxCamFlip7ch.Location = new System.Drawing.Point(459, 75);
             this.comboBoxCamFlip7ch.Name = "comboBoxCamFlip7ch";
             this.comboBoxCamFlip7ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip7ch.TabIndex = 27;
@@ -843,7 +843,7 @@ namespace RealtimeViewer
             this.comboBoxCamFlip8ch.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxCamFlip8ch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCamFlip8ch.FormattingEnabled = true;
-            this.comboBoxCamFlip8ch.Location = new System.Drawing.Point(535, 79);
+            this.comboBoxCamFlip8ch.Location = new System.Drawing.Point(535, 75);
             this.comboBoxCamFlip8ch.Name = "comboBoxCamFlip8ch";
             this.comboBoxCamFlip8ch.Size = new System.Drawing.Size(70, 27);
             this.comboBoxCamFlip8ch.TabIndex = 31;
@@ -856,7 +856,7 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxRecBitrate8ch.AutoSize = true;
             this.checkBoxRecBitrate8ch.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxRecBitrate8ch.Location = new System.Drawing.Point(535, 27);
+            this.checkBoxRecBitrate8ch.Location = new System.Drawing.Point(535, 29);
             this.checkBoxRecBitrate8ch.Name = "checkBoxRecBitrate8ch";
             this.checkBoxRecBitrate8ch.Size = new System.Drawing.Size(70, 14);
             this.checkBoxRecBitrate8ch.TabIndex = 29;
@@ -865,10 +865,10 @@ namespace RealtimeViewer
             // labelDevice
             // 
             this.labelDevice.AutoSize = true;
-            this.labelDevice.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelDevice.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelDevice.Location = new System.Drawing.Point(25, 25);
             this.labelDevice.Name = "labelDevice";
-            this.labelDevice.Size = new System.Drawing.Size(66, 24);
+            this.labelDevice.Size = new System.Drawing.Size(68, 25);
             this.labelDevice.TabIndex = 0;
             this.labelDevice.Tag = "operator";
             this.labelDevice.Text = "社番：";
@@ -876,10 +876,10 @@ namespace RealtimeViewer
             // labelDeviceId
             // 
             this.labelDeviceId.AutoSize = true;
-            this.labelDeviceId.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelDeviceId.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelDeviceId.Location = new System.Drawing.Point(85, 25);
             this.labelDeviceId.Name = "labelDeviceId";
-            this.labelDeviceId.Size = new System.Drawing.Size(70, 24);
+            this.labelDeviceId.Size = new System.Drawing.Size(64, 25);
             this.labelDeviceId.TabIndex = 1;
             this.labelDeviceId.Tag = "operator";
             this.labelDeviceId.Text = "0000";
@@ -1049,7 +1049,7 @@ namespace RealtimeViewer
             this.labelGSensorFront.Location = new System.Drawing.Point(3, 3);
             this.labelGSensorFront.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorFront.Name = "labelGSensorFront";
-            this.labelGSensorFront.Size = new System.Drawing.Size(56, 37);
+            this.labelGSensorFront.Size = new System.Drawing.Size(57, 37);
             this.labelGSensorFront.TabIndex = 0;
             this.labelGSensorFront.Text = "急発進";
             this.labelGSensorFront.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1064,10 +1064,10 @@ namespace RealtimeViewer
             "3:平置き・ドア",
             "4:縦置き・天井",
             "5:縦置き・ドア"});
-            this.comboBoxDevicePos.Location = new System.Drawing.Point(786, 9);
+            this.comboBoxDevicePos.Location = new System.Drawing.Point(788, 9);
             this.comboBoxDevicePos.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.comboBoxDevicePos.Name = "comboBoxDevicePos";
-            this.comboBoxDevicePos.Size = new System.Drawing.Size(180, 26);
+            this.comboBoxDevicePos.Size = new System.Drawing.Size(180, 28);
             this.comboBoxDevicePos.TabIndex = 13;
             this.comboBoxDevicePos.Tag = "operator";
             // 
@@ -1079,7 +1079,7 @@ namespace RealtimeViewer
             0,
             0,
             131072});
-            this.numUpDownGSensorFront.Location = new System.Drawing.Point(65, 9);
+            this.numUpDownGSensorFront.Location = new System.Drawing.Point(66, 9);
             this.numUpDownGSensorFront.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.numUpDownGSensorFront.Maximum = new decimal(new int[] {
             1,
@@ -1104,10 +1104,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDevicePos.AutoSize = true;
-            this.labelDevicePos.Location = new System.Drawing.Point(708, 3);
+            this.labelDevicePos.Location = new System.Drawing.Point(709, 3);
             this.labelDevicePos.Margin = new System.Windows.Forms.Padding(3);
             this.labelDevicePos.Name = "labelDevicePos";
-            this.labelDevicePos.Size = new System.Drawing.Size(72, 37);
+            this.labelDevicePos.Size = new System.Drawing.Size(73, 37);
             this.labelDevicePos.TabIndex = 12;
             this.labelDevicePos.Text = "取付方向";
             this.labelDevicePos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1118,10 +1118,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorFrontUnit.AutoSize = true;
-            this.labelGSensorFrontUnit.Location = new System.Drawing.Point(135, 3);
+            this.labelGSensorFrontUnit.Location = new System.Drawing.Point(136, 3);
             this.labelGSensorFrontUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorFrontUnit.Name = "labelGSensorFrontUnit";
-            this.labelGSensorFrontUnit.Size = new System.Drawing.Size(20, 37);
+            this.labelGSensorFrontUnit.Size = new System.Drawing.Size(21, 37);
             this.labelGSensorFrontUnit.TabIndex = 2;
             this.labelGSensorFrontUnit.Text = "Ｇ";
             this.labelGSensorFrontUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1135,7 +1135,7 @@ namespace RealtimeViewer
             this.labelGSensorZAxisUnit.Location = new System.Drawing.Point(662, 3);
             this.labelGSensorZAxisUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorZAxisUnit.Name = "labelGSensorZAxisUnit";
-            this.labelGSensorZAxisUnit.Size = new System.Drawing.Size(20, 37);
+            this.labelGSensorZAxisUnit.Size = new System.Drawing.Size(21, 37);
             this.labelGSensorZAxisUnit.TabIndex = 11;
             this.labelGSensorZAxisUnit.Text = "Ｇ";
             this.labelGSensorZAxisUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1146,10 +1146,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorRear.AutoSize = true;
-            this.labelGSensorRear.Location = new System.Drawing.Point(181, 3);
+            this.labelGSensorRear.Location = new System.Drawing.Point(183, 3);
             this.labelGSensorRear.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorRear.Name = "labelGSensorRear";
-            this.labelGSensorRear.Size = new System.Drawing.Size(81, 37);
+            this.labelGSensorRear.Size = new System.Drawing.Size(75, 37);
             this.labelGSensorRear.TabIndex = 3;
             this.labelGSensorRear.Text = "急ブレーキ";
             this.labelGSensorRear.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1187,10 +1187,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorYAxisUnit.AutoSize = true;
-            this.labelGSensorYAxisUnit.Location = new System.Drawing.Point(500, 3);
+            this.labelGSensorYAxisUnit.Location = new System.Drawing.Point(498, 3);
             this.labelGSensorYAxisUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorYAxisUnit.Name = "labelGSensorYAxisUnit";
-            this.labelGSensorYAxisUnit.Size = new System.Drawing.Size(20, 37);
+            this.labelGSensorYAxisUnit.Size = new System.Drawing.Size(21, 37);
             this.labelGSensorYAxisUnit.TabIndex = 8;
             this.labelGSensorYAxisUnit.Text = "Ｇ";
             this.labelGSensorYAxisUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1201,10 +1201,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorZAxis.AutoSize = true;
-            this.labelGSensorZAxis.Location = new System.Drawing.Point(546, 3);
+            this.labelGSensorZAxis.Location = new System.Drawing.Point(545, 3);
             this.labelGSensorZAxis.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorZAxis.Name = "labelGSensorZAxis";
-            this.labelGSensorZAxis.Size = new System.Drawing.Size(40, 37);
+            this.labelGSensorZAxis.Size = new System.Drawing.Size(41, 37);
             this.labelGSensorZAxis.TabIndex = 9;
             this.labelGSensorZAxis.Text = "上下";
             this.labelGSensorZAxis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1217,7 +1217,7 @@ namespace RealtimeViewer
             0,
             0,
             131072});
-            this.numUpDownGSensorRear.Location = new System.Drawing.Point(268, 9);
+            this.numUpDownGSensorRear.Location = new System.Drawing.Point(264, 9);
             this.numUpDownGSensorRear.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.numUpDownGSensorRear.Maximum = new decimal(new int[] {
             1,
@@ -1242,10 +1242,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorRearUnit.AutoSize = true;
-            this.labelGSensorRearUnit.Location = new System.Drawing.Point(338, 3);
+            this.labelGSensorRearUnit.Location = new System.Drawing.Point(334, 3);
             this.labelGSensorRearUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorRearUnit.Name = "labelGSensorRearUnit";
-            this.labelGSensorRearUnit.Size = new System.Drawing.Size(20, 37);
+            this.labelGSensorRearUnit.Size = new System.Drawing.Size(21, 37);
             this.labelGSensorRearUnit.TabIndex = 5;
             this.labelGSensorRearUnit.Text = "Ｇ";
             this.labelGSensorRearUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1258,7 +1258,7 @@ namespace RealtimeViewer
             0,
             0,
             131072});
-            this.numUpDownGSensorYAxis.Location = new System.Drawing.Point(430, 9);
+            this.numUpDownGSensorYAxis.Location = new System.Drawing.Point(428, 9);
             this.numUpDownGSensorYAxis.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.numUpDownGSensorYAxis.Maximum = new decimal(new int[] {
             1,
@@ -1283,10 +1283,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGSensorYAxis.AutoSize = true;
-            this.labelGSensorYAxis.Location = new System.Drawing.Point(384, 3);
+            this.labelGSensorYAxis.Location = new System.Drawing.Point(381, 3);
             this.labelGSensorYAxis.Margin = new System.Windows.Forms.Padding(3);
             this.labelGSensorYAxis.Name = "labelGSensorYAxis";
-            this.labelGSensorYAxis.Size = new System.Drawing.Size(40, 37);
+            this.labelGSensorYAxis.Size = new System.Drawing.Size(41, 37);
             this.labelGSensorYAxis.TabIndex = 6;
             this.labelGSensorYAxis.Text = "左右";
             this.labelGSensorYAxis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1338,7 +1338,7 @@ namespace RealtimeViewer
             this.radioButtonSpeedCurrent.AutoSize = true;
             this.radioButtonSpeedCurrent.Location = new System.Drawing.Point(20, 55);
             this.radioButtonSpeedCurrent.Name = "radioButtonSpeedCurrent";
-            this.radioButtonSpeedCurrent.Size = new System.Drawing.Size(58, 22);
+            this.radioButtonSpeedCurrent.Size = new System.Drawing.Size(59, 24);
             this.radioButtonSpeedCurrent.TabIndex = 1;
             this.radioButtonSpeedCurrent.Text = "電流";
             this.radioButtonSpeedCurrent.UseVisualStyleBackColor = true;
@@ -1349,7 +1349,7 @@ namespace RealtimeViewer
             this.radioButtonSpeedVoltage.Checked = true;
             this.radioButtonSpeedVoltage.Location = new System.Drawing.Point(20, 25);
             this.radioButtonSpeedVoltage.Name = "radioButtonSpeedVoltage";
-            this.radioButtonSpeedVoltage.Size = new System.Drawing.Size(58, 22);
+            this.radioButtonSpeedVoltage.Size = new System.Drawing.Size(59, 24);
             this.radioButtonSpeedVoltage.TabIndex = 0;
             this.radioButtonSpeedVoltage.TabStop = true;
             this.radioButtonSpeedVoltage.Text = "電圧";
@@ -1371,7 +1371,7 @@ namespace RealtimeViewer
             this.comboBoxSpeedPulseCoefficient.Location = new System.Drawing.Point(243, 58);
             this.comboBoxSpeedPulseCoefficient.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxSpeedPulseCoefficient.Name = "comboBoxSpeedPulseCoefficient";
-            this.comboBoxSpeedPulseCoefficient.Size = new System.Drawing.Size(118, 26);
+            this.comboBoxSpeedPulseCoefficient.Size = new System.Drawing.Size(118, 28);
             this.comboBoxSpeedPulseCoefficient.TabIndex = 4;
             // 
             // labelSpeedVoltageThreshold
@@ -1419,7 +1419,7 @@ namespace RealtimeViewer
             this.comboBoxSpeedVoltageThreshold.Location = new System.Drawing.Point(109, 58);
             this.comboBoxSpeedVoltageThreshold.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxSpeedVoltageThreshold.Name = "comboBoxSpeedVoltageThreshold";
-            this.comboBoxSpeedVoltageThreshold.Size = new System.Drawing.Size(128, 26);
+            this.comboBoxSpeedVoltageThreshold.Size = new System.Drawing.Size(128, 28);
             this.comboBoxSpeedVoltageThreshold.TabIndex = 2;
             // 
             // groupBoxSpeakerVolume
@@ -1519,7 +1519,7 @@ namespace RealtimeViewer
             this.comboBoxRealtimeBitrate.Location = new System.Drawing.Point(3, 24);
             this.comboBoxRealtimeBitrate.Margin = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.comboBoxRealtimeBitrate.Name = "comboBoxRealtimeBitrate";
-            this.comboBoxRealtimeBitrate.Size = new System.Drawing.Size(138, 26);
+            this.comboBoxRealtimeBitrate.Size = new System.Drawing.Size(138, 28);
             this.comboBoxRealtimeBitrate.TabIndex = 0;
             // 
             // groupBoxTachPulse
@@ -1592,7 +1592,7 @@ namespace RealtimeViewer
             this.radioButtonTachCurrent.AutoSize = true;
             this.radioButtonTachCurrent.Location = new System.Drawing.Point(20, 55);
             this.radioButtonTachCurrent.Name = "radioButtonTachCurrent";
-            this.radioButtonTachCurrent.Size = new System.Drawing.Size(58, 22);
+            this.radioButtonTachCurrent.Size = new System.Drawing.Size(59, 24);
             this.radioButtonTachCurrent.TabIndex = 1;
             this.radioButtonTachCurrent.TabStop = true;
             this.radioButtonTachCurrent.Text = "電流";
@@ -1604,7 +1604,7 @@ namespace RealtimeViewer
             this.radioButtonTachVoltage.Checked = true;
             this.radioButtonTachVoltage.Location = new System.Drawing.Point(20, 25);
             this.radioButtonTachVoltage.Name = "radioButtonTachVoltage";
-            this.radioButtonTachVoltage.Size = new System.Drawing.Size(58, 22);
+            this.radioButtonTachVoltage.Size = new System.Drawing.Size(59, 24);
             this.radioButtonTachVoltage.TabIndex = 0;
             this.radioButtonTachVoltage.TabStop = true;
             this.radioButtonTachVoltage.Text = "電圧";
@@ -1627,7 +1627,7 @@ namespace RealtimeViewer
             this.comboBoxTachVoltageThreshold.Location = new System.Drawing.Point(109, 58);
             this.comboBoxTachVoltageThreshold.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxTachVoltageThreshold.Name = "comboBoxTachVoltageThreshold";
-            this.comboBoxTachVoltageThreshold.Size = new System.Drawing.Size(128, 26);
+            this.comboBoxTachVoltageThreshold.Size = new System.Drawing.Size(128, 28);
             this.comboBoxTachVoltageThreshold.TabIndex = 2;
             // 
             // labelTachVoltageThreshold
@@ -1715,7 +1715,7 @@ namespace RealtimeViewer
             this.labelParkingBrake.Location = new System.Drawing.Point(3, 3);
             this.labelParkingBrake.Margin = new System.Windows.Forms.Padding(3);
             this.labelParkingBrake.Name = "labelParkingBrake";
-            this.labelParkingBrake.Size = new System.Drawing.Size(138, 31);
+            this.labelParkingBrake.Size = new System.Drawing.Size(122, 31);
             this.labelParkingBrake.TabIndex = 0;
             this.labelParkingBrake.Text = "パーキングブレーキ";
             this.labelParkingBrake.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1727,9 +1727,9 @@ namespace RealtimeViewer
             this.comboBoxBackGear.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxBackGear.Location = new System.Drawing.Point(753, 3);
+            this.comboBoxBackGear.Location = new System.Drawing.Point(730, 3);
             this.comboBoxBackGear.Name = "comboBoxBackGear";
-            this.comboBoxBackGear.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxBackGear.Size = new System.Drawing.Size(75, 28);
             this.comboBoxBackGear.TabIndex = 7;
             // 
             // labelBrake
@@ -1741,7 +1741,7 @@ namespace RealtimeViewer
             this.labelBrake.Location = new System.Drawing.Point(3, 40);
             this.labelBrake.Margin = new System.Windows.Forms.Padding(3);
             this.labelBrake.Name = "labelBrake";
-            this.labelBrake.Size = new System.Drawing.Size(138, 32);
+            this.labelBrake.Size = new System.Drawing.Size(122, 32);
             this.labelBrake.TabIndex = 8;
             this.labelBrake.Text = "ブレーキ";
             this.labelBrake.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1752,10 +1752,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelBackGear.AutoSize = true;
-            this.labelBackGear.Location = new System.Drawing.Point(670, 3);
+            this.labelBackGear.Location = new System.Drawing.Point(656, 3);
             this.labelBackGear.Margin = new System.Windows.Forms.Padding(3);
             this.labelBackGear.Name = "labelBackGear";
-            this.labelBackGear.Size = new System.Drawing.Size(77, 31);
+            this.labelBackGear.Size = new System.Drawing.Size(68, 31);
             this.labelBackGear.TabIndex = 6;
             this.labelBackGear.Text = "バックギア";
             this.labelBackGear.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1767,10 +1767,10 @@ namespace RealtimeViewer
             this.comboBoxLeftWinker.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxLeftWinker.Location = new System.Drawing.Point(358, 43);
+            this.comboBoxLeftWinker.Location = new System.Drawing.Point(343, 43);
             this.comboBoxLeftWinker.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxLeftWinker.Name = "comboBoxLeftWinker";
-            this.comboBoxLeftWinker.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxLeftWinker.Size = new System.Drawing.Size(75, 28);
             this.comboBoxLeftWinker.TabIndex = 11;
             // 
             // comboBoxRearDoor
@@ -1780,9 +1780,9 @@ namespace RealtimeViewer
             this.comboBoxRearDoor.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxRearDoor.Location = new System.Drawing.Point(569, 3);
+            this.comboBoxRearDoor.Location = new System.Drawing.Point(555, 3);
             this.comboBoxRearDoor.Name = "comboBoxRearDoor";
-            this.comboBoxRearDoor.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxRearDoor.Size = new System.Drawing.Size(75, 28);
             this.comboBoxRearDoor.TabIndex = 5;
             // 
             // comboBoxParkingBrake
@@ -1792,10 +1792,10 @@ namespace RealtimeViewer
             this.comboBoxParkingBrake.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxParkingBrake.Location = new System.Drawing.Point(147, 6);
+            this.comboBoxParkingBrake.Location = new System.Drawing.Point(131, 6);
             this.comboBoxParkingBrake.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxParkingBrake.Name = "comboBoxParkingBrake";
-            this.comboBoxParkingBrake.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxParkingBrake.Size = new System.Drawing.Size(75, 28);
             this.comboBoxParkingBrake.TabIndex = 1;
             // 
             // comboBoxBrake
@@ -1805,10 +1805,10 @@ namespace RealtimeViewer
             this.comboBoxBrake.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxBrake.Location = new System.Drawing.Point(147, 43);
+            this.comboBoxBrake.Location = new System.Drawing.Point(131, 43);
             this.comboBoxBrake.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxBrake.Name = "comboBoxBrake";
-            this.comboBoxBrake.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxBrake.Size = new System.Drawing.Size(75, 28);
             this.comboBoxBrake.TabIndex = 9;
             // 
             // labelFrontDoor
@@ -1817,10 +1817,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelFrontDoor.AutoSize = true;
-            this.labelFrontDoor.Location = new System.Drawing.Point(248, 3);
+            this.labelFrontDoor.Location = new System.Drawing.Point(232, 3);
             this.labelFrontDoor.Margin = new System.Windows.Forms.Padding(3);
             this.labelFrontDoor.Name = "labelFrontDoor";
-            this.labelFrontDoor.Size = new System.Drawing.Size(104, 31);
+            this.labelFrontDoor.Size = new System.Drawing.Size(105, 31);
             this.labelFrontDoor.TabIndex = 2;
             this.labelFrontDoor.Text = "前方ドア";
             this.labelFrontDoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1831,10 +1831,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelRearDoor.AutoSize = true;
-            this.labelRearDoor.Location = new System.Drawing.Point(459, 3);
+            this.labelRearDoor.Location = new System.Drawing.Point(444, 3);
             this.labelRearDoor.Margin = new System.Windows.Forms.Padding(3);
             this.labelRearDoor.Name = "labelRearDoor";
-            this.labelRearDoor.Size = new System.Drawing.Size(104, 31);
+            this.labelRearDoor.Size = new System.Drawing.Size(105, 31);
             this.labelRearDoor.TabIndex = 4;
             this.labelRearDoor.Text = "後方ドア";
             this.labelRearDoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1846,10 +1846,10 @@ namespace RealtimeViewer
             this.comboBoxFrontDoor.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxFrontDoor.Location = new System.Drawing.Point(358, 6);
+            this.comboBoxFrontDoor.Location = new System.Drawing.Point(343, 6);
             this.comboBoxFrontDoor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.comboBoxFrontDoor.Name = "comboBoxFrontDoor";
-            this.comboBoxFrontDoor.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxFrontDoor.Size = new System.Drawing.Size(75, 28);
             this.comboBoxFrontDoor.TabIndex = 3;
             // 
             // labelLeftWinker
@@ -1858,10 +1858,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLeftWinker.AutoSize = true;
-            this.labelLeftWinker.Location = new System.Drawing.Point(248, 40);
+            this.labelLeftWinker.Location = new System.Drawing.Point(232, 40);
             this.labelLeftWinker.Margin = new System.Windows.Forms.Padding(3);
             this.labelLeftWinker.Name = "labelLeftWinker";
-            this.labelLeftWinker.Size = new System.Drawing.Size(104, 32);
+            this.labelLeftWinker.Size = new System.Drawing.Size(105, 32);
             this.labelLeftWinker.TabIndex = 10;
             this.labelLeftWinker.Text = "左方向指示器";
             this.labelLeftWinker.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1872,10 +1872,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelRightWinker.AutoSize = true;
-            this.labelRightWinker.Location = new System.Drawing.Point(459, 40);
+            this.labelRightWinker.Location = new System.Drawing.Point(444, 40);
             this.labelRightWinker.Margin = new System.Windows.Forms.Padding(3);
             this.labelRightWinker.Name = "labelRightWinker";
-            this.labelRightWinker.Size = new System.Drawing.Size(104, 32);
+            this.labelRightWinker.Size = new System.Drawing.Size(105, 32);
             this.labelRightWinker.TabIndex = 12;
             this.labelRightWinker.Text = "右方向指示器";
             this.labelRightWinker.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1887,9 +1887,9 @@ namespace RealtimeViewer
             this.comboBoxRightWinker.Items.AddRange(new object[] {
             "正論理",
             "負論理"});
-            this.comboBoxRightWinker.Location = new System.Drawing.Point(569, 40);
+            this.comboBoxRightWinker.Location = new System.Drawing.Point(555, 40);
             this.comboBoxRightWinker.Name = "comboBoxRightWinker";
-            this.comboBoxRightWinker.Size = new System.Drawing.Size(75, 26);
+            this.comboBoxRightWinker.Size = new System.Drawing.Size(75, 28);
             this.comboBoxRightWinker.TabIndex = 13;
             // 
             // groupBoxExtention
@@ -1928,9 +1928,9 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxStatusSwitch.AutoSize = true;
-            this.checkBoxStatusSwitch.Location = new System.Drawing.Point(251, 3);
+            this.checkBoxStatusSwitch.Location = new System.Drawing.Point(241, 3);
             this.checkBoxStatusSwitch.Name = "checkBoxStatusSwitch";
-            this.checkBoxStatusSwitch.Size = new System.Drawing.Size(190, 69);
+            this.checkBoxStatusSwitch.Size = new System.Drawing.Size(200, 69);
             this.checkBoxStatusSwitch.TabIndex = 3;
             this.checkBoxStatusSwitch.Text = "ステータススイッチ";
             this.checkBoxStatusSwitch.UseVisualStyleBackColor = true;
@@ -1943,7 +1943,7 @@ namespace RealtimeViewer
             this.checkBoxNamePlate.AutoSize = true;
             this.checkBoxNamePlate.Location = new System.Drawing.Point(3, 3);
             this.checkBoxNamePlate.Name = "checkBoxNamePlate";
-            this.checkBoxNamePlate.Size = new System.Drawing.Size(75, 69);
+            this.checkBoxNamePlate.Size = new System.Drawing.Size(76, 69);
             this.checkBoxNamePlate.TabIndex = 0;
             this.checkBoxNamePlate.Text = "氏名札";
             this.checkBoxNamePlate.UseVisualStyleBackColor = true;
@@ -1954,9 +1954,9 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEtc.AutoSize = true;
-            this.checkBoxEtc.Location = new System.Drawing.Point(84, 3);
+            this.checkBoxEtc.Location = new System.Drawing.Point(85, 3);
             this.checkBoxEtc.Name = "checkBoxEtc";
-            this.checkBoxEtc.Size = new System.Drawing.Size(60, 69);
+            this.checkBoxEtc.Size = new System.Drawing.Size(59, 69);
             this.checkBoxEtc.TabIndex = 1;
             this.checkBoxEtc.Text = "ETC";
             this.checkBoxEtc.UseVisualStyleBackColor = true;
@@ -1969,7 +1969,7 @@ namespace RealtimeViewer
             this.checkBoxPrinter.AutoSize = true;
             this.checkBoxPrinter.Location = new System.Drawing.Point(150, 3);
             this.checkBoxPrinter.Name = "checkBoxPrinter";
-            this.checkBoxPrinter.Size = new System.Drawing.Size(95, 69);
+            this.checkBoxPrinter.Size = new System.Drawing.Size(85, 69);
             this.checkBoxPrinter.TabIndex = 2;
             this.checkBoxPrinter.Text = "プリンター";
             this.checkBoxPrinter.UseVisualStyleBackColor = true;
@@ -2039,10 +2039,10 @@ namespace RealtimeViewer
             // labelRemoteStatus
             // 
             this.labelRemoteStatus.AutoSize = true;
-            this.labelRemoteStatus.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelRemoteStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelRemoteStatus.Location = new System.Drawing.Point(393, 25);
             this.labelRemoteStatus.Name = "labelRemoteStatus";
-            this.labelRemoteStatus.Size = new System.Drawing.Size(310, 24);
+            this.labelRemoteStatus.Size = new System.Drawing.Size(287, 25);
             this.labelRemoteStatus.TabIndex = 2;
             this.labelRemoteStatus.Tag = "operator";
             this.labelRemoteStatus.Text = "サーバーから設定を取得中です...";
@@ -2091,7 +2091,7 @@ namespace RealtimeViewer
             this.labelIccId.Location = new System.Drawing.Point(3, 3);
             this.labelIccId.Margin = new System.Windows.Forms.Padding(3);
             this.labelIccId.Name = "labelIccId";
-            this.labelIccId.Size = new System.Drawing.Size(61, 26);
+            this.labelIccId.Size = new System.Drawing.Size(59, 26);
             this.labelIccId.TabIndex = 0;
             this.labelIccId.Text = "SIM ID";
             this.labelIccId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2105,7 +2105,7 @@ namespace RealtimeViewer
             this.labelSdFree.Location = new System.Drawing.Point(3, 35);
             this.labelSdFree.Margin = new System.Windows.Forms.Padding(3);
             this.labelSdFree.Name = "labelSdFree";
-            this.labelSdFree.Size = new System.Drawing.Size(61, 18);
+            this.labelSdFree.Size = new System.Drawing.Size(59, 20);
             this.labelSdFree.TabIndex = 2;
             this.labelSdFree.Text = "SD";
             this.labelSdFree.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2116,10 +2116,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSsdFree.AutoSize = true;
-            this.labelSsdFree.Location = new System.Drawing.Point(3, 59);
+            this.labelSsdFree.Location = new System.Drawing.Point(3, 61);
             this.labelSsdFree.Margin = new System.Windows.Forms.Padding(3);
             this.labelSsdFree.Name = "labelSsdFree";
-            this.labelSsdFree.Size = new System.Drawing.Size(61, 18);
+            this.labelSsdFree.Size = new System.Drawing.Size(59, 20);
             this.labelSsdFree.TabIndex = 5;
             this.labelSsdFree.Text = "SSD";
             this.labelSsdFree.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2131,10 +2131,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanelDeviceInfo.SetColumnSpan(this.textBoxIccId, 2);
             this.textBoxIccId.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceDeviceInfo, "IccId", true));
-            this.textBoxIccId.Location = new System.Drawing.Point(70, 3);
+            this.textBoxIccId.Location = new System.Drawing.Point(68, 3);
             this.textBoxIccId.Name = "textBoxIccId";
             this.textBoxIccId.ReadOnly = true;
-            this.textBoxIccId.Size = new System.Drawing.Size(236, 26);
+            this.textBoxIccId.Size = new System.Drawing.Size(238, 26);
             this.textBoxIccId.TabIndex = 1;
             this.textBoxIccId.Text = "12345678901234567890";
             // 
@@ -2149,10 +2149,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSdFreeValue.AutoSize = true;
             this.labelSdFreeValue.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceDeviceInfo, "SdFree", true));
-            this.labelSdFreeValue.Location = new System.Drawing.Point(70, 35);
+            this.labelSdFreeValue.Location = new System.Drawing.Point(68, 35);
             this.labelSdFreeValue.Margin = new System.Windows.Forms.Padding(3);
             this.labelSdFreeValue.Name = "labelSdFreeValue";
-            this.labelSdFreeValue.Size = new System.Drawing.Size(187, 18);
+            this.labelSdFreeValue.Size = new System.Drawing.Size(190, 20);
             this.labelSdFreeValue.TabIndex = 3;
             this.labelSdFreeValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -2163,10 +2163,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSsdFreeValue.AutoSize = true;
             this.labelSsdFreeValue.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceDeviceInfo, "SsdFree", true));
-            this.labelSsdFreeValue.Location = new System.Drawing.Point(70, 59);
+            this.labelSsdFreeValue.Location = new System.Drawing.Point(68, 61);
             this.labelSsdFreeValue.Margin = new System.Windows.Forms.Padding(3);
             this.labelSsdFreeValue.Name = "labelSsdFreeValue";
-            this.labelSsdFreeValue.Size = new System.Drawing.Size(187, 18);
+            this.labelSsdFreeValue.Size = new System.Drawing.Size(190, 20);
             this.labelSsdFreeValue.TabIndex = 6;
             this.labelSsdFreeValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -2176,10 +2176,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSdFreeUnit.AutoSize = true;
-            this.labelSdFreeUnit.Location = new System.Drawing.Point(263, 35);
+            this.labelSdFreeUnit.Location = new System.Drawing.Point(264, 35);
             this.labelSdFreeUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelSdFreeUnit.Name = "labelSdFreeUnit";
-            this.labelSdFreeUnit.Size = new System.Drawing.Size(43, 18);
+            this.labelSdFreeUnit.Size = new System.Drawing.Size(42, 20);
             this.labelSdFreeUnit.TabIndex = 4;
             this.labelSdFreeUnit.Text = "Free";
             this.labelSdFreeUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2190,10 +2190,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSsdFreeUnit.AutoSize = true;
-            this.labelSsdFreeUnit.Location = new System.Drawing.Point(263, 59);
+            this.labelSsdFreeUnit.Location = new System.Drawing.Point(264, 61);
             this.labelSsdFreeUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelSsdFreeUnit.Name = "labelSsdFreeUnit";
-            this.labelSsdFreeUnit.Size = new System.Drawing.Size(43, 18);
+            this.labelSsdFreeUnit.Size = new System.Drawing.Size(42, 20);
             this.labelSsdFreeUnit.TabIndex = 7;
             this.labelSsdFreeUnit.Text = "Free";
             this.labelSsdFreeUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2238,7 +2238,7 @@ namespace RealtimeViewer
             this.labelNormalRoadSpeedLimit.Location = new System.Drawing.Point(3, 3);
             this.labelNormalRoadSpeedLimit.Margin = new System.Windows.Forms.Padding(3);
             this.labelNormalRoadSpeedLimit.Name = "labelNormalRoadSpeedLimit";
-            this.labelNormalRoadSpeedLimit.Size = new System.Drawing.Size(104, 31);
+            this.labelNormalRoadSpeedLimit.Size = new System.Drawing.Size(105, 31);
             this.labelNormalRoadSpeedLimit.TabIndex = 0;
             this.labelNormalRoadSpeedLimit.Text = "超過値";
             this.labelNormalRoadSpeedLimit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2249,17 +2249,17 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelNormalRoadSpeedLimitUnit.AutoSize = true;
-            this.labelNormalRoadSpeedLimitUnit.Location = new System.Drawing.Point(179, 3);
+            this.labelNormalRoadSpeedLimitUnit.Location = new System.Drawing.Point(180, 3);
             this.labelNormalRoadSpeedLimitUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelNormalRoadSpeedLimitUnit.Name = "labelNormalRoadSpeedLimitUnit";
-            this.labelNormalRoadSpeedLimitUnit.Size = new System.Drawing.Size(49, 31);
+            this.labelNormalRoadSpeedLimitUnit.Size = new System.Drawing.Size(46, 31);
             this.labelNormalRoadSpeedLimitUnit.TabIndex = 4;
             this.labelNormalRoadSpeedLimitUnit.Text = "Km/h";
             this.labelNormalRoadSpeedLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numericUpDownNormalRoadSpeedLimit
             // 
-            this.numericUpDownNormalRoadSpeedLimit.Location = new System.Drawing.Point(113, 6);
+            this.numericUpDownNormalRoadSpeedLimit.Location = new System.Drawing.Point(114, 6);
             this.numericUpDownNormalRoadSpeedLimit.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownNormalRoadSpeedLimit.Maximum = new decimal(new int[] {
             999,
@@ -2285,7 +2285,7 @@ namespace RealtimeViewer
             this.labelNormalRoadDecisionTime.Location = new System.Drawing.Point(3, 40);
             this.labelNormalRoadDecisionTime.Margin = new System.Windows.Forms.Padding(3);
             this.labelNormalRoadDecisionTime.Name = "labelNormalRoadDecisionTime";
-            this.labelNormalRoadDecisionTime.Size = new System.Drawing.Size(104, 32);
+            this.labelNormalRoadDecisionTime.Size = new System.Drawing.Size(105, 32);
             this.labelNormalRoadDecisionTime.TabIndex = 1;
             this.labelNormalRoadDecisionTime.Text = "判定猶予時間";
             this.labelNormalRoadDecisionTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2296,10 +2296,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelNormalRoadDecisionTimeUnit.AutoSize = true;
-            this.labelNormalRoadDecisionTimeUnit.Location = new System.Drawing.Point(179, 40);
+            this.labelNormalRoadDecisionTimeUnit.Location = new System.Drawing.Point(180, 40);
             this.labelNormalRoadDecisionTimeUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelNormalRoadDecisionTimeUnit.Name = "labelNormalRoadDecisionTimeUnit";
-            this.labelNormalRoadDecisionTimeUnit.Size = new System.Drawing.Size(49, 32);
+            this.labelNormalRoadDecisionTimeUnit.Size = new System.Drawing.Size(46, 32);
             this.labelNormalRoadDecisionTimeUnit.TabIndex = 5;
             this.labelNormalRoadDecisionTimeUnit.Text = "秒";
             this.labelNormalRoadDecisionTimeUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2309,7 +2309,7 @@ namespace RealtimeViewer
             this.numericUpDownNormalRoadDecisionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownNormalRoadDecisionTime.Location = new System.Drawing.Point(113, 43);
+            this.numericUpDownNormalRoadDecisionTime.Location = new System.Drawing.Point(114, 43);
             this.numericUpDownNormalRoadDecisionTime.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownNormalRoadDecisionTime.Maximum = new decimal(new int[] {
             999,
@@ -2361,7 +2361,7 @@ namespace RealtimeViewer
             this.labelHighwaySpeedLimit.Location = new System.Drawing.Point(3, 3);
             this.labelHighwaySpeedLimit.Margin = new System.Windows.Forms.Padding(3);
             this.labelHighwaySpeedLimit.Name = "labelHighwaySpeedLimit";
-            this.labelHighwaySpeedLimit.Size = new System.Drawing.Size(104, 31);
+            this.labelHighwaySpeedLimit.Size = new System.Drawing.Size(105, 31);
             this.labelHighwaySpeedLimit.TabIndex = 0;
             this.labelHighwaySpeedLimit.Text = "超過値";
             this.labelHighwaySpeedLimit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2372,10 +2372,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelHighwaySpeedLimitUnit.AutoSize = true;
-            this.labelHighwaySpeedLimitUnit.Location = new System.Drawing.Point(179, 3);
+            this.labelHighwaySpeedLimitUnit.Location = new System.Drawing.Point(180, 3);
             this.labelHighwaySpeedLimitUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelHighwaySpeedLimitUnit.Name = "labelHighwaySpeedLimitUnit";
-            this.labelHighwaySpeedLimitUnit.Size = new System.Drawing.Size(49, 31);
+            this.labelHighwaySpeedLimitUnit.Size = new System.Drawing.Size(48, 31);
             this.labelHighwaySpeedLimitUnit.TabIndex = 4;
             this.labelHighwaySpeedLimitUnit.Text = "Km/h";
             this.labelHighwaySpeedLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2385,7 +2385,7 @@ namespace RealtimeViewer
             this.numericUpDownHighwaySpeedLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownHighwaySpeedLimit.Location = new System.Drawing.Point(113, 6);
+            this.numericUpDownHighwaySpeedLimit.Location = new System.Drawing.Point(114, 6);
             this.numericUpDownHighwaySpeedLimit.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownHighwaySpeedLimit.Maximum = new decimal(new int[] {
             999,
@@ -2411,7 +2411,7 @@ namespace RealtimeViewer
             this.labelHighwayDecisionTime.Location = new System.Drawing.Point(3, 40);
             this.labelHighwayDecisionTime.Margin = new System.Windows.Forms.Padding(3);
             this.labelHighwayDecisionTime.Name = "labelHighwayDecisionTime";
-            this.labelHighwayDecisionTime.Size = new System.Drawing.Size(104, 32);
+            this.labelHighwayDecisionTime.Size = new System.Drawing.Size(105, 32);
             this.labelHighwayDecisionTime.TabIndex = 1;
             this.labelHighwayDecisionTime.Text = "判定猶予時間";
             this.labelHighwayDecisionTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2421,7 +2421,7 @@ namespace RealtimeViewer
             this.numericUpDownHighwayDecisionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownHighwayDecisionTime.Location = new System.Drawing.Point(113, 43);
+            this.numericUpDownHighwayDecisionTime.Location = new System.Drawing.Point(114, 43);
             this.numericUpDownHighwayDecisionTime.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownHighwayDecisionTime.Maximum = new decimal(new int[] {
             999,
@@ -2439,10 +2439,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelHighwayDecisionTimeUnit.AutoSize = true;
-            this.labelHighwayDecisionTimeUnit.Location = new System.Drawing.Point(179, 40);
+            this.labelHighwayDecisionTimeUnit.Location = new System.Drawing.Point(180, 40);
             this.labelHighwayDecisionTimeUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelHighwayDecisionTimeUnit.Name = "labelHighwayDecisionTimeUnit";
-            this.labelHighwayDecisionTimeUnit.Size = new System.Drawing.Size(49, 32);
+            this.labelHighwayDecisionTimeUnit.Size = new System.Drawing.Size(48, 32);
             this.labelHighwayDecisionTimeUnit.TabIndex = 5;
             this.labelHighwayDecisionTimeUnit.Text = "秒";
             this.labelHighwayDecisionTimeUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2496,7 +2496,7 @@ namespace RealtimeViewer
             this.labelEngineRPMLimit.Location = new System.Drawing.Point(3, 3);
             this.labelEngineRPMLimit.Margin = new System.Windows.Forms.Padding(3);
             this.labelEngineRPMLimit.Name = "labelEngineRPMLimit";
-            this.labelEngineRPMLimit.Size = new System.Drawing.Size(104, 31);
+            this.labelEngineRPMLimit.Size = new System.Drawing.Size(105, 31);
             this.labelEngineRPMLimit.TabIndex = 0;
             this.labelEngineRPMLimit.Text = "超過値";
             this.labelEngineRPMLimit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2510,7 +2510,7 @@ namespace RealtimeViewer
             this.labelEngineRPMDecisionTime.Location = new System.Drawing.Point(3, 40);
             this.labelEngineRPMDecisionTime.Margin = new System.Windows.Forms.Padding(3);
             this.labelEngineRPMDecisionTime.Name = "labelEngineRPMDecisionTime";
-            this.labelEngineRPMDecisionTime.Size = new System.Drawing.Size(104, 32);
+            this.labelEngineRPMDecisionTime.Size = new System.Drawing.Size(105, 32);
             this.labelEngineRPMDecisionTime.TabIndex = 1;
             this.labelEngineRPMDecisionTime.Text = "判定猶予時間";
             this.labelEngineRPMDecisionTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2521,10 +2521,10 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelEngineRPMLimitUnit.AutoSize = true;
-            this.labelEngineRPMLimitUnit.Location = new System.Drawing.Point(189, 3);
+            this.labelEngineRPMLimitUnit.Location = new System.Drawing.Point(190, 3);
             this.labelEngineRPMLimitUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelEngineRPMLimitUnit.Name = "labelEngineRPMLimitUnit";
-            this.labelEngineRPMLimitUnit.Size = new System.Drawing.Size(70, 31);
+            this.labelEngineRPMLimitUnit.Size = new System.Drawing.Size(69, 31);
             this.labelEngineRPMLimitUnit.TabIndex = 2;
             this.labelEngineRPMLimitUnit.Text = "rpm";
             this.labelEngineRPMLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2535,17 +2535,17 @@ namespace RealtimeViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelEngineRPMDecisionTimeUnit.AutoSize = true;
-            this.labelEngineRPMDecisionTimeUnit.Location = new System.Drawing.Point(189, 40);
+            this.labelEngineRPMDecisionTimeUnit.Location = new System.Drawing.Point(190, 40);
             this.labelEngineRPMDecisionTimeUnit.Margin = new System.Windows.Forms.Padding(3);
             this.labelEngineRPMDecisionTimeUnit.Name = "labelEngineRPMDecisionTimeUnit";
-            this.labelEngineRPMDecisionTimeUnit.Size = new System.Drawing.Size(70, 32);
+            this.labelEngineRPMDecisionTimeUnit.Size = new System.Drawing.Size(69, 32);
             this.labelEngineRPMDecisionTimeUnit.TabIndex = 3;
             this.labelEngineRPMDecisionTimeUnit.Text = "秒";
             this.labelEngineRPMDecisionTimeUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numericUpDownEngineRPMLimit
             // 
-            this.numericUpDownEngineRPMLimit.Location = new System.Drawing.Point(113, 6);
+            this.numericUpDownEngineRPMLimit.Location = new System.Drawing.Point(114, 6);
             this.numericUpDownEngineRPMLimit.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownEngineRPMLimit.Maximum = new decimal(new int[] {
             9999,
@@ -2563,7 +2563,7 @@ namespace RealtimeViewer
             // 
             // numericUpDownEngineRPMDecisionTime
             // 
-            this.numericUpDownEngineRPMDecisionTime.Location = new System.Drawing.Point(113, 43);
+            this.numericUpDownEngineRPMDecisionTime.Location = new System.Drawing.Point(114, 43);
             this.numericUpDownEngineRPMDecisionTime.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.numericUpDownEngineRPMDecisionTime.Maximum = new decimal(new int[] {
             999,
@@ -2598,7 +2598,7 @@ namespace RealtimeViewer
             this.Controls.Add(this.groupBoxRecBitrate);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSend);
-            this.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;

@@ -34,6 +34,18 @@ namespace RealtimeViewer.WMShipView.Streaming
         void AbortAll();
 
         /// <summary>
+        /// VLCウィンドウをフォアグランドに
+        /// </summary>
+        void SetForeground(string deviceId);
+
+        /// <summary>
+        /// エラー持ちか
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <returns></returns>
+        bool HasError(string deviceId);
+
+        /// <summary>
         /// チャンネル変更
         /// </summary>
         /// <param name="deviceId"></param>

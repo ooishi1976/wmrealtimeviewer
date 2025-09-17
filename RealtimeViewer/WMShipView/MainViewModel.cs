@@ -22,6 +22,7 @@ using RealtimeViewer.Network.Http;
 using RealtimeViewer.Network.Mqtt;
 using RealtimeViewer.Setting;
 using RealtimeViewer.WMShipView.Streaming;
+using uPLibrary.Networking.M2Mqtt;
 using UserBioDP;
 using static RealtimeViewer.Network.Http.RequestSequence;
 
@@ -32,9 +33,12 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// リアルタイムビューアの仕向け(東武、開発、明治、others)
         /// </summary>
-        private UserIndex UserIndex { get; set; } = UserIndex.Tobu;
+        private UserIndex UserIndex { get; set; } = UserIndex.WeatherMedia;
 
-        private StreamingTypes StreamingTypes { get; set; } = StreamingTypes.Udp;
+        /// <summary>
+        /// リアルタイム視聴方式
+        /// </summary>
+        private StreamingTypes StreamingTypes { get; set; } = StreamingTypes.Rtsp;
 
         public OperationLogger OperationLogger { get; private set; }
 
@@ -184,11 +188,13 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// WebAPI呼び出し用のHTTPクライアント
         /// </summary>
-        private readonly HttpClient httpClient = new HttpClient();
+        public HttpClient HttpClient { get; private set; } = new HttpClient();
 
-        private RequestSequence RequestController { get; set; }
+        public RequestSequence RequestController { get; private set; }
 
         private MqttController MqttController { get; set; } = new MqttController();
+
+        public MqttClient MqttClient => MqttController.MqttClient;
 
         private IStreamingController StreamingController { get; set; }
 
@@ -271,7 +277,11 @@ namespace RealtimeViewer.WMShipView
             get
             {
                 var result = Color.Gray;
-                if (IsAliveSelectedDevice) 
+                if (HasRealtimeErrorSelectedDevice) 
+                {
+                    result = Color.Gold;
+                }
+                else if (IsAliveSelectedDevice) 
                 {
                     result = Color.CornflowerBlue;
                 }
@@ -290,6 +300,23 @@ namespace RealtimeViewer.WMShipView
                 if (SelectedDevice != null && 
                     SelectedDevice.TryGetLastNotificationTime(out var lastNotificationTime) &&
                     (DateTime.Now - lastNotificationTime).TotalSeconds < 120)
+                {
+                    result = true;
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 選択車両が生きてるか
+        /// </summary>
+        public bool HasRealtimeErrorSelectedDevice
+        {
+            get
+            {
+                var result = false;
+                if (SelectedDevice != null && 
+                    StreamingController.HasError(SelectedDevice.DeviceId))
                 {
                     result = true;
                 }
@@ -337,6 +364,9 @@ namespace RealtimeViewer.WMShipView
         }
         #endregion
 
+        /// <summary>
+        /// 選択車両のストリーミングの状態
+        /// </summary>
         public ClientStatus StreamingStatus { get; set; }
 
         #region イベントパネル
@@ -501,13 +531,13 @@ namespace RealtimeViewer.WMShipView
 
         public void CreateRequestController()
         {
-            RequestController = new RequestSequence(LocalSettings, httpClient, OperationServerInfo);
+            RequestController = new RequestSequence(LocalSettings, HttpClient, OperationServerInfo);
             RequestController.OfficeLocations = LocalSettings.OfficeLocations;
         }
 
         public void CreateStreamingController(Dispatcher dispatcher)
         {
-            if (LocalSettings.StreamingType == StreamingTypes.Udp)
+            if (StreamingTypes == StreamingTypes.Udp)
             {
                 StreamingController = new UdpController(
                         MqttController, RequestController, dispatcher, LocalSettings);
@@ -655,9 +685,24 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
+        public void StopStreamingForce(string deviceId)
+        {
+            StreamingController.Stop(deviceId);
+        }
+
         public void AbortAllStreaming()
         {
             StreamingController.AbortAll();
+        }
+
+        public void SetForeground(string deviceId)
+        {
+            StreamingController.SetForeground(deviceId);
+        }
+
+        public void NotifyUpdateBackgroundColor()
+        {
+            NotifyPropertyChanged(nameof(SelectedDeviceBackColor));
         }
 
         public void NotifyStreamingStatus()

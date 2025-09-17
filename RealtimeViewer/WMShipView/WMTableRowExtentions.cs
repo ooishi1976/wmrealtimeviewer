@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MpgCommon;
+using Newtonsoft.Json;
 using RealtimeViewer.Map;
 using RealtimeViewer.Model;
+using RealtimeViewer.Network.Mqtt;
 
 namespace RealtimeViewer.WMShipView
 {
@@ -54,6 +56,17 @@ namespace RealtimeViewer.WMShipView
             }
             return result;
         }
+        public static bool IsAlive(this WMDataSet.DeviceRow device)
+        {
+            var result = false;
+            if (device != null && 
+                device.TryGetLastNotificationTime(out var lastNotificationTime) &&
+                (DateTime.Now - lastNotificationTime).TotalSeconds < 120)
+            {
+                result = true;
+            }
+            return result;
+        }
 
         public static int GetCode(this WMDataSet.ErrorRow error)
         {
@@ -73,6 +86,24 @@ namespace RealtimeViewer.WMShipView
         public static Color GetColor(this WMDataSet.ErrorRow error)
         {
             return DeviceErrorCode.GetBackgroundColor(error.GetCode());
+        }
+
+        public static MqttJsonError GetErrorJson(this WMDataSet.ErrorRow error)
+        {
+            MqttJsonError result = null;
+            if (error != null)
+            {
+                result = new MqttJsonError()
+                {
+                    DeviceId = error.DeviceId,
+                    Ts = error.Timestamp,
+                    Error = error.Error,
+                    SdFree = error.SdFree,
+                    SsdFree = error.SsdFree,
+                    IccId = error.IccId,
+                };
+            }
+            return result;
         }
 
     }

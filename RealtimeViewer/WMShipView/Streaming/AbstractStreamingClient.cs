@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -203,7 +204,7 @@ namespace RealtimeViewer.WMShipView
             VlcProcess.Exited += VlcProcess_Exited;
             VlcProcess.EnableRaisingEvents = true;
             VlcProcess.Start();
-            
+
             PlayCounter = Stopwatch.StartNew();
             PlayCountTimer = new TTimer(1000);
             PlayCountTimer.Elapsed += PlayCountTimer_Elapsed;
@@ -272,6 +273,13 @@ namespace RealtimeViewer.WMShipView
             SessionWaitCounter?.Stop();
         }
 
+        public void SetForground()
+        {
+            if (VlcProcess != null && !VlcProcess.HasExited)
+            {
+                SetForegroundWindow(VlcProcess.MainWindowHandle);
+            }
+        }
 
         protected abstract string GetDistributeUrl(StreamingServerInfo serverInfo);
 
@@ -304,5 +312,7 @@ namespace RealtimeViewer.WMShipView
             MqttController.SendMessage(topic, message);
         }
 
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }

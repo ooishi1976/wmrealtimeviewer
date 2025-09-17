@@ -17,6 +17,15 @@ namespace RealtimeViewer.Map
     {
         public static Dictionary<int, Dictionary<int, string>> cache = new Dictionary<int, Dictionary<int, string>>();
 
+        public static (int d, int m, double s) ConvertMsToDMS(long ms)
+        {
+            var deg10 = ms / 3600000M;  // 十進度
+            var d = Math.Floor(deg10);
+            var m = Math.Floor((deg10 - d) * 60M);
+            var s = (((deg10 - d) * 60M) - m) * 60M;
+            return (Convert.ToInt32(d), Convert.ToInt32(m), Convert.ToDouble(s));
+        }
+
         /// <summary>
         /// 住所検索を行う
         /// </summary>

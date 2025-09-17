@@ -785,6 +785,14 @@ namespace RealtimeViewer.WMShipView {
             
             private global::System.Data.DataColumn columnLatitude;
             
+            private global::System.Data.DataColumn columnLongitudeDeg10;
+            
+            private global::System.Data.DataColumn columnLatitudeDeg10;
+            
+            private global::System.Data.DataColumn columnLongitudeDMS;
+            
+            private global::System.Data.DataColumn columnLatitudeDMS;
+            
             private global::System.Data.DataColumn columnAddress;
             
             private global::System.Data.DataColumn columnLastNotificationTime;
@@ -872,6 +880,38 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn LongitudeDeg10Column {
+                get {
+                    return this.columnLongitudeDeg10;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn LatitudeDeg10Column {
+                get {
+                    return this.columnLatitudeDeg10;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn LongitudeDMSColumn {
+                get {
+                    return this.columnLongitudeDMS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn LatitudeDMSColumn {
+                get {
+                    return this.columnLatitudeDMS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn AddressColumn {
                 get {
                     return this.columnAddress;
@@ -923,7 +963,7 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DeviceRow AddDeviceRow(string DeviceId, OfficeRow parentOfficeRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string Address, string LastNotificationTime) {
+            public DeviceRow AddDeviceRow(string DeviceId, OfficeRow parentOfficeRowByOfficeTable_DeviceTable, string CarId, string CarNumber, string Longitude, string Latitude, string LongitudeDeg10, string LatitudeDeg10, string LongitudeDMS, string LatitudeDMS, string Address, string LastNotificationTime) {
                 DeviceRow rowDeviceRow = ((DeviceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DeviceId,
@@ -932,6 +972,10 @@ namespace RealtimeViewer.WMShipView {
                         CarNumber,
                         Longitude,
                         Latitude,
+                        LongitudeDeg10,
+                        LatitudeDeg10,
+                        LongitudeDMS,
+                        LatitudeDMS,
                         Address,
                         LastNotificationTime};
                 if ((parentOfficeRowByOfficeTable_DeviceTable != null)) {
@@ -972,6 +1016,10 @@ namespace RealtimeViewer.WMShipView {
                 this.columnCarNumber = base.Columns["CarNumber"];
                 this.columnLongitude = base.Columns["Longitude"];
                 this.columnLatitude = base.Columns["Latitude"];
+                this.columnLongitudeDeg10 = base.Columns["LongitudeDeg10"];
+                this.columnLatitudeDeg10 = base.Columns["LatitudeDeg10"];
+                this.columnLongitudeDMS = base.Columns["LongitudeDMS"];
+                this.columnLatitudeDMS = base.Columns["LatitudeDMS"];
                 this.columnAddress = base.Columns["Address"];
                 this.columnLastNotificationTime = base.Columns["LastNotificationTime"];
             }
@@ -991,6 +1039,14 @@ namespace RealtimeViewer.WMShipView {
                 base.Columns.Add(this.columnLongitude);
                 this.columnLatitude = new global::System.Data.DataColumn("Latitude", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLatitude);
+                this.columnLongitudeDeg10 = new global::System.Data.DataColumn("LongitudeDeg10", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLongitudeDeg10);
+                this.columnLatitudeDeg10 = new global::System.Data.DataColumn("LatitudeDeg10", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLatitudeDeg10);
+                this.columnLongitudeDMS = new global::System.Data.DataColumn("LongitudeDMS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLongitudeDMS);
+                this.columnLatitudeDMS = new global::System.Data.DataColumn("LatitudeDMS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLatitudeDMS);
                 this.columnAddress = new global::System.Data.DataColumn("Address", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAddress);
                 this.columnLastNotificationTime = new global::System.Data.DataColumn("LastNotificationTime", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2487,6 +2543,70 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string LongitudeDeg10 {
+                get {
+                    if (this.IsLongitudeDeg10Null()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableDevice.LongitudeDeg10Column]));
+                    }
+                }
+                set {
+                    this[this.tableDevice.LongitudeDeg10Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string LatitudeDeg10 {
+                get {
+                    if (this.IsLatitudeDeg10Null()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableDevice.LatitudeDeg10Column]));
+                    }
+                }
+                set {
+                    this[this.tableDevice.LatitudeDeg10Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string LongitudeDMS {
+                get {
+                    if (this.IsLongitudeDMSNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableDevice.LongitudeDMSColumn]));
+                    }
+                }
+                set {
+                    this[this.tableDevice.LongitudeDMSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string LatitudeDMS {
+                get {
+                    if (this.IsLatitudeDMSNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableDevice.LatitudeDMSColumn]));
+                    }
+                }
+                set {
+                    this[this.tableDevice.LatitudeDMSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Address {
                 get {
                     if (this.IsAddressNull()) {
@@ -2586,6 +2706,54 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLatitudeNull() {
                 this[this.tableDevice.LatitudeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsLongitudeDeg10Null() {
+                return this.IsNull(this.tableDevice.LongitudeDeg10Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetLongitudeDeg10Null() {
+                this[this.tableDevice.LongitudeDeg10Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsLatitudeDeg10Null() {
+                return this.IsNull(this.tableDevice.LatitudeDeg10Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetLatitudeDeg10Null() {
+                this[this.tableDevice.LatitudeDeg10Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsLongitudeDMSNull() {
+                return this.IsNull(this.tableDevice.LongitudeDMSColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetLongitudeDMSNull() {
+                this[this.tableDevice.LongitudeDMSColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsLatitudeDMSNull() {
+                return this.IsNull(this.tableDevice.LatitudeDMSColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetLatitudeDMSNull() {
+                this[this.tableDevice.LatitudeDMSColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

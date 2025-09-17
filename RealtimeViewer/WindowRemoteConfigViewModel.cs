@@ -94,6 +94,8 @@ namespace RealtimeViewer
 
         public int OfficeId { get; set; }
 
+        public UserBioDP.User AuthedUser { get; set; }
+
         public WindowRemoteConfigViewModel()
         {
             DeviceStatus = new DeviceStatus();

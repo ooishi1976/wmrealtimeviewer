@@ -67,6 +67,8 @@ namespace RealtimeViewer.WMShipView.Streaming
 
         void Stop(StreamingStatuses status);
 
+        void SetForground();
+
         ClientStatus GetClientStatus();
 
         void AddCounterHandler(CounterEventHandler handler);

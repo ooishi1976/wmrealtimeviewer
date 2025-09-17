@@ -67,12 +67,35 @@ namespace RealtimeViewer.Movie
             ProcessStartInfo psi;
 
             // ffmpeg のオプションは順番にも意味がある。注意されたい。
+            // 新しいffmpegだとストリームに音が付かない.
+            // その場合、ビデオを再エンコードすると音が付けられるが、処理に時間が掛かる
+            var isPcm = false;
             var opts = new StringBuilder();
             opts.Append($" -framerate {fps}");
             opts.Append($" -i {movieFilePath}");
             if (!string.IsNullOrEmpty(audioFilePath))
-                opts.Append($" -i {audioFilePath}");
-            opts.Append(@" -c copy");
+            {
+                var ext = Path.GetExtension(audioFilePath);
+                if (!string.IsNullOrEmpty(ext) && ext.ToLower() == "pcm")
+                {
+                    opts.Append($" -f s16le -ar 48000 -ac 1 -i {audioFilePath}");
+                    isPcm = true;
+                }
+                else
+                {
+                    // aac
+                    opts.Append($" -i {audioFilePath}");
+                }
+            }
+            opts.Append(@" -c:v copy");
+            if (isPcm) 
+            {
+                opts.Append(" -c:a pcm_s16le");
+            }
+            else
+            {
+                opts.Append(" -c:a copy");
+            }
             opts.Append(@" -shortest");
             opts.Append($" {output}");
 

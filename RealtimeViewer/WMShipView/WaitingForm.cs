@@ -18,7 +18,6 @@ namespace RealtimeViewer.WMShipView
         {
             InitializeComponent();
             ViewModel = viewModel;
-
             labelAuthWarning.DataBindings.Add("Visible", ViewModel, nameof(ViewModel.IsShowAuthWarning));
             ViewModel.WaitTask.ContinueWith((t) =>
             {

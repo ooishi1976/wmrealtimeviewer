@@ -55,8 +55,6 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         private const int LEFT_PANEL_WIDTH = 240;
 
-        //private CountdownEvent WaitCountDown { get; set; } = new CountdownEvent(1);
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -106,10 +104,11 @@ namespace RealtimeViewer.WMShipView
                 {
                     Invoke((MethodInvoker)(() =>
                     {
-                        if (m_wform != null && m_wform.IsDisposed)
-                        {
-                            //TabControlUpdate(true);
-                        }
+                        WaitFormViewModel.IsShowAuthWarning = false;
+                        //if (WaitForm != null && WaitForm.IsDisposed)
+                        //{
+                        //    //TabControlUpdate(true);
+                        //}
                         // TODO データ取得中ダイアログの文言
                         //UpdateUiAtUserAuthed();
                     }));
@@ -220,6 +219,10 @@ namespace RealtimeViewer.WMShipView
 
                 // イベント動画のテンポラリ削除
                 ViewModel.RemoveAllPlayListFile();
+
+                // 開いた子画面を閉じる
+                CloseAllRemoteSettingWindow();
+                CloseAllMovieRequestWindow();
             }
             finally 
             {
@@ -246,6 +249,8 @@ namespace RealtimeViewer.WMShipView
                     // 画面項目のバインド
                     BindDeviceDataSource();
                     BindStreamingDataSource();
+
+                    SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID);
                     DrawMapEntries();
                     timerGPSDraw.Start();
                 }));
@@ -254,9 +259,9 @@ namespace RealtimeViewer.WMShipView
             {
                 ViewModel.DataUpdateDate = DateTime.Now;
             });
-            var waitFormViewModel = new WaitFormViewModel(waitTask);
-            var waitForm = new WaitingForm(waitFormViewModel);
-            waitForm.ShowDialog();
+            WaitFormViewModel = new WaitFormViewModel(Dispatcher.CurrentDispatcher, waitTask);
+            WaitForm = new WaitingForm(WaitFormViewModel);
+            WaitForm.ShowDialog();
         }
 
         /// <summary>
@@ -286,6 +291,8 @@ namespace RealtimeViewer.WMShipView
                 {
                     ViewModel.SelectedDeviceError = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
                 }
+
+                ViewModel.SetForeground(device.DeviceId);
             }
             else
             {
@@ -317,13 +324,12 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// 車両リストヘッダクリックイベント<br/>
         /// ソート処理<br/>
-        /// 住所でソートした場合、住所検索が非同期の関係上、<br/>
-        /// 正しくソートされない場合がある。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GridCarList_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            // 処理なし
         }
 
         /// <summary>
@@ -352,6 +358,14 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void zoomBar_MouseUp(object sender, MouseEventArgs e)
         {
+            // ズームバーの値と地図のスケールが一致する場合は何もしない。
+            if (mpgMap.MapScale != ViewModel.MapScales[zoomBar.Value])
+            {
+                // 地図のスケールを変更する。
+                mpgMap.MapScale = ViewModel.MapScales[zoomBar.Value];
+                SyncMapScale(false);
+                mpgMap.RePaint();  // 地図を再描画する。
+            }
         }
 
 #endregion フォームイベント処理
@@ -368,6 +382,24 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void MpgMap_CustomObjectHit(object sender, CustomObjectHitArgs e)
         {
+            // e.IDがDeviceId
+            if (DeviceBindingSource.List is DataView dataView)
+            {
+                var index = 0;
+                foreach (var data in dataView)
+                {
+                    if (data is DataRowView rowView && 
+                        rowView.Row is WMDataSet.DeviceRow deviceData &&
+                        deviceData.DeviceId == e.ID)
+                    {
+                        DeviceBindingSource.Position = index;
+                        LeftPanelShow();
+                        break;
+                    }
+                    index++;
+                }
+                ChangeMapMode(MapMode.Write);
+            }
         }
 
         /// <summary>
@@ -377,6 +409,12 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void MpgMap_MouseMove(object sender, MouseEventArgs e)
         {
+            // 地図操作モードに応じて、マウスカーソルを変更する。
+            if (mpgMap.MapMode != MapMode.Write)
+            {
+                // 移動モードの場合
+                mpgMap.Cursor = Cursors.Hand;
+            }
         }
 
         /// <summary>
@@ -387,6 +425,17 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void MpgMap_MouseDown(object sender, MouseEventArgs e)
         {
+            ChangeMapMode(MapMode.Move);
+
+            // ピクセル位置を緯度経度に変換する。
+            Point[] pt = new Point[] { mpgMap.PointToClient(Cursor.Position) };
+            PointLL[] ptl = mpgMap.Convert(pt);
+
+            // ヒットテストを実施する。（結果はイベントで取得する）
+            if (e.Button == MouseButtons.Right)
+            {
+                mpgMap.CustomObjectHitTest(ptl[0]);
+            }
         }
 
         /// <summary>
@@ -396,6 +445,8 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void MpgMap_MouseWheel(object sender, EventArgs e)
         {
+            // 縮尺変更を行う。
+            SyncMapScale(true);
         }
 
 #endregion 地図コントロールイベント処理
@@ -425,26 +476,14 @@ namespace RealtimeViewer.WMShipView
         }
 
 #endregion イベントタブ イベント
-
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-        }
-
-
         private void TimerStartMQTT_Tick(object sender, EventArgs e)
         {
-
+            // 処理なし
         }
 
         private void buttonLeftPanelClose_Click(object sender, EventArgs e)
         {
             LeftPanelHide();
-            // TODO 
-            //if (!isStreaming)
-            //{
-            //    LeftPanelHide();
-            //}
         }
 
 #region "リアルタイム再生関係"
@@ -519,9 +558,46 @@ namespace RealtimeViewer.WMShipView
 
 #region "車載器の映像データ"
 
-
+        /// <summary>
+        /// ドラレコ映像ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonShowDrivingMovie_Click(object sender, EventArgs e)
         {
+            var device = ViewModel.SelectedDevice;
+            if (device.IsAlive())
+            {
+                if (MovieRequestWindows == null)
+                {
+                    MovieRequestWindows = new Dictionary<string, MovieRequestWindow>();
+                }
+
+                if (string.IsNullOrEmpty(device.DeviceId))
+                {
+                    // 選択中に消えた。なにもしない。
+                }
+                else if (MovieRequestWindows.ContainsKey(device.DeviceId))
+                {
+                    var window = MovieRequestWindows[device.DeviceId];
+                    window.Show();
+                    window.Activate();
+                }
+                else
+                {
+                    var window = new MovieRequestWindow(ViewModel.RequestController);
+                    window.MqttClient = ViewModel.MqttClient;
+                    window.CarId = device.CarId;
+                    window.DeviceId = device.DeviceId;
+                    window.OfficeId = device.OfficeId;
+                    MovieRequestWindows[device.DeviceId] = window;
+                    if (ViewModel.AuthedUser != null)
+                    {
+                        window.UserName = ViewModel.AuthedUser.Name;
+                    }
+                    window.Show();
+                }
+            }
         }
 #endregion "車載器の映像データ"
 
@@ -529,10 +605,68 @@ namespace RealtimeViewer.WMShipView
 
         private void buttonShowRemoteSetting_Click(object sender, EventArgs e)
         {
+            var device = ViewModel.SelectedDevice;
+            if (device.IsAlive())
+            {
+                if (RemoteSettingWindows == null)
+                {
+                    RemoteSettingWindows = new Dictionary<string, RemoteSetting>();
+                }
+
+                if (string.IsNullOrEmpty(device.DeviceId))
+                {
+                    // 選択中に消えた。なにもしない。
+                }
+                else if (RemoteSettingWindows.ContainsKey(device.DeviceId))
+                {
+                    var window = RemoteSettingWindows[device.DeviceId];
+                    window.Show();
+                    window.Activate();
+                }
+                else
+                {
+                    WMDataSet.ErrorRow error = null;
+                    lock (ViewModel.ErrorTable)
+                    {
+                        error = ViewModel.ErrorTable.FirstOrDefault(item => item.DeviceId == device.DeviceId);
+                    }
+
+                    var window = new RemoteSetting();
+                    window.ServerInfo = ViewModel.OperationServerInfo;
+                    window.LocalSettings = ViewModel.LocalSettings;
+                    window.FormClosed += RemoteSettingWindow_FormClosed;
+                    window.MqttClient = ViewModel.MqttClient;
+                    window.HttpClient = ViewModel.HttpClient;
+                    window.DeviceId = device.DeviceId;
+                    window.CarId = device.CarId;
+                    RemoteSettingWindows[device.DeviceId] = window;
+                    var viewModel = new WindowRemoteConfigViewModel();
+                    viewModel.AuthedUser = ViewModel.AuthedUser;
+                    viewModel.DeviceStatus = new DeviceStatus(error.GetErrorJson());
+                    viewModel.BrList = new BitrateList();
+                    viewModel.OfficeId = device.OfficeId;
+                    window.ViewModel = viewModel;
+                    window.Show();
+                }
+            }
         }
 
         private void RemoteSettingWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
+                var window = (RemoteSetting)sender;
+                var did = window.DeviceId;
+                if (RemoteSettingWindows.ContainsKey(did))
+                {
+                    RemoteSettingWindows.Remove(did);
+                    Debug.WriteLine($"Removed {did} from remoteSettingWindows");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"@@@ Exception: {ex}, {ex.StackTrace}");
+            }
         }
 #endregion "リモート設定"
         /// <summary>
@@ -569,10 +703,11 @@ namespace RealtimeViewer.WMShipView
                 labelUserName.Text = Properties.Resources.BeforeAuthoricationUserName;
 
                 // TODO ダウンロードの中止
-                //if (downloadCancelTokenSource != null && downloadCancelTokenSource.Token.CanBeCanceled)
-                //{
-                //    downloadCancelTokenSource.Cancel();
-                //}
+                if (CancellationTokenSource != null &&
+                    !CancellationTokenSource.IsCancellationRequested)
+                {
+                    CancellationTokenSource.Cancel();
+                }
 
                 // サイドパネルの戻し
                 LeftPanelHide();
@@ -581,19 +716,18 @@ namespace RealtimeViewer.WMShipView
                 // メインタブの戻し
                 tabControlMain.SelectedIndex = 0;
 
-                // TODO ストリーミングの中止
-                //if (isStreaming)
-                //{
-                //    StopStreaming();
-                //}
+                // ストリーミング中止
+                ViewModel.AbortAllStreaming();
 
-                // TODO イベント再生強制終了
-                // ffmpegCtrl.KillAllProcesses();
+                // FFMPEG 関連タスクキャンセル
+                FfmpegCtrl.KillAllProcesses();
 
-                // TODO MovieRequestWindowの終了
-                //CloseAllMovieRequestWindow();
-                //// RemoteSettingWindowの終了
-                //CloseAllRemoteSettingWindow();
+                // 開いた子画面を閉じる
+                CloseAllRemoteSettingWindow();
+                CloseAllMovieRequestWindow();
+
+                // 営業所の戻し
+                SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID);
 
                 // TODO 事業所の戻し
                 // comboBoxOffice.Enabled = false;
@@ -643,6 +777,29 @@ namespace RealtimeViewer.WMShipView
             //{
             //    m_wform.SetVisibleForAuthWarning(false);
             //}
+        }
+
+        private void SetOfficePostion(int? officeId = null)
+        {
+            var id = (officeId is null) ? ViewModel.SelectedOfficeId : officeId;
+
+            if (OfficeBindingSource.List is DataView dataView)
+            {
+                var index = 0;
+                foreach (var data in dataView)
+                {
+                    if (data is DataRowView rowView &&
+                        rowView.Row is WMDataSet.OfficeRow office)
+                    {
+                        if (office.OfficeId == id)
+                        {
+                            break;
+                        }
+                    }
+                    index++;
+                }
+                OfficeBindingSource.Position = index;
+            }
         }
 
 
@@ -799,6 +956,11 @@ namespace RealtimeViewer.WMShipView
                 {
                     MoveToDeviceLocation();
                 }
+
+                // 地図更新
+                timerGPSDraw.Stop();
+                DrawMapEntries();
+                timerGPSDraw.Start();
 
                 // イベントリストの更新
                 UnbindEventDataSource();
@@ -1057,15 +1219,28 @@ namespace RealtimeViewer.WMShipView
                 var row = deviceTable.FirstOrDefault(item => item.DeviceId == message.Device_id);
                 if (row is WMDataSet.DeviceRow device)
                 {
+                    var lonMS = UtilGPSConvert.ToGPSMS(int.Parse(message.Lon));
+                    var latMS = UtilGPSConvert.ToGPSMS(int.Parse(message.Lat));
+                    var lonDeg10 = Convert.ToDouble(lonMS);
+                    var latDeg10 = Convert.ToDouble(latMS);
+                    UtilGPSConvert.Convert_Millisecond2Dgree10(ref lonDeg10, ref latDeg10);
+
+                    var lonDMS = MapUtils.ConvertMsToDMS(lonMS);
+                    var latDMS = MapUtils.ConvertMsToDMS(latMS);
+
                     Invoke((MethodInvoker)(() => 
                     { 
                         device.Longitude = message.Lon;
                         device.Latitude = message.Lat;
+                        device.LongitudeDeg10 = $"{lonDeg10}";
+                        device.LatitudeDeg10 = $"{latDeg10}";
+                        device.LongitudeDMS = $"{lonDMS.d}°{lonDMS.m}'{lonDMS.s}\"E";
+                        device.LatitudeDMS = $"{latDMS.d}°{latDMS.m}'{latDMS.s}\"N";
                         device.LastNotificationTime = message.Ts;
                         device.AcceptChanges();
                         //deviceTable.AcceptChanges();
                     }));
-
+                    
                 }
             }
             catch (Exception) 
@@ -1088,7 +1263,7 @@ namespace RealtimeViewer.WMShipView
                     {
                         // 更新
                         error = (WMDataSet.ErrorRow)row;
-                        error.AcceptChanges();
+                        //error.AcceptChanges();
                     }
                     else
                     {
@@ -1103,6 +1278,7 @@ namespace RealtimeViewer.WMShipView
                     error.Error = string.IsNullOrEmpty(message.Error) ? string.Empty : message.Error;
                     error.ErrorStr = error.GetMessage();
                     error.Version = string.Empty;
+                    error.AcceptChanges();
                     errors.AcceptChanges();
                 }
 
@@ -1118,12 +1294,34 @@ namespace RealtimeViewer.WMShipView
 
         private void OnAccOnReceived(object sender, MqttMessageEventArgs<MqttJsonEventAccOn> e)
         {
-            // TODO AccOn
+            var message = e.DeserializeMessage();
+            if (!message.IsAccOn())  // AccOff
+            {
+                // ストリーミング中止
+                ViewModel.StopStreamingForce(message.device_id);
+                // 位置情報削除
+                var deviceTable = ViewModel.DeviceTable;
+                var row = deviceTable.FirstOrDefault(item => item.DeviceId == message.device_id);
+                if (row is WMDataSet.DeviceRow device)
+                {
+                    Invoke((MethodInvoker)(() => 
+                    { 
+                        device.Longitude = string.Empty;
+                        device.Latitude = string.Empty;
+                        device.LastNotificationTime = string.Empty;
+                        device.AcceptChanges();
+                        //deviceTable.AcceptChanges();
+                    }));
+                }
+            }
         }
 
         private void OnPrepostReceived(object sender, MqttMessageEventArgs<MqttJsonPrepostEvent> e)
         {
-            // TODO Prepost
+            if (ViewModel.LocalSettings.UseEmergencyPopUp)
+            {
+                ShowAlertDialog(e.Message);
+            }
         }
 
         private void StreamingStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -1184,6 +1382,7 @@ namespace RealtimeViewer.WMShipView
                         radioButtonRtCh7.Checked = false;
                         radioButtonRtCh8.Checked = false;
                     }
+                    ViewModel.NotifyUpdateBackgroundColor();
                 }
             }
         }

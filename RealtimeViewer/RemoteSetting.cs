@@ -234,12 +234,14 @@ namespace RealtimeViewer
         {
             logger.Out(OperationLogger.Category.RemoteConfig, UserName, $"Open RemoteSetting {DeviceId}");
             ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();
-            if (MainForm.AuthedUser.Item.Can(UserBioDP.Permission.Engineer))
+            //if (MainForm.AuthedUser.Item.Can(UserBioDP.Permission.Engineer))
+            if (ViewModel.AuthedUser.Can(UserBioDP.Permission.Engineer))
             {
                 // 「エンジニア」のみGセンサー以外も編集可能。
                 ChangePerm(RemoteSettingPersmission.SuperUser);
             }
-            else if (MainForm.AuthedUser.Item.Can(UserBioDP.Permission.StreamingView))
+            //else if (MainForm.AuthedUser.Item.Can(UserBioDP.Permission.StreamingView))
+            else if (ViewModel.AuthedUser.Can(UserBioDP.Permission.StreamingView))
             {
                 // 一般の人(おそらく運行管理者)は、Gセンサーのみ編集可能。
                 ChangePerm(RemoteSettingPersmission.Operator);

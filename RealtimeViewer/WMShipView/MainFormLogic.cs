@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +16,8 @@ using System.Windows.Forms;
 using MpgCommon;
 using MpgCustom;
 using MpgMap;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using RealtimeViewer.Controls;
 using RealtimeViewer.Logger;
 using RealtimeViewer.Map;
@@ -57,10 +60,13 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         private CancellationTokenSource CancellationTokenSource { get; set; } = null;
 
-
         private FfmpegCtrl FfmpegCtrl { get; set; } = new FfmpegCtrl();
 
-        private WaitingForm m_wform;
+        private WaitingForm　WaitForm { get; set; }
+
+        private WaitFormViewModel WaitFormViewModel { get; set; }
+
+        private EventAlertWindow AlertForm { get; set; }
 
         /// <summary>
         /// USB監視
@@ -69,17 +75,24 @@ namespace RealtimeViewer.WMShipView
 
         private ConfigPanel configPanel;
 
-
         private BindingSource DeviceBindingSource { get; set; } = new BindingSource();
 
         private BindingSource OfficeBindingSource { get; set; } = new BindingSource();
 
         private BindingSource EventListBindingSource { get; set; } = new BindingSource();
 
+        private List<TextObject> MapSymbolList { get; set; } = new List<TextObject>();
+
+        private Dictionary<string, MovieRequestWindow> MovieRequestWindows { get; set; } 
+
+        private Dictionary<string, RemoteSetting> RemoteSettingWindows { get; set; }
+
         /// <summary>
         /// イベントタブ選択済み(項目バインドのためのフラグ)
         /// </summary>
         private bool IsEventTabBinded { get; set; } = false;
+
+        private delegate void WaitFormCloseDelegate();
 
         /// <summary>
         /// 最初に表示されている画面項目のバインド
@@ -370,18 +383,26 @@ namespace RealtimeViewer.WMShipView
         private void DrawMapEntries()
         {
             var arrayList = new ArrayList();
-            List<TextObject> list;
+            //List<TextObject> list;
             if (ViewModel.IsDeviceFocus)
             {
-                list = CreateMapEntry();
+                MapSymbolList = CreateMapEntry();
             }
             else
             {
-                list = CreateMapEntries();
+                MapSymbolList = CreateMapEntries();
             }
-            arrayList.AddRange(list);
+            arrayList.AddRange(MapSymbolList);
             mpgMap.SetCustomData(arrayList);
-            mpgMap.RePaint();
+
+            if (ViewModel.IsDeviceFocus)
+            {
+                MoveToDeviceLocation();
+            }
+            else
+            {
+                mpgMap.RePaint();
+            }
         }
 
         /// <summary>
@@ -430,8 +451,8 @@ namespace RealtimeViewer.WMShipView
         {
             var entryObject = new TextObject
             {
-                Title = device.CarNumber,
-                TitleFont = new Font("Meiryo UI", 9),
+                Title = $"{device.CarNumber}",
+                TitleFont = new Font("Meiryo UI", 9, FontStyle.Bold),
                 CommentFont = new Font("Meiryo UI", 9),
                 pen = new Pen(Color.Orange, 1),
                 brush = new SolidBrush(Color.White),
@@ -439,9 +460,12 @@ namespace RealtimeViewer.WMShipView
                 ID = device.DeviceId  //  車両ID情報追加
             };
 
+            var comments = new List<string>();
+
             // 位置取得
             if (device.TryGetLocation(out var position))
             {
+                //entryObject.Title = $"{device.CarNumber}\nLon: {device.LongitudeDisp}\nLat: {device.LatitudeDisp}";
                 // 座標を設定する
                 entryObject.Point = position;
                 // 原点の描画を設定する
@@ -464,6 +488,9 @@ namespace RealtimeViewer.WMShipView
                 {
                     ViewModel.SelectedDevice = device;
                 }
+
+                comments.Add($"{device.LongitudeDMS}");
+                comments.Add($"{device.LatitudeDMS}");
             }
 
             // エラー
@@ -478,7 +505,8 @@ namespace RealtimeViewer.WMShipView
                 if (code != 0)
                 {
                     entryObject.brush = new SolidBrush(error.GetColor());
-                    entryObject.Comment = error.ErrorStr;
+                    //entryObject.Comment = error.ErrorStr;
+                    comments.Add(error.ErrorStr);
                 }
 
                 // 再度パネル表示中のエラー更新
@@ -486,6 +514,11 @@ namespace RealtimeViewer.WMShipView
                 {
                     ViewModel.SelectedDeviceError = error;
                 }
+            }
+
+            if (0 < comments.Count)
+            {
+                entryObject.Comment = string.Join("\n", comments);
             }
             return entryObject;
         }
@@ -566,6 +599,62 @@ namespace RealtimeViewer.WMShipView
             });
         }
 
+        #region Prepost Alert
+        private void WaitFormClose()
+        {
+            WaitForm.Close();
+            WaitForm.Dispose();
+        }
+
+        private void ShowAlertDialogUiThread(string DeviceId, int MovieType)
+        {
+            if (WaitForm.Visible == true)
+            {
+                Invoke(new WaitFormCloseDelegate(WaitFormClose));
+            }
+
+            if (AlertForm == null)
+            {
+                Invoke((MethodInvoker)(() =>
+                {
+                    this.Visible = true;
+                    WindowState = FormWindowState.Normal;
+                    Activate();
+                }));
+
+                Invoke((MethodInvoker)(() =>
+                {
+                    AlertForm = new EventAlertWindow(DeviceId, MovieType);
+                    AlertForm.FormClosed += AlertForm_FormClosed;
+                    AlertForm.Show();
+                }));
+            }
+        }
+
+        private void AlertForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AlertForm.Dispose();
+            AlertForm = null;
+        }
+
+        //  アラート表示
+        private void ShowAlertDialog(string msg)
+        {
+            //  アラート
+            var status = JsonConvert.DeserializeObject<MqttJsonPrepostEvent>(msg,
+                                  new IsoDateTimeConverter { DateTimeFormat = "yyyyMMddHHmmss" });
+            Debug.WriteLine($"TopicEventPrepost: {status.device_id}, {status.req_id}, status:{status.status}, mt:{status.movie_type}, {status.n}/{status.total}");
+
+            // 1: 強い衝撃, 3: 緊急スイッチ
+            if ((status.movie_type == 1) || (status.movie_type == 3))
+            {
+                // ここはMQTTスレッドの可能性がある。
+                // UIスレッドから子ウィンドウを表示する。
+                ShowAlertDialogUiThread(status.device_id, status.movie_type);
+            }
+        }
+        #endregion
+
         #region サーバ情報取得
         /// <summary>
         /// サーバー情報取得<br/>
@@ -596,5 +685,35 @@ namespace RealtimeViewer.WMShipView
             return result;
         }
         #endregion サーバ情報取得
+
+        private void CloseAllRemoteSettingWindow()
+        {
+            if (RemoteSettingWindows != null)
+            {
+                // window.Close時にウィンドウ管理ディクショナリに変更が加わるため
+                // ウィンドウ管理ディクショナリを直接操作しない
+                var windowList = RemoteSettingWindows.Values.ToList();
+                foreach (var window in windowList)
+                {
+                    window.Close();
+                }
+            }
+        }
+
+        private void CloseAllMovieRequestWindow()
+        {
+            if (MovieRequestWindows != null)
+            {
+                // window.Close時にウィンドウ管理ディクショナリに変更が加わるため
+                // ウィンドウ管理ディクショナリを直接操作しない
+                var windowList = MovieRequestWindows.Values.ToList();
+                foreach (var window in windowList)
+                {
+                    window.viewModel.IsDisposing = true;
+                    window.Close();
+                }
+                MovieRequestWindows.Clear();
+            }
+        }
     }
 }

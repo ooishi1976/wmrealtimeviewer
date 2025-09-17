@@ -64,7 +64,8 @@ namespace RealtimeViewer.WMShipView
             var result = false;
             if (StreamingClients.TryGetValue(deviceId, out var client) && 
                 client.Status != StreamingStatuses.RequestFailure &&
-                client.Status != StreamingStatuses.PlayingFailure)
+                client.Status != StreamingStatuses.PlayingFailure &&
+                client.Status != StreamingStatuses.PlayerError)
             {
                 result = true;
             }
@@ -116,6 +117,29 @@ namespace RealtimeViewer.WMShipView
             foreach (var keyValue in StreamingClients.Values)
             {
                 Abort(keyValue.DeviceId, StreamingStatuses.None);
+            }
+        }
+
+        public bool HasError(string deviceId)
+        {
+            var result = false;
+            if (StreamingClients.TryGetValue(deviceId, out var client))
+            {
+                if (client.Status == StreamingStatuses.PlayerError ||
+                    client.Status == StreamingStatuses.PlayingFailure ||
+                    client.Status == StreamingStatuses.RequestFailure)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public void SetForeground(string deviceId)
+        {
+            if (StreamingClients.TryGetValue(deviceId, out var client))
+            {
+                client.SetForground();
             }
         }
 

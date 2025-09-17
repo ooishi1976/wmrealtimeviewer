@@ -3390,6 +3390,7 @@ namespace RealtimeViewer
                 window.CarId = mapEntry.CarId;
                 remoteSettingWindows[mapEntry.DeviceId] = window;
                 var viewModel = new WindowRemoteConfigViewModel();
+                viewModel.AuthedUser = AuthedUser.Item;
                 viewModel.DeviceStatus = new DeviceStatus(carInfo.ErrorCode);
                 viewModel.BrList = new BitrateList();
                 viewModel.OfficeId = m_SelectOfficeID;

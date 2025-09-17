@@ -45,7 +45,7 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// MQTTクライアント
         /// </summary>
-        private MqttClient MqttClient { get; set; }
+        public MqttClient MqttClient { get; private set; }
 
         /// <summary>
         /// 配信イベント
