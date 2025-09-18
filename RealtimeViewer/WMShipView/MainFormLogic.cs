@@ -650,7 +650,13 @@ namespace RealtimeViewer.WMShipView
             {
                 // ここはMQTTスレッドの可能性がある。
                 // UIスレッドから子ウィンドウを表示する。
-                ShowAlertDialogUiThread(status.device_id, status.movie_type);
+                WMDataSet.DeviceRow device = null;
+                lock(ViewModel.DeviceTable)
+                {
+                    device = ViewModel.DeviceTable.FirstOrDefault(item => item.DeviceId == status.device_id);
+                }
+                var notifyDevice = (device is null) ? status.device_id : device.CarNumber;
+                ShowAlertDialogUiThread(notifyDevice, status.movie_type);
             }
         }
         #endregion

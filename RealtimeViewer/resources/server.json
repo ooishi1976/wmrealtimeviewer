@@ -3,6 +3,7 @@
     {
       "Id": 0,
       "Kind": 0,
+      "StreamingType":  0,
       "Name": "東武バス",
       "ValidOfficeIds": [],
       "ForbiddunOfficeIds": [],
@@ -20,6 +21,7 @@
     {
       "Id": 0,
       "Kind": 0,
+      "StreamingType": 0,
       "Name": "東武バス",
       "ValidOfficeIds": [],
       "ForbiddunOfficeIds": [],
@@ -35,7 +37,20 @@
     {
       "Id": 1,
       "Kind": 1,
-      "Name": "開発",
+      "StreamingType": 0,
+      "Name": "開発(UDP)",
+      "ValidOfficeIds": [],
+      "ForbiddunOfficeIds": [],
+      "InvisibleOfficeIds": [],
+      "IsShowWaitDialog": true,
+      "UseRetainMessageForRemoteSettings": true,
+      "ExcludeOfficesForRetain": [ 2 ]
+    },
+    {
+      "Id": 5,
+      "Kind": 1,
+      "StreamingType": 1,
+      "Name": "開発(RTSP)",
       "ValidOfficeIds": [],
       "ForbiddunOfficeIds": [],
       "InvisibleOfficeIds": [],
@@ -48,6 +63,7 @@
     {
       "Id": 2,
       "Kind": 1,
+      "StreamingType": 0,
       "Name": "明治大学",
       "ValidOfficeIds": [
         2
@@ -63,6 +79,7 @@
     {
       "Id": 3,
       "Kind": 1,
+      "StreamingType": 0,
       "Name": "根室観光交通",
       "ValidOfficeIds": [
         3
@@ -78,6 +95,7 @@
     {
       "Id": 0,
       "Kind": 0,
+      "StreamingType": 0,
       "Name": "東武バス",
       "ValidOfficeIds": [],
       "ForbiddunOfficeIds": [],
@@ -93,6 +111,7 @@
     {
       "Id": 3,
       "Kind": 1,
+      "StreamingType": 0,
       "Name": "根室観光交通",
       "ValidOfficeIds": [
         3
@@ -108,6 +127,7 @@
     {
       "Id": 4,
       "Kind": 1,
+      "StreamingType": 1,
       "Name": "ウェザーメディア",
       "ValidOfficeIds": [
         4

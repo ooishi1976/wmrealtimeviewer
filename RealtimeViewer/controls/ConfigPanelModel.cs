@@ -273,8 +273,6 @@ namespace RealtimeViewer.Controls
             }
         }
 
-
-
         /// <summary>
         /// 各プロパティ値をIniファイル情報へ設定する。
         /// </summary>

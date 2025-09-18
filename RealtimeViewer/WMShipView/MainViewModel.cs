@@ -33,12 +33,12 @@ namespace RealtimeViewer.WMShipView
         /// <summary>
         /// リアルタイムビューアの仕向け(東武、開発、明治、others)
         /// </summary>
-        private UserIndex UserIndex { get; set; } = UserIndex.WeatherMedia;
+        private UserIndex UserIndex { get; set; } = UserIndex.Multiwave;
 
         /// <summary>
         /// リアルタイム視聴方式
         /// </summary>
-        private StreamingTypes StreamingTypes { get; set; } = StreamingTypes.Rtsp;
+        //private StreamingTypes StreamingTypes { get; set; } = StreamingTypes.Rtsp;
 
         public OperationLogger OperationLogger { get; private set; }
 
@@ -537,7 +537,7 @@ namespace RealtimeViewer.WMShipView
 
         public void CreateStreamingController(Dispatcher dispatcher)
         {
-            if (StreamingTypes == StreamingTypes.Udp)
+            if (OperationServerInfo.StreamingType == StreamingTypes.Udp)
             {
                 StreamingController = new UdpController(
                         MqttController, RequestController, dispatcher, LocalSettings);

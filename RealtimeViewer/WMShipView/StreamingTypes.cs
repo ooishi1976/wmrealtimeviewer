@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RealtimeViewer.WMShipView
+namespace RealtimeViewer.Network
 {
     public enum StreamingTypes
     {
-        Udp,
-        Rtsp
+        Udp = 0,
+        Rtsp = 1
     }
 }

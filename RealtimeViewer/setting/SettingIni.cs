@@ -10,7 +10,6 @@ using RealtimeViewer.Network;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Diagnostics;
-using RealtimeViewer.WMShipView;
 using RealtimeViewer.WMShipView.Streaming;
 
 namespace RealtimeViewer.Setting
@@ -182,10 +181,6 @@ namespace RealtimeViewer.Setting
         /// イベント映像の時間(秒)
         /// </summary>
         public double PrePostDuration { get; set; } = 10d;
-        /// <summary>
-        /// ストリーミングタイプ
-        /// </summary>
-        public StreamingTypes StreamingType { get; set; } = StreamingTypes.Udp;
 
         #region 接続設定
         /// <summary>
@@ -268,7 +263,6 @@ namespace RealtimeViewer.Setting
                 PrePostDuration = UtilIniFile.getValueDouble("EventList", "PrePostDuration", 10D);
 
                 var streamingType = UtilIniFile.getValueInt("Streaming", "StreamingType", 0);
-                StreamingType = (StreamingTypes)Enum.ToObject(typeof(StreamingTypes), streamingType);
                 StreamingRequestRetryCount = UtilIniFile.getValueInt("Streaming", "StreamingRequestRetryCount", STREAMING_REQUEST_RETRY_COUNT);
                 StreamingSessionRetryCount = UtilIniFile.getValueInt("Streaming", "StreamingSessionRetryCount", STREAMING_SESSION_RETRY_COUNT);
                 StreamingRequestWait = UtilIniFile.getValueInt("Streaming", "StreamingRequestWait", STREAMING_REQUEST_WAIT);
@@ -330,7 +324,6 @@ namespace RealtimeViewer.Setting
                     UseEmergencyPopUp = true;
                     LogFileDirectory = string.Empty;
                     PrePostDuration = 10D;
-                    StreamingType = StreamingTypes.Udp;
                 }
             }
             else
@@ -362,7 +355,6 @@ namespace RealtimeViewer.Setting
                 RestDownloadRequestTimeout = REST_DOWNLOAD_REQUEST_TIMEOUT;
                 LogFileDirectory = string.Empty;
                 PrePostDuration = 10D;
-                StreamingType = StreamingTypes.Udp;
                 IsChangedServer = false;
             }
         }
@@ -389,7 +381,6 @@ namespace RealtimeViewer.Setting
             UtilIniFile.setValue("Streaming", "StreamingSessionRetryCount", StreamingSessionRetryCount);
             UtilIniFile.setValue("Streaming", "StreamingRequestWait", StreamingRequestWait);
             UtilIniFile.setValue("Streaming", "StreamingSessionWait", StreamingSessionWait);
-            UtilIniFile.setValue("Streaming", "StreamingType", (int)StreamingType);
             UtilIniFile.setValue("EventList", "UseEmergencyPopUp", UseEmergencyPopUp);
             UtilIniFile.setValue("EventList", "PrePostDuration", PrePostDuration);
 

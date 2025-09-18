@@ -24,10 +24,11 @@ namespace RealtimeViewer.Network
     public enum ServerIndex
     {
         Tobu = 0,
-        Dev = 1,
+        Dev1 = 1,
         Meiji = 2,
         Nemuro = 3,
         WeatherMedia = 4,
+        Dev2 = 5,
     }
 
     public enum UserIndex
@@ -60,6 +61,11 @@ namespace RealtimeViewer.Network
         /// 本番、開発
         /// </summary>
         public ServerKind Kind { get; set; }
+
+        /// <summary>
+        /// ストリーミングタイプ
+        /// </summary>
+        public StreamingTypes StreamingType { get; set; }
 
         /// <summary>
         /// 名前
