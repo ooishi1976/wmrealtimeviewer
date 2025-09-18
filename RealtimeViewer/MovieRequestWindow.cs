@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RealtimeViewer.Logger;
-using RealtimeViewer.Movie;
-using RealtimeViewer.Network.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,11 +9,16 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using RealtimeViewer.Logger;
+using RealtimeViewer.Model;
+using RealtimeViewer.Movie;
+using RealtimeViewer.Network.Http;
+using RealtimeViewer.Network.Mqtt;
+using RealtimeViewer.WMShipView;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using RealtimeViewer.Network.Mqtt;
-using RealtimeViewer.Model;
-using System.ComponentModel;
 
 namespace RealtimeViewer
 {
@@ -97,11 +99,17 @@ namespace RealtimeViewer
         /// </summary>
         private List<EventInfo> eventSelectedList = new List<EventInfo>();
 
+        private WMShipView.MainViewModel mainViewModel = null;
+
+        private BindingSource movieListBindingSource;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="requestSequence"></param>
-        public MovieRequestWindow(RequestSequence requestSequence)
+        public MovieRequestWindow(
+            RequestSequence requestSequence, 
+            WMShipView.MainViewModel mainViewModel = null)
         {
             InitializeComponent();
             viewModel = new MovieRequestWindowViewModel();
@@ -126,7 +134,23 @@ namespace RealtimeViewer
             // 複数ウィンドウでデータを共有するため、
             // RequestSequence.RequestsをソートしてGrid表示することができない。
             // その為、Shallow Copyを作っている。
-            requestsBindingList = new SortableBindingList<EventInfo>(reqSequence.Requests);
+            if (mainViewModel is null)
+            {
+                requestsBindingList = new SortableBindingList<EventInfo>(reqSequence.Requests);
+            }
+            else
+            {
+                this.mainViewModel = mainViewModel;
+                movieListBindingSource = new BindingSource();
+                movieListBindingSource.DataSource = mainViewModel.EventTable;
+                //movieListBindingSource.DataMember = "EventList";
+                movieListBindingSource.Filter = "MovieType = 2";
+                movieListBindingSource.Sort = "Timestamp";
+
+                var movieList = movieListBindingSource.List;
+                requestsBindingList = new SortableBindingList<EventInfo>();
+                requestsBindingList.AddRange(movieList);
+            }
             SortRequestList();
             eventInfoBindingSource.DataSource = requestsBindingList;
             // リクエスト映像更新完了時のタイミングを得る為、イベントを登録
@@ -189,8 +213,8 @@ namespace RealtimeViewer
         /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            //Close();
-            Hide();
+            Close();
+            //Hide();
         }
 
         /// <summary>
@@ -489,20 +513,32 @@ namespace RealtimeViewer
                         viewModel.IsUploading = false;
                         if (viewModel.DownloadStatus[status.req_id].StoredCount > 0)
                         {
-                            var w = new TimeSpan(0, 0, 10);
-                            var httpSequenceTask = reqSequence.UpdateEvents(
-                                    OfficeId, w, cancellationTokenSource.Token);
-                            httpSequenceTask.GetAwaiter().OnCompleted(
-                                () =>
-                                {
-                                    Invoke((MethodInvoker)(() =>
+                            if (viewModel is null)
+                            {
+                                var w = new TimeSpan(0, 0, 10);
+                                var httpSequenceTask = reqSequence.UpdateEvents(
+                                        OfficeId, w, cancellationTokenSource.Token);
+                                httpSequenceTask.GetAwaiter().OnCompleted(
+                                    () =>
                                     {
-                                        reqSequence.CreateEventBindingList();
-                                        reqSequence.UpdateRequestBindingList();
-                                        UpdateUiAtUploadCompleted(null);
-                                    }));
-                                });
+                                        Invoke((MethodInvoker)(() =>
+                                        {
+                                            reqSequence.CreateEventBindingList();
+                                            reqSequence.UpdateRequestBindingList();
+                                            UpdateUiAtUploadCompleted(null);
+                                        }));
+                                    });
+                            }
+                            else
+                            {
+                                var task = mainViewModel.GetEventsAsync(mainViewModel.SelectedOfficeId, cancellationTokenSource.Token, null);
+                                var newEvents = task.GetAwaiter().GetResult();
+
+                                // 差分抽出（dtBefore にあって dtAfter にない行）
+
+                            }
                         }
+
                         Invoke((MethodInvoker)(() =>
                         {
                             UpdateUiAtUploadCompleted(viewModel.DownloadStatus[status.req_id]);

@@ -275,9 +275,6 @@
     <Compile Include="WMShipView\MainFormLogic.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WMShipView\MainFormExt.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="WMShipView\Streaming\ClientStatus.cs" />
     <Compile Include="WMShipView\Streaming\IStreamingClient.cs" />
     <Compile Include="WMShipView\Streaming\IStreamingController.cs" />

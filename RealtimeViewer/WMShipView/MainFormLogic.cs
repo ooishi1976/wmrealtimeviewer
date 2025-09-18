@@ -212,10 +212,10 @@ namespace RealtimeViewer.WMShipView
                 OfficeBindingSource.DataMember = "Office";
                 OfficeBindingSource.Filter = "Visible = true";
                 OfficeBindingSource.Sort = "OfficeId";
-                //OfficeBindingSource.CurrentChanged += ComboBoxOffice_SelectedValueChanged;
+                OfficeBindingSource.CurrentChanged += OfficeBindingSource_CurrentChanged;
                 comboBoxOffice.DisplayMember = "Name";
                 comboBoxOffice.ValueMember = "OfficeId";
-                comboBoxOffice.SelectedValueChanged += ComboBoxOffice_SelectedValueChanged;
+                //comboBoxOffice.SelectedValueChanged += ComboBoxOffice_SelectedValueChanged;
                 comboBoxOffice.DataSource = OfficeBindingSource;
             }
         }

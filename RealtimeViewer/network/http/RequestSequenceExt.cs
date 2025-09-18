@@ -125,6 +125,72 @@ namespace RealtimeViewer.Network.Http
         }
 
         public async Task<WMDataSet.EventListDataTable> GetAllEventsAsync(
+               WMDataSet.EventListDataTable events,
+               EnumerableRowCollection<WMDataSet.DeviceRow> devices, 
+               CancellationToken token,
+               UpdateEventsProgress progress)
+        {
+            token.ThrowIfCancellationRequested();
+            //var events = new WMDataSet.EventListDataTable();
+            var hasAccessToken = false;
+            var result = new JsonDeviceSearchResult();
+            ServerInfo serverInfo = ServerInfo.GetPhygicalServerInfo();
+            if (loginResponse == null || string.IsNullOrEmpty(loginResponse.access_token))
+            {
+                var login = await HttpRequest.GetLoginToken(httpClient, serverInfo);
+                if (!string.IsNullOrEmpty(login.access_token))
+                {
+                    loginResponse = login;
+                    hasAccessToken = true;
+                }
+            }
+            else
+            {
+                hasAccessToken = true;
+            }
+
+            if (hasAccessToken)
+            {
+                var baseDate = DateTime.Now;
+                var count = 0;
+                var total = devices.Count();
+                foreach (var device in devices)
+                {
+                    token.ThrowIfCancellationRequested();
+                    var eventList = await GetEventListAsync(device, baseDate, token);
+                    if (0 < eventList.Count)
+                    {
+                        var beforeTimestamp = DateTime.MinValue;
+                        var beforeSequence = string.Empty;
+                        foreach (var movie in eventList)
+                        {
+                            if (beforeSequence != movie.sequence ||
+                                beforeTimestamp != movie.ts_start) 
+                            {
+                                var row = events.NewEventListRow();
+                                row.Timestamp = movie.ts_start;
+                                row.DeviceId = movie.device_id;
+                                row.CarNumber = device.CarNumber;
+                                row.Sequence = movie.sequence;
+                                row.MovieId = movie.id;
+                                row.MovieType = movie.movie_type;
+                                row.MovieTypeName = ConvertMovieType(movie.movie_type);
+                                events.AddEventListRow(row);
+                                beforeTimestamp = movie.ts_start;
+                                beforeSequence = movie.sequence;
+                            }
+                        }
+                        events.AcceptChanges();
+                    }
+                    count++;
+                    progress?.Invoke(count, total, false);
+                }
+                progress?.Invoke(count, total, true);
+            }
+            return events;
+        }
+
+        public async Task<WMDataSet.EventListDataTable> GetAllEventsAsync(
                EnumerableRowCollection<WMDataSet.DeviceRow> devices, 
                CancellationToken token,
                UpdateEventsProgress progress)

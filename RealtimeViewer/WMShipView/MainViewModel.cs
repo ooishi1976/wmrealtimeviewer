@@ -623,6 +623,19 @@ namespace RealtimeViewer.WMShipView
             return result;
         }
 
+        public async Task GetEventsAsync(
+            int officeId, WMDataSet.EventListDataTable events, CancellationToken token, UpdateEventsProgress progress)
+        {
+            var result = new WMDataSet.EventListDataTable();
+            DeviceTable.DefaultView.RowFilter = $"OfficeId = {officeId}";
+            var allDevices = DeviceTable.DefaultView.ToTable();
+            DeviceTable.DefaultView.RowFilter = string.Empty;
+
+            var devices = DeviceTable.Where(x => x.OfficeId == officeId);
+            await RequestController.GetAllEventsAsync(events, devices, token, progress);
+        }
+
+
         public async Task GetGravityAsync(
             CancellationToken token,
             UpdateEventsProgress progress)

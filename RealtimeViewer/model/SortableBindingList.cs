@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections;
+using RealtimeViewer.WMShipView;
+using System.Data;
 
 namespace RealtimeViewer.Model
 {
@@ -47,6 +49,31 @@ namespace RealtimeViewer.Model
             foreach (T value in list)
             {
                 Add(value);
+            }
+        }
+
+        public void AddRange(IList dataView)
+        {
+            foreach (var data in dataView)
+            {
+                if (data is DataRowView rowView &&
+                    rowView.Row is WMDataSet.EventListRow row)
+                {
+                    if (typeof(T) == typeof(EventInfo)) 
+                    {
+                        var eventInfo = new EventInfo()
+                        {
+                            DeviceId = row.DeviceId,
+                            CarId = row.CarNumber,
+                            MovieId = row.MovieId,
+                            Timestamp = row.Timestamp,
+                            IsDownloadable = true,
+                            IsPlayable = false,
+                            MovieType = row.MovieTypeName
+                        };
+                        Add((T)(object)eventInfo);
+                    }
+                }
             }
         }
 

@@ -250,7 +250,12 @@ namespace RealtimeViewer.WMShipView
                     BindDeviceDataSource();
                     BindStreamingDataSource();
 
-                    SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID);
+                    var isChanged = SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID);
+                    if (!isChanged) 
+                    {
+                        //OfficeBindingSource.ResetCurrentItem();
+                        OfficeBindingSource_CurrentChanged(OfficeBindingSource, new EventArgs());
+                    }
                     DrawMapEntries();
                     timerGPSDraw.Start();
                 }));
@@ -585,7 +590,7 @@ namespace RealtimeViewer.WMShipView
                 }
                 else
                 {
-                    var window = new MovieRequestWindow(ViewModel.RequestController);
+                    var window = new MovieRequestWindow(ViewModel.RequestController, ViewModel);
                     window.MqttClient = ViewModel.MqttClient;
                     window.CarId = device.CarId;
                     window.DeviceId = device.DeviceId;
@@ -779,10 +784,10 @@ namespace RealtimeViewer.WMShipView
             //}
         }
 
-        private void SetOfficePostion(int? officeId = null)
+        private bool SetOfficePostion(int? officeId = null)
         {
             var id = (officeId is null) ? ViewModel.SelectedOfficeId : officeId;
-
+            var result = false;
             if (OfficeBindingSource.List is DataView dataView)
             {
                 var index = 0;
@@ -798,8 +803,15 @@ namespace RealtimeViewer.WMShipView
                     }
                     index++;
                 }
+
+                if (dataView.Count <= index)
+                {
+                    index = 0;
+                }
+                result = (OfficeBindingSource.Position == index) ? false : true;
                 OfficeBindingSource.Position = index;
             }
+            return result;
         }
 
 
@@ -824,10 +836,6 @@ namespace RealtimeViewer.WMShipView
         }
 
         private void TimerStreamingPreparation_Tick(object sender, EventArgs e)
-        {
-        }
-
-        private void OfficeInfoBindingSource_CurrentChanged(object sender, EventArgs e)
         {
         }
 
@@ -940,16 +948,28 @@ namespace RealtimeViewer.WMShipView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ComboBoxOffice_SelectedValueChanged(object sender, EventArgs e)
+        //private void ComboBoxOffice_SelectedValueChanged(object sender, EventArgs e)
+        //{
+        //    if (sender is ComboBox comboBox &&
+        //        int.TryParse($"{comboBox.SelectedValue}", out var officeId))
+        private async void OfficeBindingSource_CurrentChanged(object sender, EventArgs e)
         {
-            if (sender is ComboBox comboBox &&
-                int.TryParse($"{comboBox.SelectedValue}", out var officeId))
+            if (sender is BindingSource bindingSource &&
+                bindingSource.Current is DataRowView rowView &&
+                rowView.Row is WMDataSet.OfficeRow office)
             {
-                ViewModel.SelectedOfficeId = officeId;
+                ViewModel.SelectedOfficeId = office.OfficeId;
                 CancellationTokenSource?.Cancel();
+
+                while (ViewModel.IsUpdatingEventList)
+                {
+                    await Task.Delay(1000);
+                    Debug.WriteLine("(ﾟдﾟ)ｳﾏｰ");
+                }
+
                 // 車両リストの更新
                 CancellationTokenSource = new CancellationTokenSource();
-                DeviceBindingSource.Filter = $"OfficeId = {officeId}";
+                DeviceBindingSource.Filter = $"OfficeId = {office.OfficeId}";
 
                 MoveToOfficeLocation();
                 if (ViewModel.IsDeviceFocus)
@@ -965,12 +985,12 @@ namespace RealtimeViewer.WMShipView
                 // イベントリストの更新
                 UnbindEventDataSource();
 
-                Task.Run(async () =>
+                await Task.Run(async () =>
                 {
                     ViewModel.IsUpdatingEventList = true;
                     try
                     {
-                        var eventList = await ViewModel.GetEventsAsync(officeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
+                        var eventList = await ViewModel.GetEventsAsync(office.OfficeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
                         {
                             this.Invoke((MethodInvoker)(() => {
                                 if (isCompleted)
@@ -991,6 +1011,7 @@ namespace RealtimeViewer.WMShipView
                             BindEventDataSource(eventList);
                         }));
                     }
+                    catch (OperationCanceledException) { }
                     finally
                     {
                         ViewModel.IsUpdatingEventList = false;
@@ -1078,6 +1099,7 @@ namespace RealtimeViewer.WMShipView
                 ViewModel.IsUpdatingEventList = true;
                 try
                 {
+                    ViewModel.EventTable.Clear();
                     var eventList = await ViewModel.GetEventsAsync(ViewModel.SelectedOfficeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
                     {
                         Invoke((MethodInvoker)(() => {

@@ -50,13 +50,6 @@ namespace RealtimeViewer
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.gridEventList = new System.Windows.Forms.DataGridView();
-            this.IsDownloadable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.timestampDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.carIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDownload = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.MovieId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsPlayable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.eventInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panelPlay = new System.Windows.Forms.Panel();
             this.buttonPlay8 = new System.Windows.Forms.Button();
@@ -79,6 +72,13 @@ namespace RealtimeViewer
             this.labelProgress = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.IsDownloadable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.timestampDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.carIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDownload = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.MovieId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsPlayable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.movieRequestWindowViewModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -94,20 +94,20 @@ namespace RealtimeViewer
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("UD デジタル 教科書体 NP-B", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label1.Location = new System.Drawing.Point(25, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 24);
+            this.label1.Size = new System.Drawing.Size(68, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "社番：";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("UD デジタル 教科書体 NP-B", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label2.Location = new System.Drawing.Point(86, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 24);
+            this.label2.Size = new System.Drawing.Size(64, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "0000";
             // 
@@ -116,7 +116,7 @@ namespace RealtimeViewer
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(36, 34);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(402, 18);
+            this.label3.Size = new System.Drawing.Size(383, 20);
             this.label3.TabIndex = 0;
             this.label3.Text = "取得対象とする時間を１０分以内の範囲で設定してください";
             // 
@@ -125,7 +125,7 @@ namespace RealtimeViewer
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(302, 72);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 18);
+            this.label4.Size = new System.Drawing.Size(25, 20);
             this.label4.TabIndex = 3;
             this.label4.Text = "時";
             // 
@@ -134,7 +134,7 @@ namespace RealtimeViewer
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(302, 110);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(24, 18);
+            this.label5.Size = new System.Drawing.Size(25, 20);
             this.label5.TabIndex = 8;
             this.label5.Text = "時";
             // 
@@ -143,7 +143,7 @@ namespace RealtimeViewer
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(384, 72);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 18);
+            this.label6.Size = new System.Drawing.Size(49, 20);
             this.label6.TabIndex = 5;
             this.label6.Text = "分から";
             // 
@@ -152,7 +152,7 @@ namespace RealtimeViewer
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(384, 110);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 18);
+            this.label7.Size = new System.Drawing.Size(50, 20);
             this.label7.TabIndex = 10;
             this.label7.Text = "分まで";
             // 
@@ -294,6 +294,258 @@ namespace RealtimeViewer
             this.gridEventList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridEventList_ColumnHeaderMouseClick);
             this.gridEventList.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridEventList_CurrentCellDirtyStateChanged);
             // 
+            // eventInfoBindingSource
+            // 
+            this.eventInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.EventInfo);
+            // 
+            // panelPlay
+            // 
+            this.panelPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPlay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPlay.Controls.Add(this.buttonPlay8);
+            this.panelPlay.Controls.Add(this.buttonPlay7);
+            this.panelPlay.Controls.Add(this.buttonPlay6);
+            this.panelPlay.Controls.Add(this.buttonPlay5);
+            this.panelPlay.Controls.Add(this.buttonPlay4);
+            this.panelPlay.Controls.Add(this.buttonPlay3);
+            this.panelPlay.Controls.Add(this.buttonPlay2);
+            this.panelPlay.Controls.Add(this.buttonPlay1);
+            this.panelPlay.Location = new System.Drawing.Point(779, 248);
+            this.panelPlay.Name = "panelPlay";
+            this.panelPlay.Size = new System.Drawing.Size(504, 101);
+            this.panelPlay.TabIndex = 8;
+            this.panelPlay.Visible = false;
+            // 
+            // buttonPlay8
+            // 
+            this.buttonPlay8.Enabled = false;
+            this.buttonPlay8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay8.Location = new System.Drawing.Point(380, 57);
+            this.buttonPlay8.Name = "buttonPlay8";
+            this.buttonPlay8.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay8.TabIndex = 7;
+            this.buttonPlay8.Text = "Ch8 再生";
+            this.buttonPlay8.UseVisualStyleBackColor = true;
+            this.buttonPlay8.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay7
+            // 
+            this.buttonPlay7.Enabled = false;
+            this.buttonPlay7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay7.Location = new System.Drawing.Point(260, 57);
+            this.buttonPlay7.Name = "buttonPlay7";
+            this.buttonPlay7.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay7.TabIndex = 6;
+            this.buttonPlay7.Text = "Ch7 再生";
+            this.buttonPlay7.UseVisualStyleBackColor = true;
+            this.buttonPlay7.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay6
+            // 
+            this.buttonPlay6.Enabled = false;
+            this.buttonPlay6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay6.Location = new System.Drawing.Point(140, 57);
+            this.buttonPlay6.Name = "buttonPlay6";
+            this.buttonPlay6.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay6.TabIndex = 5;
+            this.buttonPlay6.Text = "Ch6 再生";
+            this.buttonPlay6.UseVisualStyleBackColor = true;
+            this.buttonPlay6.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay5
+            // 
+            this.buttonPlay5.Enabled = false;
+            this.buttonPlay5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay5.Location = new System.Drawing.Point(20, 57);
+            this.buttonPlay5.Name = "buttonPlay5";
+            this.buttonPlay5.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay5.TabIndex = 4;
+            this.buttonPlay5.Text = "Ch5 再生";
+            this.buttonPlay5.UseVisualStyleBackColor = true;
+            this.buttonPlay5.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay4
+            // 
+            this.buttonPlay4.Enabled = false;
+            this.buttonPlay4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay4.Location = new System.Drawing.Point(380, 17);
+            this.buttonPlay4.Name = "buttonPlay4";
+            this.buttonPlay4.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay4.TabIndex = 3;
+            this.buttonPlay4.Text = "Ch4 再生";
+            this.buttonPlay4.UseVisualStyleBackColor = true;
+            this.buttonPlay4.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay3
+            // 
+            this.buttonPlay3.Enabled = false;
+            this.buttonPlay3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay3.Location = new System.Drawing.Point(260, 17);
+            this.buttonPlay3.Name = "buttonPlay3";
+            this.buttonPlay3.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay3.TabIndex = 2;
+            this.buttonPlay3.Text = "Ch3 再生";
+            this.buttonPlay3.UseVisualStyleBackColor = true;
+            this.buttonPlay3.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay2
+            // 
+            this.buttonPlay2.Enabled = false;
+            this.buttonPlay2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay2.Location = new System.Drawing.Point(140, 17);
+            this.buttonPlay2.Name = "buttonPlay2";
+            this.buttonPlay2.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay2.TabIndex = 1;
+            this.buttonPlay2.Text = "Ch2 再生";
+            this.buttonPlay2.UseVisualStyleBackColor = true;
+            this.buttonPlay2.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // buttonPlay1
+            // 
+            this.buttonPlay1.Enabled = false;
+            this.buttonPlay1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonPlay1.Location = new System.Drawing.Point(20, 17);
+            this.buttonPlay1.Name = "buttonPlay1";
+            this.buttonPlay1.Size = new System.Drawing.Size(100, 25);
+            this.buttonPlay1.TabIndex = 0;
+            this.buttonPlay1.Text = "Ch1 再生";
+            this.buttonPlay1.UseVisualStyleBackColor = true;
+            this.buttonPlay1.Click += new System.EventHandler(this.buttonPlay1_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(780, 96);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(247, 20);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "車載器からサーバにアップロード中です";
+            this.label12.Visible = false;
+            // 
+            // labelDownload
+            // 
+            this.labelDownload.AutoSize = true;
+            this.labelDownload.Location = new System.Drawing.Point(782, 85);
+            this.labelDownload.Name = "labelDownload";
+            this.labelDownload.Size = new System.Drawing.Size(207, 20);
+            this.labelDownload.TabIndex = 4;
+            this.labelDownload.Text = "映像データのダウンロード中です";
+            this.labelDownload.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(780, 106);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(129, 20);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "映像の準備中です";
+            this.label8.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(36, 41);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(405, 20);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "再生したい映像にチェックをつけてダウンロードを開始してください";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.labelUploadComplete);
+            this.groupBox1.Controls.Add(this.labelValidateError);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.buttonUpload);
+            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.dateTimePicker2);
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.numericUpDown4);
+            this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.numericUpDown3);
+            this.groupBox1.Location = new System.Drawing.Point(25, 61);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(724, 166);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "車載器からサーバーへデータを格納";
+            // 
+            // labelUploadComplete
+            // 
+            this.labelUploadComplete.AutoSize = true;
+            this.labelUploadComplete.Location = new System.Drawing.Point(451, 134);
+            this.labelUploadComplete.Name = "labelUploadComplete";
+            this.labelUploadComplete.Size = new System.Drawing.Size(0, 20);
+            this.labelUploadComplete.TabIndex = 17;
+            // 
+            // labelValidateError
+            // 
+            this.labelValidateError.AutoSize = true;
+            this.labelValidateError.ForeColor = System.Drawing.Color.Red;
+            this.labelValidateError.Location = new System.Drawing.Point(76, 145);
+            this.labelValidateError.Name = "labelValidateError";
+            this.labelValidateError.Size = new System.Drawing.Size(174, 20);
+            this.labelValidateError.TabIndex = 12;
+            this.labelValidateError.Text = "これはサンプルのエラーです";
+            // 
+            // buttonDownload
+            // 
+            this.buttonDownload.Enabled = false;
+            this.buttonDownload.Location = new System.Drawing.Point(488, 32);
+            this.buttonDownload.Name = "buttonDownload";
+            this.buttonDownload.Size = new System.Drawing.Size(215, 36);
+            this.buttonDownload.TabIndex = 1;
+            this.buttonDownload.Text = "サーバーからダウンロード";
+            this.buttonDownload.UseVisualStyleBackColor = true;
+            this.buttonDownload.Click += new System.EventHandler(this.ButtonDownload_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.buttonDownload);
+            this.groupBox2.Controls.Add(this.gridEventList);
+            this.groupBox2.Location = new System.Drawing.Point(25, 248);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(724, 564);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "サーバー上のドラレコ映像";
+            // 
+            // labelProgress
+            // 
+            this.labelProgress.AutoSize = true;
+            this.labelProgress.Location = new System.Drawing.Point(784, 170);
+            this.labelProgress.Name = "labelProgress";
+            this.labelProgress.Size = new System.Drawing.Size(0, 20);
+            this.labelProgress.TabIndex = 27;
+            this.labelProgress.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(797, 365);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(153, 20);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "音声データがありません";
+            this.label10.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(797, 383);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(164, 20);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "再生ステータスのサンプル";
+            this.label11.Visible = false;
+            // 
             // IsDownloadable
             // 
             this.IsDownloadable.FalseValue = "0";
@@ -318,6 +570,7 @@ namespace RealtimeViewer
             // 
             // carIdDataGridViewTextBoxColumn
             // 
+            this.carIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.carIdDataGridViewTextBoxColumn.DataPropertyName = "CarId";
             this.carIdDataGridViewTextBoxColumn.HeaderText = "社番";
             this.carIdDataGridViewTextBoxColumn.MinimumWidth = 65;
@@ -325,7 +578,7 @@ namespace RealtimeViewer
             this.carIdDataGridViewTextBoxColumn.ReadOnly = true;
             this.carIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.carIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.carIdDataGridViewTextBoxColumn.Width = 65;
+            this.carIdDataGridViewTextBoxColumn.Width = 66;
             // 
             // Remarks
             // 
@@ -369,258 +622,6 @@ namespace RealtimeViewer
             this.IsPlayable.TrueValue = "true";
             this.IsPlayable.Visible = false;
             // 
-            // eventInfoBindingSource
-            // 
-            this.eventInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.EventInfo);
-            // 
-            // panelPlay
-            // 
-            this.panelPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPlay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPlay.Controls.Add(this.buttonPlay8);
-            this.panelPlay.Controls.Add(this.buttonPlay7);
-            this.panelPlay.Controls.Add(this.buttonPlay6);
-            this.panelPlay.Controls.Add(this.buttonPlay5);
-            this.panelPlay.Controls.Add(this.buttonPlay4);
-            this.panelPlay.Controls.Add(this.buttonPlay3);
-            this.panelPlay.Controls.Add(this.buttonPlay2);
-            this.panelPlay.Controls.Add(this.buttonPlay1);
-            this.panelPlay.Location = new System.Drawing.Point(779, 248);
-            this.panelPlay.Name = "panelPlay";
-            this.panelPlay.Size = new System.Drawing.Size(504, 101);
-            this.panelPlay.TabIndex = 8;
-            this.panelPlay.Visible = false;
-            // 
-            // buttonPlay8
-            // 
-            this.buttonPlay8.Enabled = false;
-            this.buttonPlay8.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay8.Location = new System.Drawing.Point(380, 57);
-            this.buttonPlay8.Name = "buttonPlay8";
-            this.buttonPlay8.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay8.TabIndex = 7;
-            this.buttonPlay8.Text = "Ch8 再生";
-            this.buttonPlay8.UseVisualStyleBackColor = true;
-            this.buttonPlay8.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay7
-            // 
-            this.buttonPlay7.Enabled = false;
-            this.buttonPlay7.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay7.Location = new System.Drawing.Point(260, 57);
-            this.buttonPlay7.Name = "buttonPlay7";
-            this.buttonPlay7.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay7.TabIndex = 6;
-            this.buttonPlay7.Text = "Ch7 再生";
-            this.buttonPlay7.UseVisualStyleBackColor = true;
-            this.buttonPlay7.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay6
-            // 
-            this.buttonPlay6.Enabled = false;
-            this.buttonPlay6.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay6.Location = new System.Drawing.Point(140, 57);
-            this.buttonPlay6.Name = "buttonPlay6";
-            this.buttonPlay6.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay6.TabIndex = 5;
-            this.buttonPlay6.Text = "Ch6 再生";
-            this.buttonPlay6.UseVisualStyleBackColor = true;
-            this.buttonPlay6.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay5
-            // 
-            this.buttonPlay5.Enabled = false;
-            this.buttonPlay5.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay5.Location = new System.Drawing.Point(20, 57);
-            this.buttonPlay5.Name = "buttonPlay5";
-            this.buttonPlay5.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay5.TabIndex = 4;
-            this.buttonPlay5.Text = "Ch5 再生";
-            this.buttonPlay5.UseVisualStyleBackColor = true;
-            this.buttonPlay5.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay4
-            // 
-            this.buttonPlay4.Enabled = false;
-            this.buttonPlay4.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay4.Location = new System.Drawing.Point(380, 17);
-            this.buttonPlay4.Name = "buttonPlay4";
-            this.buttonPlay4.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay4.TabIndex = 3;
-            this.buttonPlay4.Text = "Ch4 再生";
-            this.buttonPlay4.UseVisualStyleBackColor = true;
-            this.buttonPlay4.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay3
-            // 
-            this.buttonPlay3.Enabled = false;
-            this.buttonPlay3.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay3.Location = new System.Drawing.Point(260, 17);
-            this.buttonPlay3.Name = "buttonPlay3";
-            this.buttonPlay3.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay3.TabIndex = 2;
-            this.buttonPlay3.Text = "Ch3 再生";
-            this.buttonPlay3.UseVisualStyleBackColor = true;
-            this.buttonPlay3.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay2
-            // 
-            this.buttonPlay2.Enabled = false;
-            this.buttonPlay2.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay2.Location = new System.Drawing.Point(140, 17);
-            this.buttonPlay2.Name = "buttonPlay2";
-            this.buttonPlay2.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay2.TabIndex = 1;
-            this.buttonPlay2.Text = "Ch2 再生";
-            this.buttonPlay2.UseVisualStyleBackColor = true;
-            this.buttonPlay2.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // buttonPlay1
-            // 
-            this.buttonPlay1.Enabled = false;
-            this.buttonPlay1.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonPlay1.Location = new System.Drawing.Point(20, 17);
-            this.buttonPlay1.Name = "buttonPlay1";
-            this.buttonPlay1.Size = new System.Drawing.Size(100, 25);
-            this.buttonPlay1.TabIndex = 0;
-            this.buttonPlay1.Text = "Ch1 再生";
-            this.buttonPlay1.UseVisualStyleBackColor = true;
-            this.buttonPlay1.Click += new System.EventHandler(this.buttonPlay1_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(780, 96);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(274, 18);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "車載器からサーバにアップロード中です";
-            this.label12.Visible = false;
-            // 
-            // labelDownload
-            // 
-            this.labelDownload.AutoSize = true;
-            this.labelDownload.Location = new System.Drawing.Point(782, 85);
-            this.labelDownload.Name = "labelDownload";
-            this.labelDownload.Size = new System.Drawing.Size(228, 18);
-            this.labelDownload.TabIndex = 4;
-            this.labelDownload.Text = "映像データのダウンロード中です";
-            this.labelDownload.Visible = false;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(780, 106);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(133, 18);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "映像の準備中です";
-            this.label8.Visible = false;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(36, 41);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(446, 18);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "再生したい映像にチェックをつけてダウンロードを開始してください";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.labelUploadComplete);
-            this.groupBox1.Controls.Add(this.labelValidateError);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.buttonUpload);
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
-            this.groupBox1.Controls.Add(this.dateTimePicker2);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Controls.Add(this.numericUpDown4);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.numericUpDown3);
-            this.groupBox1.Location = new System.Drawing.Point(25, 61);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(724, 166);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "車載器からサーバーへデータを格納";
-            // 
-            // labelUploadComplete
-            // 
-            this.labelUploadComplete.AutoSize = true;
-            this.labelUploadComplete.Location = new System.Drawing.Point(451, 134);
-            this.labelUploadComplete.Name = "labelUploadComplete";
-            this.labelUploadComplete.Size = new System.Drawing.Size(0, 18);
-            this.labelUploadComplete.TabIndex = 17;
-            // 
-            // labelValidateError
-            // 
-            this.labelValidateError.AutoSize = true;
-            this.labelValidateError.ForeColor = System.Drawing.Color.Red;
-            this.labelValidateError.Location = new System.Drawing.Point(76, 145);
-            this.labelValidateError.Name = "labelValidateError";
-            this.labelValidateError.Size = new System.Drawing.Size(197, 18);
-            this.labelValidateError.TabIndex = 12;
-            this.labelValidateError.Text = "これはサンプルのエラーです";
-            // 
-            // buttonDownload
-            // 
-            this.buttonDownload.Enabled = false;
-            this.buttonDownload.Location = new System.Drawing.Point(488, 32);
-            this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(215, 36);
-            this.buttonDownload.TabIndex = 1;
-            this.buttonDownload.Text = "サーバーからダウンロード";
-            this.buttonDownload.UseVisualStyleBackColor = true;
-            this.buttonDownload.Click += new System.EventHandler(this.ButtonDownload_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.buttonDownload);
-            this.groupBox2.Controls.Add(this.gridEventList);
-            this.groupBox2.Location = new System.Drawing.Point(25, 248);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(724, 564);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "サーバー上のドラレコ映像";
-            // 
-            // labelProgress
-            // 
-            this.labelProgress.AutoSize = true;
-            this.labelProgress.Location = new System.Drawing.Point(784, 170);
-            this.labelProgress.Name = "labelProgress";
-            this.labelProgress.Size = new System.Drawing.Size(0, 18);
-            this.labelProgress.TabIndex = 27;
-            this.labelProgress.Visible = false;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(797, 365);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(170, 18);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "音声データがありません";
-            this.label10.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(797, 383);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(183, 18);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "再生ステータスのサンプル";
-            this.label11.Visible = false;
-            // 
             // MovieRequestWindow
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -639,7 +640,7 @@ namespace RealtimeViewer
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("UD デジタル 教科書体 NK-R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
