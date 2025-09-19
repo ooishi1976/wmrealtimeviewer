@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using System.Diagnostics;
 using RealtimeViewer.WMShipView.Streaming;
+using System.Windows.Forms;
 
 namespace RealtimeViewer.Setting
 {
@@ -220,10 +221,36 @@ namespace RealtimeViewer.Setting
         {
             var sessionWaitDefault = STREAMING_SESSION_WAIT;
             // .exeを.iniに
-            string sAppExePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string sIniFilePath = sAppExePath.Replace(".exe", ".ini");
-            UtilIniFile.UtilSetIniFilePath(sIniFilePath);
-            if (File.Exists(sIniFilePath))
+            var sAppExePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var sIniFilePath = sAppExePath.Replace(".exe", ".ini");
+
+            var isExistIniFile = false;
+#if _WEATHER_MEDIA
+            var appFileName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+            var iniFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Multiwave",
+                appFileName);
+#else
+            var appFileName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+            var iniFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "ISSUI",
+                appFileName);
+#endif
+            var newIniFilePath = Path.Combine(iniFileDir, $"{appFileName}.ini");
+            if (File.Exists(newIniFilePath))
+            {
+                isExistIniFile = true;
+                UtilIniFile.UtilSetIniFilePath(newIniFilePath);
+            }
+            else if (File.Exists(sIniFilePath)) 
+            {
+                isExistIniFile = true;
+                UtilIniFile.UtilSetIniFilePath(sIniFilePath);
+            }
+
+            if (isExistIniFile)
             {
                 // 接続設定読込
                 ServerIndex = UtilIniFile.getValueInt("ServerInfo", "ServerIndex", -1);
@@ -362,8 +389,27 @@ namespace RealtimeViewer.Setting
         public void WriteIniFile()
         {
             // .exeを.iniに
-            string sAppExePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string sIniFilePath = sAppExePath.Replace(".exe", ".ini");
+            var appFileName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+#if _WEATHER_MEDIA
+            var iniFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Multiwave",
+                appFileName);
+#else
+            var iniFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "ISSUI",
+                appFileName);
+#endif
+            //string sAppExePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            //string sIniFilePath = sAppExePath.Replace(".exe", ".ini");
+            var sIniFilePath = Path.Combine(iniFileDir, $"{appFileName}.ini");
+
+            if (!Directory.Exists(sIniFilePath)) 
+            {
+                Directory.CreateDirectory(iniFileDir);
+            }
+
             UtilIniFile.UtilSetIniFilePath(sIniFilePath);
 
             UtilIniFile.setValue("General", "fileVersion", FileVersion);

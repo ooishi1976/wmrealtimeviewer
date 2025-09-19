@@ -44,7 +44,7 @@ namespace RealtimeViewer
             this.labelUpdateDate = new System.Windows.Forms.Label();
             this.labelCarListCaption = new System.Windows.Forms.Label();
             this.gridCarList = new System.Windows.Forms.DataGridView();
-            this.carListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.deviceIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelBase = new System.Windows.Forms.Panel();
@@ -133,12 +133,8 @@ namespace RealtimeViewer
             this.labelPanelPlayDate = new System.Windows.Forms.Label();
             this.gridEventList = new System.Windows.Forms.DataGridView();
             this.ColumnCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.timestampDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.carIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.movieTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MovieId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eventInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelEventListCaption = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -154,12 +150,15 @@ namespace RealtimeViewer
             this.pictureBoxWarn = new System.Windows.Forms.PictureBox();
             this.panelErrorIcon = new System.Windows.Forms.Panel();
             this.labelServerEnv = new System.Windows.Forms.Label();
+            this.carListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.timestampDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.carIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.movieTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceErrorInfomation = new System.Windows.Forms.BindingSource(this.components);
             this.officeInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.deviceIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridCarList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carListBindingSource)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelBase.SuspendLayout();
@@ -181,10 +180,11 @@ namespace RealtimeViewer
             this.panelPlay.SuspendLayout();
             this.tableLayoutPanelPlay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEventList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventInfoBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWarn)).BeginInit();
             this.panelErrorIcon.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.carListBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventInfoBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceErrorInfomation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.officeInfoBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -298,11 +298,15 @@ namespace RealtimeViewer
             this.gridCarList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridCarList_CellDoubleClick);
             this.gridCarList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridCarList_ColumnHeaderMouseClick);
             // 
-            // carListBindingSource
+            // deviceIdDataGridViewTextBoxColumn
             // 
-            this.carListBindingSource.DataSource = typeof(RealtimeViewer.Model.MapEntryInfo);
-            this.carListBindingSource.Sort = "";
-            this.carListBindingSource.CurrentChanged += new System.EventHandler(this.CarListBindingSource_CurrentChanged);
+            this.deviceIdDataGridViewTextBoxColumn.DataPropertyName = "CarId";
+            this.deviceIdDataGridViewTextBoxColumn.HeaderText = "社番";
+            this.deviceIdDataGridViewTextBoxColumn.MinimumWidth = 70;
+            this.deviceIdDataGridViewTextBoxColumn.Name = "deviceIdDataGridViewTextBoxColumn";
+            this.deviceIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.deviceIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.deviceIdDataGridViewTextBoxColumn.Width = 70;
             // 
             // tabControlMain
             // 
@@ -366,7 +370,7 @@ namespace RealtimeViewer
             this.mpgMap.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.mpgMap.Location = new System.Drawing.Point(0, 0);
             this.mpgMap.MapAngle = 0F;
-            this.mpgMap.MapCenter = new System.Drawing.Point(503209660, 128494390);
+            this.mpgMap.MapCenter = new System.Drawing.Point(503209660, 128489200);
             this.mpgMap.MapMode = MpgMap.MapMode.Move;
             this.mpgMap.MapPath = "latest";
             this.mpgMap.MapScale = 100000;
@@ -865,7 +869,7 @@ namespace RealtimeViewer
             this.tabPageEvent.Location = new System.Drawing.Point(4, 4);
             this.tabPageEvent.Name = "tabPageEvent";
             this.tabPageEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEvent.Size = new System.Drawing.Size(208, 728);
+            this.tabPageEvent.Size = new System.Drawing.Size(214, 728);
             this.tabPageEvent.TabIndex = 1;
             this.tabPageEvent.Text = "ドラレコ映像";
             // 
@@ -885,7 +889,7 @@ namespace RealtimeViewer
             this.tabPageRemoteConfig.Controls.Add(this.buttonShowRemoteSetting);
             this.tabPageRemoteConfig.Location = new System.Drawing.Point(4, 4);
             this.tabPageRemoteConfig.Name = "tabPageRemoteConfig";
-            this.tabPageRemoteConfig.Size = new System.Drawing.Size(208, 728);
+            this.tabPageRemoteConfig.Size = new System.Drawing.Size(214, 728);
             this.tabPageRemoteConfig.TabIndex = 2;
             this.tabPageRemoteConfig.Text = "遠隔設定";
             // 
@@ -1482,7 +1486,6 @@ namespace RealtimeViewer
             this.gridEventList.RowHeadersWidth = 4;
             this.gridEventList.Size = new System.Drawing.Size(700, 825);
             this.gridEventList.TabIndex = 1;
-            this.gridEventList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridEventList_CellContentClick);
             this.gridEventList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridEventList_CellFormatting);
             this.gridEventList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridEventList_ColumnHeaderMouseClick);
             // 
@@ -1496,39 +1499,6 @@ namespace RealtimeViewer
             this.ColumnCheck.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColumnCheck.TrueValue = "1";
             this.ColumnCheck.Width = 25;
-            // 
-            // timestampDataGridViewTextBoxColumn
-            // 
-            this.timestampDataGridViewTextBoxColumn.DataPropertyName = "Timestamp";
-            this.timestampDataGridViewTextBoxColumn.HeaderText = "日付";
-            this.timestampDataGridViewTextBoxColumn.MinimumWidth = 200;
-            this.timestampDataGridViewTextBoxColumn.Name = "timestampDataGridViewTextBoxColumn";
-            this.timestampDataGridViewTextBoxColumn.ReadOnly = true;
-            this.timestampDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timestampDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.timestampDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // carIdDataGridViewTextBoxColumn
-            // 
-            this.carIdDataGridViewTextBoxColumn.DataPropertyName = "CarId";
-            this.carIdDataGridViewTextBoxColumn.HeaderText = "社番";
-            this.carIdDataGridViewTextBoxColumn.MinimumWidth = 65;
-            this.carIdDataGridViewTextBoxColumn.Name = "carIdDataGridViewTextBoxColumn";
-            this.carIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.carIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.carIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.carIdDataGridViewTextBoxColumn.Width = 65;
-            // 
-            // movieTypeDataGridViewTextBoxColumn
-            // 
-            this.movieTypeDataGridViewTextBoxColumn.DataPropertyName = "MovieType";
-            this.movieTypeDataGridViewTextBoxColumn.HeaderText = "種別";
-            this.movieTypeDataGridViewTextBoxColumn.MinimumWidth = 79;
-            this.movieTypeDataGridViewTextBoxColumn.Name = "movieTypeDataGridViewTextBoxColumn";
-            this.movieTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.movieTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.movieTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.movieTypeDataGridViewTextBoxColumn.Width = 79;
             // 
             // Remarks
             // 
@@ -1549,10 +1519,6 @@ namespace RealtimeViewer
             this.MovieId.Name = "MovieId";
             this.MovieId.Visible = false;
             this.MovieId.Width = 200;
-            // 
-            // eventInfoBindingSource
-            // 
-            this.eventInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.EventInfo);
             // 
             // labelEventListCaption
             // 
@@ -1703,24 +1669,48 @@ namespace RealtimeViewer
             this.labelServerEnv.Text = "接続先";
             this.labelServerEnv.Visible = false;
             // 
-            // bindingSourceErrorInfomation
+            // carListBindingSource
             // 
-            this.bindingSourceErrorInfomation.DataSource = typeof(RealtimeViewer.Logger.ErrorInformationManager);
+            this.carListBindingSource.DataSource = typeof(RealtimeViewer.Model.MapEntryInfo);
+            this.carListBindingSource.Sort = "";
+            this.carListBindingSource.CurrentChanged += new System.EventHandler(this.CarListBindingSource_CurrentChanged);
             // 
-            // officeInfoBindingSource
+            // timestampDataGridViewTextBoxColumn
             // 
-            this.officeInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.OfficeInfo);
-            this.officeInfoBindingSource.Filter = "";
+            this.timestampDataGridViewTextBoxColumn.DataPropertyName = "Timestamp";
+            this.timestampDataGridViewTextBoxColumn.HeaderText = "日付";
+            this.timestampDataGridViewTextBoxColumn.MinimumWidth = 200;
+            this.timestampDataGridViewTextBoxColumn.Name = "timestampDataGridViewTextBoxColumn";
+            this.timestampDataGridViewTextBoxColumn.ReadOnly = true;
+            this.timestampDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.timestampDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.timestampDataGridViewTextBoxColumn.Width = 200;
             // 
-            // deviceIdDataGridViewTextBoxColumn
+            // carIdDataGridViewTextBoxColumn
             // 
-            this.deviceIdDataGridViewTextBoxColumn.DataPropertyName = "CarId";
-            this.deviceIdDataGridViewTextBoxColumn.HeaderText = "社番";
-            this.deviceIdDataGridViewTextBoxColumn.MinimumWidth = 70;
-            this.deviceIdDataGridViewTextBoxColumn.Name = "deviceIdDataGridViewTextBoxColumn";
-            this.deviceIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.deviceIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.deviceIdDataGridViewTextBoxColumn.Width = 70;
+            this.carIdDataGridViewTextBoxColumn.DataPropertyName = "CarId";
+            this.carIdDataGridViewTextBoxColumn.HeaderText = "社番";
+            this.carIdDataGridViewTextBoxColumn.MinimumWidth = 65;
+            this.carIdDataGridViewTextBoxColumn.Name = "carIdDataGridViewTextBoxColumn";
+            this.carIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.carIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.carIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.carIdDataGridViewTextBoxColumn.Width = 65;
+            // 
+            // movieTypeDataGridViewTextBoxColumn
+            // 
+            this.movieTypeDataGridViewTextBoxColumn.DataPropertyName = "MovieType";
+            this.movieTypeDataGridViewTextBoxColumn.HeaderText = "種別";
+            this.movieTypeDataGridViewTextBoxColumn.MinimumWidth = 79;
+            this.movieTypeDataGridViewTextBoxColumn.Name = "movieTypeDataGridViewTextBoxColumn";
+            this.movieTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.movieTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.movieTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.movieTypeDataGridViewTextBoxColumn.Width = 79;
+            // 
+            // eventInfoBindingSource
+            // 
+            this.eventInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.EventInfo);
             // 
             // addressDataGridViewTextBoxColumn
             // 
@@ -1730,6 +1720,15 @@ namespace RealtimeViewer
             this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
             this.addressDataGridViewTextBoxColumn.ReadOnly = true;
             this.addressDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // bindingSourceErrorInfomation
+            // 
+            this.bindingSourceErrorInfomation.DataSource = typeof(RealtimeViewer.Logger.ErrorInformationManager);
+            // 
+            // officeInfoBindingSource
+            // 
+            this.officeInfoBindingSource.DataSource = typeof(RealtimeViewer.Model.OfficeInfo);
+            this.officeInfoBindingSource.Filter = "";
             // 
             // MainForm
             // 
@@ -1757,7 +1756,6 @@ namespace RealtimeViewer
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.gridCarList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carListBindingSource)).EndInit();
             this.tabControlMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1790,10 +1788,11 @@ namespace RealtimeViewer
             this.tableLayoutPanelPlay.ResumeLayout(false);
             this.tableLayoutPanelPlay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEventList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventInfoBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWarn)).EndInit();
             this.panelErrorIcon.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.carListBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventInfoBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceErrorInfomation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.officeInfoBindingSource)).EndInit();
             this.ResumeLayout(false);

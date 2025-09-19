@@ -319,6 +319,8 @@ namespace RealtimeViewer.WMShipView
         /// <param name="e"></param>
         private void MqttClient_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
+            PublishReceived?.Invoke(sender, e);
+
             //  MQTT取得
             var msg = Encoding.UTF8.GetString(e.Message);
             foreach (var pattern in TopicRegexes)

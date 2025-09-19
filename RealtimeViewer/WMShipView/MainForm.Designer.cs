@@ -1447,6 +1447,7 @@ namespace RealtimeViewer.WMShipView
             this.Remarks,
             this.MovieId,
             this.Sequence});
+            this.gridEventList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gridEventList.Location = new System.Drawing.Point(25, 45);
             this.gridEventList.Margin = new System.Windows.Forms.Padding(2);
             this.gridEventList.Name = "gridEventList";
@@ -1455,10 +1456,6 @@ namespace RealtimeViewer.WMShipView
             this.gridEventList.Size = new System.Drawing.Size(700, 825);
             this.gridEventList.TabIndex = 1;
             this.gridEventList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridEventList_CellContentClick);
-            this.gridEventList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridEventList_CellFormatting);
-            this.gridEventList.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridEventList_CellValueChanged);
-            this.gridEventList.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridEventList_ColumnHeaderMouseClick);
-            this.gridEventList.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridEventList_CurrentCellDirtyStateChanged);
             // 
             // labelEventListCaption
             // 
@@ -1531,6 +1528,7 @@ namespace RealtimeViewer.WMShipView
             this.Timestamp.HeaderText = "日付";
             this.Timestamp.MinimumWidth = 200;
             this.Timestamp.Name = "Timestamp";
+            this.Timestamp.ReadOnly = true;
             this.Timestamp.Width = 200;
             // 
             // CarNumber
@@ -1539,6 +1537,7 @@ namespace RealtimeViewer.WMShipView
             this.CarNumber.DataPropertyName = "CarNumber";
             this.CarNumber.HeaderText = "船名";
             this.CarNumber.Name = "CarNumber";
+            this.CarNumber.ReadOnly = true;
             this.CarNumber.Width = 66;
             // 
             // MovieType
@@ -1547,6 +1546,7 @@ namespace RealtimeViewer.WMShipView
             this.MovieType.HeaderText = "種別";
             this.MovieType.MinimumWidth = 79;
             this.MovieType.Name = "MovieType";
+            this.MovieType.ReadOnly = true;
             this.MovieType.Width = 79;
             // 
             // Remarks
@@ -1765,6 +1765,9 @@ namespace RealtimeViewer.WMShipView
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelHeader;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEventList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelPlay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn Timestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn CarNumber;
@@ -1772,9 +1775,6 @@ namespace RealtimeViewer.WMShipView
         private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
         private System.Windows.Forms.DataGridViewTextBoxColumn MovieId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sequence;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
     }
 }
 

@@ -35,8 +35,8 @@
               <xs:element name="Latitude" msprop:Generator_ColumnPropNameInTable="LatitudeColumn" msprop:Generator_ColumnPropNameInRow="Latitude" msprop:Generator_UserColumnName="Latitude" msprop:Generator_ColumnVarNameInTable="columnLatitude" type="xs:string" default="" minOccurs="0" />
               <xs:element name="LongitudeDeg10" msprop:Generator_ColumnPropNameInTable="LongitudeDeg10Column" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LongitudeDeg10" msprop:Generator_UserColumnName="LongitudeDeg10" msprop:Generator_ColumnVarNameInTable="columnLongitudeDeg10" type="xs:string" minOccurs="0" />
               <xs:element name="LatitudeDeg10" msprop:Generator_ColumnPropNameInTable="LatitudeDeg10Column" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LatitudeDeg10" msprop:Generator_UserColumnName="LatitudeDeg10" msprop:Generator_ColumnVarNameInTable="columnLatitudeDeg10" type="xs:string" minOccurs="0" />
-              <xs:element name="LongitudeDMS" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInTable="LongitudeDMSColumn" msprop:Generator_ColumnVarNameInTable="columnLongitudeDMS" msprop:Generator_UserColumnName="LongitudeDMS" msprop:Generator_ColumnPropNameInRow="LongitudeDMS" type="xs:string" minOccurs="0" />
-              <xs:element name="LatitudeDMS" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInTable="LatitudeDMSColumn" msprop:Generator_ColumnVarNameInTable="columnLatitudeDMS" msprop:Generator_UserColumnName="LatitudeDMS" msprop:Generator_ColumnPropNameInRow="LatitudeDMS" type="xs:string" minOccurs="0" />
+              <xs:element name="LongitudeDMS" msprop:Generator_ColumnPropNameInTable="LongitudeDMSColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LongitudeDMS" msprop:Generator_UserColumnName="LongitudeDMS" msprop:Generator_ColumnVarNameInTable="columnLongitudeDMS" type="xs:string" minOccurs="0" />
+              <xs:element name="LatitudeDMS" msprop:Generator_ColumnPropNameInTable="LatitudeDMSColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LatitudeDMS" msprop:Generator_UserColumnName="LatitudeDMS" msprop:Generator_ColumnVarNameInTable="columnLatitudeDMS" type="xs:string" minOccurs="0" />
               <xs:element name="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_UserColumnName="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" type="xs:string" minOccurs="0" />
               <xs:element name="LastNotificationTime" msprop:Generator_ColumnPropNameInTable="LastNotificationTimeColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LastNotificationTime" msprop:Generator_UserColumnName="LastNotificationTime" msprop:Generator_ColumnVarNameInTable="columnLastNotificationTime" type="xs:string" minOccurs="0" />
             </xs:sequence>
@@ -48,9 +48,9 @@
               <xs:element name="Timestamp" msprop:Generator_ColumnPropNameInTable="TimestampColumn" msprop:Generator_ColumnPropNameInRow="Timestamp" msprop:Generator_UserColumnName="Timestamp" msprop:Generator_ColumnVarNameInTable="columnTimestamp" type="xs:dateTime" />
               <xs:element name="DeviceId" msprop:Generator_ColumnPropNameInTable="DeviceIdColumn" msprop:Generator_ColumnPropNameInRow="DeviceId" msprop:Generator_UserColumnName="DeviceId" msprop:Generator_ColumnVarNameInTable="columnDeviceId" type="xs:string" />
               <xs:element name="CarNumber" msprop:Generator_ColumnPropNameInTable="CarNumberColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CarNumber" msprop:Generator_UserColumnName="CarNumber" msprop:Generator_ColumnVarNameInTable="columnCarNumber" type="xs:string" minOccurs="0" />
-              <xs:element name="Sequence" msprop:Generator_ColumnPropNameInTable="SequenceColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Sequence" msprop:Generator_UserColumnName="Sequence" msprop:Generator_ColumnVarNameInTable="columnSequence" type="xs:string" minOccurs="0" />
+              <xs:element name="Sequence" msprop:Generator_ColumnPropNameInTable="SequenceColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Sequence" msprop:Generator_UserColumnName="Sequence" msprop:Generator_ColumnVarNameInTable="columnSequence" type="xs:string" />
               <xs:element name="MovieId" msprop:Generator_ColumnPropNameInTable="MovieIdColumn" msprop:Generator_ColumnPropNameInRow="MovieId" msprop:Generator_UserColumnName="MovieId" msprop:Generator_ColumnVarNameInTable="columnMovieId" type="xs:int" minOccurs="0" />
-              <xs:element name="MovieType" msprop:Generator_ColumnPropNameInTable="MovieTypeColumn" msprop:Generator_ColumnPropNameInRow="MovieType" msprop:Generator_UserColumnName="MovieType" msprop:Generator_ColumnVarNameInTable="columnMovieType" type="xs:int" minOccurs="0" />
+              <xs:element name="MovieType" msprop:Generator_ColumnPropNameInTable="MovieTypeColumn" msprop:Generator_ColumnPropNameInRow="MovieType" msprop:Generator_UserColumnName="MovieType" msprop:Generator_ColumnVarNameInTable="columnMovieType" type="xs:int" />
               <xs:element name="MovieTypeName" msprop:Generator_ColumnPropNameInTable="MovieTypeNameColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="MovieTypeName" msprop:Generator_UserColumnName="MovieTypeName" msprop:Generator_ColumnVarNameInTable="columnMovieTypeName" type="xs:string" minOccurs="0" />
               <xs:element name="Remarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_UserColumnName="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" type="xs:string" minOccurs="0" />
               <xs:element name="GX" msprop:Generator_ColumnPropNameInTable="GXColumn" msprop:Generator_ColumnPropNameInRow="GX" msprop:Generator_UserColumnName="GX" msprop:Generator_ColumnVarNameInTable="columnGX" type="xs:double" default="0" minOccurs="0" />
@@ -66,6 +66,8 @@
             <xs:sequence>
               <xs:element name="Timestamp" msprop:Generator_ColumnPropNameInTable="TimestampColumn" msprop:Generator_ColumnPropNameInRow="Timestamp" msprop:Generator_UserColumnName="Timestamp" msprop:Generator_ColumnVarNameInTable="columnTimestamp" type="xs:dateTime" />
               <xs:element name="DeviceId" msprop:Generator_ColumnPropNameInTable="DeviceIdColumn" msprop:Generator_ColumnPropNameInRow="DeviceId" msprop:Generator_UserColumnName="DeviceId" msprop:Generator_ColumnVarNameInTable="columnDeviceId" type="xs:string" />
+              <xs:element name="Sequence" msprop:Generator_ColumnPropNameInTable="SequenceColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Sequence" msprop:Generator_UserColumnName="Sequence" msprop:Generator_ColumnVarNameInTable="columnSequence" type="xs:string" />
+              <xs:element name="MovieType" msprop:Generator_ColumnPropNameInRow="MovieType" msprop:Generator_ColumnPropNameInTable="MovieTypeColumn" msprop:Generator_ColumnVarNameInTable="columnMovieType" msprop:Generator_UserColumnName="MovieType" type="xs:int" />
               <xs:element name="Ch" msprop:Generator_ColumnPropNameInTable="ChColumn" msprop:Generator_ColumnPropNameInRow="Ch" msprop:Generator_UserColumnName="Ch" msprop:Generator_ColumnVarNameInTable="columnCh" type="xs:int" />
               <xs:element name="FilePath" msprop:Generator_ColumnPropNameInTable="FilePathColumn" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="FilePath" msprop:Generator_UserColumnName="FilePath" msprop:Generator_ColumnVarNameInTable="columnFilePath" type="xs:string" minOccurs="0" />
             </xs:sequence>
@@ -95,16 +97,20 @@
       <xs:selector xpath=".//mstns:Device" />
       <xs:field xpath="mstns:DeviceId" />
     </xs:unique>
-    <xs:unique name="EventList_Constraint1" msdata:ConstraintName="Constraint1">
+    <xs:unique name="EventList_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:EventList" />
       <xs:field xpath="mstns:Timestamp" />
       <xs:field xpath="mstns:DeviceId" />
+      <xs:field xpath="mstns:Sequence" />
+      <xs:field xpath="mstns:MovieType" />
     </xs:unique>
     <xs:unique name="PlayList_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:PlayList" />
       <xs:field xpath="mstns:Timestamp" />
-      <xs:field xpath="mstns:Ch" />
       <xs:field xpath="mstns:DeviceId" />
+      <xs:field xpath="mstns:Sequence" />
+      <xs:field xpath="mstns:MovieType" />
+      <xs:field xpath="mstns:Ch" />
     </xs:unique>
   </xs:element>
   <xs:annotation>

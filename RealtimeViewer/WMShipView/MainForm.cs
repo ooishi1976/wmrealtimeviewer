@@ -250,14 +250,44 @@ namespace RealtimeViewer.WMShipView
                     BindDeviceDataSource();
                     BindStreamingDataSource();
 
-                    var isChanged = SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID);
-                    if (!isChanged) 
+                    if (ViewModel.IsEmergencyMode)
                     {
-                        //OfficeBindingSource.ResetCurrentItem();
-                        OfficeBindingSource_CurrentChanged(OfficeBindingSource, new EventArgs());
+                        lock (ViewModel.DeviceTable)
+                        {
+                            var emergencyDevice = ViewModel.DeviceTable.FindByDeviceId(ViewModel.EmergencyDeviceId);
+                            if (emergencyDevice is WMDataSet.DeviceRow device)
+                            {
+                                // 選択値が変わっていない場合、変更イベントを強制的に発動する
+                                if (!SetOfficePostion(device.OfficeId))
+                                {
+                                    OfficeBindingSource_CurrentChanged(OfficeBindingSource, new EventArgs());
+                                }
+
+                                // 選択値が変わっていない場合、変更イベントを強制的に発動する
+                                if (!SetDevicePostion(device.DeviceId))
+                                {
+                                    DeviceBindingSource_CurrentChanged(DeviceBindingSource, new EventArgs());
+                                }
+
+                                // 選択船舶表示を選択
+                                radioButtonSelect.Checked = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // 選択値が変わっていない場合、変更イベントを強制的に発動する
+                        if (!SetOfficePostion(ViewModel.LocalSettings.SelectOfficeID)) 
+                        {
+                            //OfficeBindingSource.ResetCurrentItem();
+                            OfficeBindingSource_CurrentChanged(OfficeBindingSource, new EventArgs());
+                        }
                     }
                     DrawMapEntries();
-                    timerGPSDraw.Start();
+                    if (!ViewModel.IsEmergencyMode)
+                    {
+                        timerGPSDraw.Start();
+                    }
                 }));
             });
             waitTask.ContinueWith((t) =>
@@ -459,25 +489,27 @@ namespace RealtimeViewer.WMShipView
 #region イベントタブ イベント
         private void GridEventList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-        }
+            // 選択列の場合
+            if (e.ColumnIndex == 0)
+            {
+                // 最初にすべてチェック解除
+                for (var rowIndex = 0; rowIndex < gridEventList.Rows.Count; rowIndex++)
+                {
+                    if (rowIndex != e.RowIndex && 
+                        gridEventList[0, rowIndex].Value is bool oldValue &&
+                        oldValue == true)
+                    {
+                        gridEventList[0, rowIndex].Value = false;
+                    }
+                }
 
-        /// <summary>
-        /// イベントリストのフォーマット指定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridEventList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// イベントリストの列クリックイベント<br/>
-        /// ソート処理を実行
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridEventList_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
+                // 前回未チェック
+                if (gridEventList[0, e.RowIndex].Value is bool newValue &&
+                    newValue == false)
+                {
+                    gridEventList[0, e.RowIndex].Value = true;
+                }
+            }
         }
 
 #endregion イベントタブ イベント
@@ -784,6 +816,11 @@ namespace RealtimeViewer.WMShipView
             //}
         }
 
+        /// <summary>
+        /// Officeコンボボックスの選択値を変更する
+        /// </summary>
+        /// <param name="officeId"></param>
+        /// <returns>true: 選択値が変わった</returns>
         private bool SetOfficePostion(int? officeId = null)
         {
             var id = (officeId is null) ? ViewModel.SelectedOfficeId : officeId;
@@ -814,6 +851,34 @@ namespace RealtimeViewer.WMShipView
             return result;
         }
 
+        private bool SetDevicePostion(string deviceId)
+        {
+            var result = false;
+            if (DeviceBindingSource.List is DataView dataView)
+            {
+                var index = 0;
+                foreach (var data in dataView)
+                {
+                    if (data is DataRowView rowView &&
+                        rowView.Row is WMDataSet.DeviceRow device)
+                    {
+                        if (device.DeviceId == deviceId)
+                        {
+                            break;
+                        }
+                    }
+                    index++;
+                }
+
+                if (dataView.Count <= index)
+                {
+                    index = 0;
+                }
+                result = (DeviceBindingSource.Position == index) ? false : true;
+                DeviceBindingSource.Position = index;
+            }
+            return result;
+        }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -911,39 +976,6 @@ namespace RealtimeViewer.WMShipView
         }
 
         /// <summary>
-        /// イベントリストのセル値変更
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridEventList_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (sender is DataGridView dataGrid && e.ColumnIndex == 0)
-            {
-                for (var i = 0; i < dataGrid.Rows.Count; i++)
-                {
-                    if (i != e.RowIndex)
-                    {
-                        dataGrid.Rows[i].Cells[e.ColumnIndex].Value = false;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// イベントリストセル値変更確定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridEventList_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (sender is DataGridView dataGrid &&
-                dataGrid.IsCurrentCellDirty)
-            {
-                dataGrid.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-
-        /// <summary>
         /// 営業所選択変更
         /// </summary>
         /// <param name="sender"></param>
@@ -964,12 +996,18 @@ namespace RealtimeViewer.WMShipView
                 while (ViewModel.IsUpdatingEventList)
                 {
                     await Task.Delay(1000);
-                    Debug.WriteLine("(ﾟдﾟ)ｳﾏｰ");
                 }
 
                 // 車両リストの更新
                 CancellationTokenSource = new CancellationTokenSource();
-                DeviceBindingSource.Filter = $"OfficeId = {office.OfficeId}";
+                if (ViewModel.IsEmergencyMode)
+                {
+                    DeviceBindingSource.Filter = $"DeviceId = '{ViewModel.EmergencyDeviceId}'";
+                }
+                else
+                {
+                    DeviceBindingSource.Filter = $"OfficeId = {office.OfficeId}";
+                }
 
                 MoveToOfficeLocation();
                 if (ViewModel.IsDeviceFocus)
@@ -1028,56 +1066,87 @@ namespace RealtimeViewer.WMShipView
         private void ButtonDownload_Click(object sender, EventArgs e)
         {
             //  閲覧権限あり
-            if (ViewModel.IsBrowsable &&
-                EventListBindingSource.Current is DataRowView rowView &&
-                rowView.Row is WMDataSet.EventListRow row)
+            if (ViewModel.IsBrowsable)
             {
-                CancellationTokenSource?.Cancel();
-                // 車両リストの更新
-                CancellationTokenSource = new CancellationTokenSource();
 
-                Task.Run(async () =>
+                WMDataSet.EventListRow selectedRow = null;
+                lock (ViewModel.EventTable)
                 {
-                    ViewModel.IsDownloadingMovie = true;
-                    try
-                    {
-                        var movies = await ViewModel.EventListDownloadAsync(row, CancellationTokenSource.Token);
-                        if (movies.Result == 0)  // 正常
-                        {
-                            var playlist = ViewModel.PlaylistTable;
-                            row.ExtractFilePath = movies.UnzippedPath;
-                            foreach (var keyValue in movies.chFile)
-                            {
-                                var playChannel = playlist.NewPlayListRow();
-                                playChannel.Timestamp = row.Timestamp;
-                                playChannel.DeviceId = row.DeviceId;
-                                playChannel.Ch = keyValue.Key;
-                                playChannel.FilePath = keyValue.Value;
-                                playlist.AddPlayListRow(playChannel);
-                            }
-                            playlist.AcceptChanges();
-                        }
-                        else
-                        {
-                            row.ExtractFilePath = string.Empty;
-                        }
+                    selectedRow = ViewModel.EventTable.FirstOrDefault(item => item.Selected);
+                }
+                //if (EventListBindingSource.Current is DataRowView rowView &&
+                //    rowView.Row is WMDataSet.EventListRow row &&
+                //    row.Selected)
+                if (selectedRow is WMDataSet.EventListRow row)
+                {
+                    CancellationTokenSource?.Cancel();
+                    // 車両リストの更新
+                    CancellationTokenSource = new CancellationTokenSource();
 
-                        // 画面に反映
-                        Invoke((MethodInvoker)(() => 
-                        { 
-                            ReadyToPlay(row);
-                        }));
-                    }
-                    finally
+                    Task.Run(async () =>
                     {
-                        ViewModel.IsDownloadingMovie = false;
-                    }
-                }, CancellationTokenSource.Token);
+                        ViewModel.IsDownloadingMovie = true;
+                        try
+                        {
+                            var existMovie = ViewModel.PlaylistTable.Any(
+                                    item => (item.Timestamp == row.Timestamp &&
+                                             item.DeviceId == row.DeviceId &&
+                                             item.Sequence == row.Sequence &&
+                                             item.MovieType == row.MovieType));
+                            if (!existMovie)
+                            {
+                                var movies = await ViewModel.EventListDownloadAsync(row, CancellationTokenSource.Token);
+                                if (movies.Result == 0)  // 正常
+                                {
+                                    var playlist = ViewModel.PlaylistTable;
+                                    row.ExtractFilePath = movies.UnzippedPath;
+                                    foreach (var keyValue in movies.chFile)
+                                    {
+                                        var trackRow = playlist.FindByTimestampDeviceIdSequenceMovieTypeCh(
+                                            row.Timestamp, row.DeviceId, row.Sequence, row.MovieType, keyValue.Key);
+                                        if (trackRow is WMDataSet.PlayListRow channelRow)
+                                        {
+                                            // 更新
+                                            trackRow.FilePath = keyValue.Value;
+                                        }
+                                        else
+                                        {
+                                            // 追加
+                                            var playChannel = playlist.NewPlayListRow();
+                                            playChannel.Timestamp = row.Timestamp;
+                                            playChannel.DeviceId = row.DeviceId;
+                                            playChannel.Sequence = row.Sequence;
+                                            playChannel.Ch = keyValue.Key;
+                                            playChannel.MovieType = row.MovieType;
+                                            playChannel.FilePath = keyValue.Value;
+                                            playlist.AddPlayListRow(playChannel);
+                                        }
+                                    }
+                                    playlist.AcceptChanges();
+                                }
+                                else
+                                {
+                                    row.ExtractFilePath = string.Empty;
+                                }
+                            }
+
+                            // 画面に反映
+                            Invoke((MethodInvoker)(() => 
+                            { 
+                                ReadyToPlay(row);
+                            }));
+                        }
+                        finally
+                        {
+                            ViewModel.IsDownloadingMovie = false;
+                        }
+                    }, CancellationTokenSource.Token);
+                }
             }
             else
             {
                 MessageBox.Show("閲覧する権限がありません", "確認", MessageBoxButtons.OK
-                                   , MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                                , MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             }
         }
 
@@ -1092,14 +1161,13 @@ namespace RealtimeViewer.WMShipView
 
             // イベントリストの更新
             CancellationTokenSource = new CancellationTokenSource();
-            UnbindEventDataSource();
+            UnbindEventDataSource(false);
 
             Task.Run(async () =>
             {
                 ViewModel.IsUpdatingEventList = true;
                 try
                 {
-                    ViewModel.EventTable.Clear();
                     var eventList = await ViewModel.GetEventsAsync(ViewModel.SelectedOfficeId, CancellationTokenSource.Token, (now, total, isCompleted) =>
                     {
                         Invoke((MethodInvoker)(() => {
@@ -1118,7 +1186,7 @@ namespace RealtimeViewer.WMShipView
 
                     Invoke((MethodInvoker)(() => 
                     { 
-                        BindEventDataSource(eventList);
+                        BindEventDataSource(eventList, false);
                     }));
                 }
                 finally
@@ -1195,15 +1263,30 @@ namespace RealtimeViewer.WMShipView
                     var playlist = ViewModel.GetPlaylist();
                     var audio = playlist.FirstOrDefault(item => item.Ch == RealtimeViewer.Model.EventInfo.AUDIO_CHANNEL_BASE);
                     var movie = playlist.FirstOrDefault(item => item.Ch == channel);
-
-                    var title = $"Event {ViewModel.PlayDeviceId} | {ViewModel.PlayTimestampStr} | Ch{channel}";
+                    var title = $"Event {ViewModel.PlayDeviceId} | {ViewModel.PlayTimestampStr} | Ch{channel + 1}";
                     ViewModel.OperationLogger.Out(OperationLogger.Category.EventData, ViewModel.AuthedUser.Name, $"Play {title}");
                     var fps = 15;
-                    if (4 < channel)
+                    if (ServerIndex.WeatherMedia == ViewModel.OperationServerInfo.Id ||
+                        ServerIndex.Dev2 == ViewModel.OperationServerInfo.Id)
                     {
-                        fps = 10; // for Analog.
+                        if (3 < channel)
+                        {
+                            fps = 10; // for Analog.
+                        }
                     }
-                    PlayffmpegControl(channel, movie.FilePath, audio.FilePath, title, 480, fps);
+                    else
+                    {
+                        if (0 < channel)
+                        {
+                            fps = 10; // for Analog.
+                        }
+                    }
+
+                    if (movie != null)
+                    {
+                        var audioFile = (audio != null) ? audio.FilePath : null;
+                        PlayffmpegControl(channel, movie.FilePath, audioFile, title, 480, fps);
+                    }
                 }
             }
         }
@@ -1238,7 +1321,8 @@ namespace RealtimeViewer.WMShipView
             {
                 var deviceTable = ViewModel.DeviceTable;
                 var message = e.DeserializeMessage();
-                var row = deviceTable.FirstOrDefault(item => item.DeviceId == message.Device_id);
+                var row = deviceTable.FindByDeviceId(message.Device_id);
+                //var row = deviceTable.FirstOrDefault(item => item.DeviceId == message.Device_id);
                 if (row is WMDataSet.DeviceRow device)
                 {
                     var lonMS = UtilGPSConvert.ToGPSMS(int.Parse(message.Lon));
@@ -1261,6 +1345,14 @@ namespace RealtimeViewer.WMShipView
                         device.LastNotificationTime = message.Ts;
                         device.AcceptChanges();
                         //deviceTable.AcceptChanges();
+
+                        if (ViewModel.IsEmergencyMode || 
+                            (ViewModel.IsDeviceFocus && ViewModel.SelectedDeviceId == message.Device_id)) 
+                        {
+                            DrawMapEntries();
+                            MoveToDeviceLocation();
+                            ViewModel.DataUpdateDate = DateTime.Now;
+                        }
                     }));
                     
                 }

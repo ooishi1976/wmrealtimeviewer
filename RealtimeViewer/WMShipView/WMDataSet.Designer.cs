@@ -1412,6 +1412,16 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public EventListRow FindByTimestampDeviceIdSequenceMovieType(System.DateTime Timestamp, string DeviceId, string Sequence, int MovieType) {
+                return ((EventListRow)(this.Rows.Find(new object[] {
+                            Timestamp,
+                            DeviceId,
+                            Sequence,
+                            MovieType})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 EventListDataTable cln = ((EventListDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1473,9 +1483,13 @@ namespace RealtimeViewer.WMShipView {
                 base.Columns.Add(this.columnExtractFilePath);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnTimestamp,
-                                this.columnDeviceId}, false));
+                                this.columnDeviceId,
+                                this.columnSequence,
+                                this.columnMovieType}, true));
                 this.columnTimestamp.AllowDBNull = false;
                 this.columnDeviceId.AllowDBNull = false;
+                this.columnSequence.AllowDBNull = false;
+                this.columnMovieType.AllowDBNull = false;
                 this.columnGX.DefaultValue = ((double)(0D));
                 this.columnGY.DefaultValue = ((double)(0D));
                 this.columnGZ.DefaultValue = ((double)(0D));
@@ -1617,6 +1631,10 @@ namespace RealtimeViewer.WMShipView {
             
             private global::System.Data.DataColumn columnDeviceId;
             
+            private global::System.Data.DataColumn columnSequence;
+            
+            private global::System.Data.DataColumn columnMovieType;
+            
             private global::System.Data.DataColumn columnCh;
             
             private global::System.Data.DataColumn columnFilePath;
@@ -1667,6 +1685,22 @@ namespace RealtimeViewer.WMShipView {
             public global::System.Data.DataColumn DeviceIdColumn {
                 get {
                     return this.columnDeviceId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SequenceColumn {
+                get {
+                    return this.columnSequence;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn MovieTypeColumn {
+                get {
+                    return this.columnMovieType;
                 }
             }
             
@@ -1723,11 +1757,13 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public PlayListRow AddPlayListRow(System.DateTime Timestamp, string DeviceId, int Ch, string FilePath) {
+            public PlayListRow AddPlayListRow(System.DateTime Timestamp, string DeviceId, string Sequence, int MovieType, int Ch, string FilePath) {
                 PlayListRow rowPlayListRow = ((PlayListRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Timestamp,
                         DeviceId,
+                        Sequence,
+                        MovieType,
                         Ch,
                         FilePath};
                 rowPlayListRow.ItemArray = columnValuesArray;
@@ -1737,11 +1773,13 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public PlayListRow FindByTimestampChDeviceId(System.DateTime Timestamp, int Ch, string DeviceId) {
+            public PlayListRow FindByTimestampDeviceIdSequenceMovieTypeCh(System.DateTime Timestamp, string DeviceId, string Sequence, int MovieType, int Ch) {
                 return ((PlayListRow)(this.Rows.Find(new object[] {
                             Timestamp,
-                            Ch,
-                            DeviceId})));
+                            DeviceId,
+                            Sequence,
+                            MovieType,
+                            Ch})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1763,6 +1801,8 @@ namespace RealtimeViewer.WMShipView {
             internal void InitVars() {
                 this.columnTimestamp = base.Columns["Timestamp"];
                 this.columnDeviceId = base.Columns["DeviceId"];
+                this.columnSequence = base.Columns["Sequence"];
+                this.columnMovieType = base.Columns["MovieType"];
                 this.columnCh = base.Columns["Ch"];
                 this.columnFilePath = base.Columns["FilePath"];
             }
@@ -1774,16 +1814,24 @@ namespace RealtimeViewer.WMShipView {
                 base.Columns.Add(this.columnTimestamp);
                 this.columnDeviceId = new global::System.Data.DataColumn("DeviceId", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDeviceId);
+                this.columnSequence = new global::System.Data.DataColumn("Sequence", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSequence);
+                this.columnMovieType = new global::System.Data.DataColumn("MovieType", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMovieType);
                 this.columnCh = new global::System.Data.DataColumn("Ch", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCh);
                 this.columnFilePath = new global::System.Data.DataColumn("FilePath", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFilePath);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnTimestamp,
-                                this.columnCh,
-                                this.columnDeviceId}, true));
+                                this.columnDeviceId,
+                                this.columnSequence,
+                                this.columnMovieType,
+                                this.columnCh}, true));
                 this.columnTimestamp.AllowDBNull = false;
                 this.columnDeviceId.AllowDBNull = false;
+                this.columnSequence.AllowDBNull = false;
+                this.columnMovieType.AllowDBNull = false;
                 this.columnCh.AllowDBNull = false;
             }
             
@@ -2848,12 +2896,7 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Sequence {
                 get {
-                    if (this.IsSequenceNull()) {
-                        return string.Empty;
-                    }
-                    else {
-                        return ((string)(this[this.tableEventList.SequenceColumn]));
-                    }
+                    return ((string)(this[this.tableEventList.SequenceColumn]));
                 }
                 set {
                     this[this.tableEventList.SequenceColumn] = value;
@@ -2880,12 +2923,7 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int MovieType {
                 get {
-                    try {
-                        return ((int)(this[this.tableEventList.MovieTypeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'EventList\' にある列 \'MovieType\' の値は DBNull です。", e);
-                    }
+                    return ((int)(this[this.tableEventList.MovieTypeColumn]));
                 }
                 set {
                     this[this.tableEventList.MovieTypeColumn] = value;
@@ -3018,18 +3056,6 @@ namespace RealtimeViewer.WMShipView {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsSequenceNull() {
-                return this.IsNull(this.tableEventList.SequenceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetSequenceNull() {
-                this[this.tableEventList.SequenceColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsMovieIdNull() {
                 return this.IsNull(this.tableEventList.MovieIdColumn);
             }
@@ -3038,18 +3064,6 @@ namespace RealtimeViewer.WMShipView {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetMovieIdNull() {
                 this[this.tableEventList.MovieIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsMovieTypeNull() {
-                return this.IsNull(this.tableEventList.MovieTypeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetMovieTypeNull() {
-                this[this.tableEventList.MovieTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3181,6 +3195,28 @@ namespace RealtimeViewer.WMShipView {
                 }
                 set {
                     this[this.tablePlayList.DeviceIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Sequence {
+                get {
+                    return ((string)(this[this.tablePlayList.SequenceColumn]));
+                }
+                set {
+                    this[this.tablePlayList.SequenceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public int MovieType {
+                get {
+                    return ((int)(this[this.tablePlayList.MovieTypeColumn]));
+                }
+                set {
+                    this[this.tablePlayList.MovieTypeColumn] = value;
                 }
             }
             

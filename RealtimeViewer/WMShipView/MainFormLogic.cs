@@ -197,7 +197,14 @@ namespace RealtimeViewer.WMShipView
 
                 DeviceBindingSource.DataSource = ViewModel.WMDataSet;
                 DeviceBindingSource.DataMember = "Device";
-                DeviceBindingSource.Filter = $"OfficeId = -1";
+                if (ViewModel.IsEmergencyMode)
+                {
+                    DeviceBindingSource.Filter = $"DeviceId = '{ViewModel.EmergencyDeviceId}'";
+                }
+                else
+                {
+                    DeviceBindingSource.Filter = $"OfficeId = -1";
+                }
                 DeviceBindingSource.Sort = "DeviceId";
                 DeviceBindingSource.CurrentChanged += DeviceBindingSource_CurrentChanged;
                 gridCarList.Enabled = true;
@@ -210,7 +217,7 @@ namespace RealtimeViewer.WMShipView
             {
                 OfficeBindingSource.DataSource = ViewModel.WMDataSet;
                 OfficeBindingSource.DataMember = "Office";
-                OfficeBindingSource.Filter = "Visible = true";
+                OfficeBindingSource.Filter = $"Visible = true";
                 OfficeBindingSource.Sort = "OfficeId";
                 OfficeBindingSource.CurrentChanged += OfficeBindingSource_CurrentChanged;
                 comboBoxOffice.DisplayMember = "Name";
@@ -224,10 +231,13 @@ namespace RealtimeViewer.WMShipView
         /// イベントリスト取得後のDataGridViewへのバインド
         /// </summary>
         /// <param name="eventList"></param>
-        private void BindEventDataSource(WMDataSet.EventListDataTable eventList)
+        private void BindEventDataSource(WMDataSet.EventListDataTable eventList, bool withPlayList = true)
         {
             ViewModel.EventTable = eventList;
-            ViewModel.PlaylistTable = new WMDataSet.PlayListDataTable();
+            if (withPlayList) 
+            {
+                ViewModel.PlaylistTable = new WMDataSet.PlayListDataTable();
+            }
             EventListBindingSource.DataSource = eventList;
             EventListBindingSource.Sort = "Timestamp desc, DeviceId";
             EventListBindingSource.Filter = "MovieType <> 2";
@@ -239,11 +249,16 @@ namespace RealtimeViewer.WMShipView
             }
         }
 
-        private void UnbindEventDataSource()
+        private void UnbindEventDataSource(bool withPlayList = true)
         {
             gridEventList.DataSource = null;
             ViewModel.EventTable = null;
-            ViewModel.PlaylistTable = null;
+            if (withPlayList ) 
+            {
+                ViewModel.RemoveAllPlayListFile();
+                ViewModel.ClearMovies();
+                ViewModel.PlaylistTable = null;
+            }
         }
 
         private void SetOffices(WMDataSet.OfficeDataTable offices)

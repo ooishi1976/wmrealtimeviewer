@@ -9,7 +9,7 @@
     <Shape ID="DesignTable:Office" ZOrder="8" X="91" Y="121" Height="143" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="139" />
     <Shape ID="DesignTable:Device" ZOrder="2" X="302" Y="395" Height="257" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:EventList" ZOrder="6" X="692" Y="253" Height="315" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="311" />
-    <Shape ID="DesignTable:PlayList" ZOrder="5" X="977" Y="335" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
+    <Shape ID="DesignTable:PlayList" ZOrder="5" X="977" Y="335" Height="143" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="139" />
     <Shape ID="DesignTable:Error" ZOrder="1" X="468" Y="660" Height="181" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
   </Shapes>
   <Connectors>

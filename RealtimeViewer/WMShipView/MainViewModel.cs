@@ -30,11 +30,14 @@ namespace RealtimeViewer.WMShipView
 {
     public class MainViewModel : BindableModel
     {
+#if _WEATHER_MEDIA
         /// <summary>
         /// リアルタイムビューアの仕向け(東武、開発、明治、others)
         /// </summary>
-        private UserIndex UserIndex { get; set; } = UserIndex.Multiwave;
-
+        private UserIndex UserIndex { get; set; } = UserIndex.WeatherMedia;
+#else
+        private UserIndex UserIndex { get; set; } = UserIndex.Tobu;
+#endif
         /// <summary>
         /// リアルタイム視聴方式
         /// </summary>
@@ -421,6 +424,12 @@ namespace RealtimeViewer.WMShipView
 
         private readonly Dictionary<int, bool> canPlayMovies = new Dictionary<int, bool>();
 
+        public void ClearMovies()
+        {
+            canPlayMovies.Clear();
+            NotifyPropertyChanged(nameof(CanPlayMovie));
+        }
+
         public bool GetCanPlayMovies(int ch)
         {
             var result = false;
@@ -553,7 +562,7 @@ namespace RealtimeViewer.WMShipView
         #region MQTT
         public void ConnectMqttServer()
         {
-            if (IsEmergencyMode) 
+            if (IsEmergencyMode)
             {
                 MqttController.ConnectMQTTServer(OperationServerInfo.GetPhygicalServerInfo(), EmergencyDeviceId);
             }
@@ -614,10 +623,6 @@ namespace RealtimeViewer.WMShipView
             int officeId, CancellationToken token, UpdateEventsProgress progress)
         {
             var result = new WMDataSet.EventListDataTable();
-            DeviceTable.DefaultView.RowFilter = $"OfficeId = {officeId}";
-            var allDevices = DeviceTable.DefaultView.ToTable();
-            DeviceTable.DefaultView.RowFilter = string.Empty;
-
             var devices = DeviceTable.Where(x => x.OfficeId == officeId);
             result = await RequestController.GetAllEventsAsync(devices, token, progress);
             return result;
@@ -627,14 +632,9 @@ namespace RealtimeViewer.WMShipView
             int officeId, WMDataSet.EventListDataTable events, CancellationToken token, UpdateEventsProgress progress)
         {
             var result = new WMDataSet.EventListDataTable();
-            DeviceTable.DefaultView.RowFilter = $"OfficeId = {officeId}";
-            var allDevices = DeviceTable.DefaultView.ToTable();
-            DeviceTable.DefaultView.RowFilter = string.Empty;
-
             var devices = DeviceTable.Where(x => x.OfficeId == officeId);
             await RequestController.GetAllEventsAsync(events, devices, token, progress);
         }
-
 
         public async Task GetGravityAsync(
             CancellationToken token,
@@ -665,17 +665,20 @@ namespace RealtimeViewer.WMShipView
         {
             if (PlaylistTable != null)
             {
-                foreach (var playList in PlaylistTable)
+                lock (PlaylistTable)
                 {
-                    try
+                    foreach (var playList in PlaylistTable)
                     {
-                        var dir = Path.GetDirectoryName(playList.FilePath);
-                        if (Directory.Exists(dir))
+                        try
                         {
-                            Directory.Delete(dir, true);
+                            var dir = Path.GetDirectoryName(playList.FilePath);
+                            if (Directory.Exists(dir))
+                            {
+                                Directory.Delete(dir, true);
+                            }
                         }
+                        catch (Exception) {}
                     }
-                    catch (Exception) {}
                 }
             }
         }
@@ -826,6 +829,12 @@ namespace RealtimeViewer.WMShipView
         /// <param name="deviceId"></param>
         public void SetEmergencyMode(string deviceId)
         {
+            AuthedUser = new User() 
+            {
+                Name = Properties.Resources.EmergencyMode,
+                Permission = (int)UserBioDP.RolePermissonConverter.ToPermission(Role.Engineer),
+            };
+            IsUserAuthCompleted = true;
             EmergencyDeviceId = deviceId;
             IsEmergencyMode = true;
         }

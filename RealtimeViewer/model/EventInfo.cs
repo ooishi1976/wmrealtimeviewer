@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -233,11 +234,13 @@ namespace RealtimeViewer.Model
                 Debug.WriteLine($"@@@ Error: SearchMovieFiles {ex.ToString()}, {ex.Message}");
             }
 
-            var audioRegex = new Regex(@"event_movie_id_(?<MID>\d+)_camera_id_(?<CH>\d+)\.aac");
+            var audioRegex = new Regex(@"event_movie_id_(?<MID>\d+)_camera_id_(?<CH>\d+)\.(?<ext>aac|PCM)");
 
             try
             {
-                var en = Directory.EnumerateFiles(path, @"*.aac", SearchOption.TopDirectoryOnly);
+                var aacs = Directory.EnumerateFiles(path, @"*.aac", SearchOption.TopDirectoryOnly);
+                var pcms = Directory.EnumerateFiles(path, @"*.PCM", SearchOption.TopDirectoryOnly);
+                var en = aacs.Concat(pcms);
                 foreach (var f in en)
                 {
                     var match = audioRegex.Match(f);

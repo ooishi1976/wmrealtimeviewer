@@ -40,12 +40,22 @@ namespace RealtimeViewer.Logger
 
         private OperationLogger()
         {
+#if _WEATHER_MEDIA
+            LogDirectoryPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Multiwave",
+                Path.GetFileNameWithoutExtension(Application.ExecutablePath),
+                LOG_DIRECTORY_NAME);
+            LogFileNamePrefix = string.Empty;
+
+#else
             LogDirectoryPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "ISSUI",
                 Path.GetFileNameWithoutExtension(Application.ExecutablePath),
                 LOG_DIRECTORY_NAME);
             LogFileNamePrefix = string.Empty;
+#endif
         }
 
         public static OperationLogger GetInstance()

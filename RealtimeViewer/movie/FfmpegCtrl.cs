@@ -76,7 +76,7 @@ namespace RealtimeViewer.Movie
             if (!string.IsNullOrEmpty(audioFilePath))
             {
                 var ext = Path.GetExtension(audioFilePath);
-                if (!string.IsNullOrEmpty(ext) && ext.ToLower() == "pcm")
+                if (!string.IsNullOrEmpty(ext) && ext.ToLower() == ".pcm")
                 {
                     opts.Append($" -f s16le -ar 48000 -ac 1 -i {audioFilePath}");
                     isPcm = true;
@@ -88,14 +88,19 @@ namespace RealtimeViewer.Movie
                 }
             }
             opts.Append(@" -c:v copy");
-            if (isPcm) 
+
+            if (!string.IsNullOrEmpty(audioFilePath))
             {
-                opts.Append(" -c:a pcm_s16le");
+                if (isPcm) 
+                {
+                    opts.Append(" -c:a pcm_s16le");
+                }
+                else
+                {
+                    opts.Append(" -c:a copy");
+                }
             }
-            else
-            {
-                opts.Append(" -c:a copy");
-            }
+
             opts.Append(@" -shortest");
             opts.Append($" {output}");
 

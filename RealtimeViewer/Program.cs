@@ -75,7 +75,7 @@ namespace RealtimeViewer
                 {
                     // 緊急通報モード
                     //Application.Run(new MainForm(deviceId));
-                    Application.Run(new RealtimeViewer.WMShipView.MainForm());
+                    Application.Run(new RealtimeViewer.WMShipView.MainForm(deviceId));
                 }
                 //Application.Run(new RealtimeViewer.WMShipView.MainForm());
             }

@@ -1836,28 +1836,6 @@ namespace RealtimeViewer
             }
         }
 
-        private void GridEventList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // 選択列の場合
-            if (e.ColumnIndex == 0)
-            {
-                // 最初にすべてチェック解除
-                for (int rowIndex = 0; rowIndex < gridEventList.Rows.Count; rowIndex++)
-                {
-                    if ((rowIndex != e.RowIndex) && (gridEventList[0, rowIndex].Value?.ToString() == "1"))
-                    {
-                        gridEventList[0, rowIndex].Value = "0";
-                    }
-                }
-
-                // 前回未チェック
-                if (gridEventList[0, e.RowIndex].Value?.ToString() != "1")
-                {
-                    gridEventList[0, e.RowIndex].Value = "1";
-                }
-            }
-        }
-
         /// <summary>
         /// イベントリストのフォーマット指定
         /// </summary>

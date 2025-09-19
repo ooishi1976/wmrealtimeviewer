@@ -227,10 +227,12 @@ namespace RealtimeViewer.Network.Http
                     {
                         var beforeTimestamp = DateTime.MinValue;
                         var beforeSequence = string.Empty;
+                        var beforeMovieType = -1;
                         foreach (var movie in eventList)
                         {
                             if (beforeSequence != movie.sequence ||
-                                beforeTimestamp != movie.ts_start) 
+                                beforeTimestamp != movie.ts_start || 
+                                beforeMovieType != movie.movie_type)
                             {
                                 var row = events.NewEventListRow();
                                 row.Timestamp = movie.ts_start;
@@ -240,9 +242,17 @@ namespace RealtimeViewer.Network.Http
                                 row.MovieId = movie.id;
                                 row.MovieType = movie.movie_type;
                                 row.MovieTypeName = ConvertMovieType(movie.movie_type);
-                                events.AddEventListRow(row);
+
+                                if (!events.Any(item => (item.DeviceId == row.DeviceId &&
+                                                    item.Timestamp == row.Timestamp && 
+                                                    item.Sequence == row.Sequence &&
+                                                    item.MovieType == row.MovieType)))
+                                {
+                                    events.AddEventListRow(row);
+                                }
                                 beforeTimestamp = movie.ts_start;
                                 beforeSequence = movie.sequence;
+                                beforeMovieType = movie.movie_type;
                             }
                         }
                         events.AcceptChanges();
